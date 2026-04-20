@@ -1,9 +1,24 @@
 'use client'
 
-import { useState, useRef, FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useRef, FormEvent, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowRight, Loader2, Sparkles } from 'lucide-react'
 import { DateRangePicker } from './DateRangePicker'
+
+const HOTEL_NAMES: Record<string, string> = {
+  'the-savoy-london': 'The Savoy, London',
+  'claridges-london': "Claridge's, London",
+  'the-connaught-london': 'The Connaught, London',
+  'the-ritz-london': 'The Ritz London',
+  'the-dorchester-london': 'The Dorchester, London',
+  'the-langham-london': 'The Langham, London',
+  'browns-hotel-london': "Brown's Hotel, London",
+  'the-goring-london': 'The Goring, London',
+  'the-lanesborough-london': 'The Lanesborough, London',
+  'the-berkeley-london': 'The Berkeley, London',
+  'the-ned-london': 'The Ned, London',
+  'chiltern-firehouse-london': 'Chiltern Firehouse, London',
+}
 
 const EXAMPLES = [
   'A quiet room in Paris with a deep soaking tub, fast wifi, for a 3-day work sprint.',
@@ -14,6 +29,7 @@ const EXAMPLES = [
 
 export function PlanFormClient() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -29,6 +45,26 @@ export function PlanFormClient() {
     rooms: '1',
     maxPriceGbp: '',
   })
+
+  useEffect(() => {
+    const hotelSlug = searchParams?.get('hotel')
+    if (hotelSlug && HOTEL_NAMES[hotelSlug]) {
+      const hotelName = HOTEL_NAMES[hotelSlug]
+      setForm((f) => ({
+        ...f,
+        rawQuery: f.rawQuery || `Looking for a private rate quote for ${hotelName}. `,
+        city: f.city || 'London',
+      }))
+      setTimeout(() => {
+        const el = textareaRef.current
+        if (el) {
+          el.focus()
+          const len = el.value.length
+          el.setSelectionRange(len, len)
+        }
+      }, 50)
+    }
+  }, [searchParams])
 
   function update<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => ({ ...f, [key]: value }))

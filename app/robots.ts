@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/search/', '/api/', '/dashboard/', '/login/'],
+        disallow: ['/api/', '/dashboard/', '/login/'],
       },
     ],
     sitemap: 'https://stayward.vercel.app/sitemap.xml',

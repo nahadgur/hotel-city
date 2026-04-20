@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getHotelBySlug, hotels } from '@/data/hotels'
 import type { Metadata } from 'next'
-import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import type { Amenity } from '@/lib/types'
 
 export const dynamicParams = false
@@ -19,21 +19,31 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: `${hotel.name}, ${hotel.city}`,
     description: `${hotel.tagline} ${hotel.signatureDetail}`,
     openGraph: {
-      title: `${hotel.name} – ${hotel.city}`,
+      title: `${hotel.name} in ${hotel.city}`,
       description: hotel.tagline,
       images: [hotel.heroImage],
     },
   }
 }
 
+// Group amenity categories into broad descriptive buckets.
+// No numeric specs, no brand names, no measurements.
 const CATEGORY_LABELS: Record<Amenity['category'], string> = {
-  sleep: 'Sleep',
-  work: 'Work & connectivity',
+  sleep: 'The room',
+  work: 'Workspace & connectivity',
   bathroom: 'Bathroom',
   food: 'Food & drink',
   light: 'Light & ambience',
-  layout: 'Room & layout',
+  layout: 'Layout',
   service: 'Service',
+}
+
+// Strip any numeric specs or measurement detail before display.
+// Internal metadata stays in data/hotels.ts for matching. We just
+// don't surface it publicly.
+function isNumericDetail(s: string | undefined): boolean {
+  if (!s) return false
+  return /\d/.test(s) || /\b(cm|mm|mbps|gbps|kbps|bps|inches|\"|hz|lumen|watts?)\b/i.test(s)
 }
 
 export default function HotelPage({ params }: { params: { slug: string } }) {
@@ -50,26 +60,24 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
     .filter((h) => h.slug !== hotel.slug && (h.country === hotel.country || h.atmosphere.some((t) => hotel.atmosphere.includes(t))))
     .slice(0, 3)
 
-  // JSON-LD – Hotel type, no fake aggregateRating
+  // JSON-LD: Service schema, not Hotel / LocalBusiness.
+  // Stayward routes briefs. It does not list or represent hotels
+  // as bookable inventory. No aggregateRating, no priceRange.
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Hotel',
-    name: hotel.name,
-    description: hotel.atmosphereDescription,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: hotel.city,
-      addressRegion: hotel.neighbourhood,
-      addressCountry: hotel.country,
+    '@type': 'Service',
+    name: `Direct quote request, ${hotel.name}`,
+    description: `Request a private, direct quote from ${hotel.name} in ${hotel.city}. Stayward routes your stay brief to this hotel and four others that match.`,
+    provider: {
+      '@type': 'Organization',
+      name: 'Stayward',
+      url: 'https://stayward.vercel.app',
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: hotel.coordinates.lat,
-      longitude: hotel.coordinates.lng,
+    areaServed: {
+      '@type': 'City',
+      name: hotel.city,
     },
-    starRating: { '@type': 'Rating', ratingValue: hotel.stars },
-    priceRange: `£${hotel.priceFrom}–£${hotel.priceFrom * 2}`,
-    image: [hotel.heroImage, ...hotel.gallery],
+    image: [hotel.heroImage, ...hotel.gallery.slice(0, 3)],
   }
 
   return (
@@ -79,8 +87,8 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
       {/* HERO */}
       <section className="container-edge pt-6 md:pt-10 pb-8">
         <div className="mb-6">
-          <Link href="/search/" className="text-xs text-ink-500 link-underline">
-            ← All hotels
+          <Link href="/" className="text-xs text-ink-500 link-underline">
+            \u2190 Back to Stayward
           </Link>
         </div>
 
@@ -100,7 +108,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
               <div key={src} className="relative aspect-[4/3] overflow-hidden bg-ink-100">
                 <Image
                   src={src}
-                  alt={`${hotel.name} – ${i + 1}`}
+                  alt={`${hotel.name}, gallery ${i + 1}`}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover"
@@ -113,7 +121,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
         <div className="grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 md:col-span-8">
             <div className="eyebrow text-ink-500 mb-3">
-              {hotel.city} · {hotel.neighbourhood} · {hotel.country}
+              {hotel.city} \u00b7 {hotel.neighbourhood} \u00b7 {hotel.country}
             </div>
             <h1 className="font-display text-display-lg mb-4">{hotel.name}</h1>
             <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-8">
@@ -145,28 +153,23 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
             )}
           </div>
 
-          {/* BOOKING SIDE PANEL */}
+          {/* DIRECT QUOTE PANEL, NO PRICES */}
           <aside className="col-span-12 md:col-span-4">
             <div className="md:sticky md:top-6 border border-ink-900/15 bg-paper-50 p-6">
-              <div className="flex items-baseline justify-between mb-1">
-                <div className="eyebrow text-ink-500">Public rate from</div>
-                <div className="text-xs text-ink-500 tabular">
-                  {'★'.repeat(hotel.stars)}
-                </div>
+              <div className="eyebrow text-ink-500 mb-2">Rates</div>
+              <div className="font-display text-2xl leading-snug mb-3">
+                Direct rates on request.
               </div>
-              <div className="font-display text-5xl tabular mb-1">
-                £{hotel.priceFrom}
-              </div>
-              <div className="text-xs text-ink-500 mb-6">
-                Per night. The direct quote is usually lower.
-              </div>
+              <p className="text-sm text-ink-700 leading-relaxed mb-6">
+                Stayward doesn't publish prices. Rates are private, quoted directly by the hotel for your specific stay. Usually below the Booking.com rate.
+              </p>
 
               <Link
                 href={`/dashboard/new/?city=${encodeURIComponent(hotel.city)}&hotel=${encodeURIComponent(hotel.slug)}`}
                 className="btn-primary w-full mb-3 text-center justify-center"
               >
                 <span>Get a direct quote</span>
-                <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
               </Link>
 
               <div className="pt-4 hairline space-y-3 text-xs text-ink-600">
@@ -184,27 +187,21 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 text-xs text-ink-500">
-              <div className="mb-1">{hotel.rooms} rooms · Opened {hotel.yearOpened ?? ''}</div>
-              <div className="italic">Work-friendliness: {hotel.workFriendliness}/5 · Noise: {hotel.noiseLevel}</div>
-            </div>
           </aside>
         </div>
       </section>
 
-      {/* AMENITIES – THE DETAIL EXPEDIA IGNORES */}
+      {/* DESCRIPTIVE AMENITIES, NO NUMERIC SPECS */}
       <section className="bg-paper-50 mt-12">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="mb-10">
-            <div className="eyebrow eyebrow-rule mb-3">The detail</div>
+            <div className="eyebrow eyebrow-rule mb-3">What you'll find here</div>
             <h2 className="font-display text-display-md max-w-reading">
-              What you actually want to know about this room.
+              The character of the place, in plain terms.
             </h2>
             <p className="mt-4 text-ink-700 max-w-reading leading-relaxed">
-              Verified items (<ShieldCheck className="inline w-4 h-4 text-sage-500" strokeWidth={1.5} />) have been
-              checked by our team. Everything else is self-reported by the hotel.
+              Broad strokes. If you need the exact specs, workspace dimensions, wifi speed, mattress, bathroom detail, put that in your brief. The hotel will confirm in their quote.
             </p>
           </div>
 
@@ -215,14 +212,12 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
                 <ul className="space-y-3">
                   {items.map((a) => (
                     <li key={a.name} className="flex items-start gap-3 pb-3 hairline">
-                      {a.verified ? (
-                        <ShieldCheck className="w-4 h-4 mt-1 shrink-0 text-sage-500" strokeWidth={1.5} />
-                      ) : (
-                        <Check className="w-4 h-4 mt-1 shrink-0 text-ink-400" strokeWidth={1.5} />
-                      )}
+                      <Check className="w-4 h-4 mt-1 shrink-0 text-ink-400" strokeWidth={1.5} />
                       <div>
                         <div className="text-ink-900">{a.name}</div>
-                        {a.detail && <div className="text-sm text-ink-500 italic">{a.detail}</div>}
+                        {a.detail && !isNumericDetail(a.detail) && (
+                          <div className="text-sm text-ink-500 italic">{a.detail}</div>
+                        )}
                       </div>
                     </li>
                   ))}
@@ -258,10 +253,33 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
           <div className="col-span-12 md:col-span-7 space-y-2">
             {hotel.bestFor.map((b) => (
               <div key={b} className="py-3 hairline flex items-center gap-3">
-                <span className="text-terracotta-500 tabular text-xs">–</span>
+                <span className="text-terracotta-500 tabular text-xs">\u2013</span>
                 <span className="font-display text-xl capitalize">{b}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA STRIP */}
+      <section className="bg-ink-900 text-paper-50">
+        <div className="container-edge py-section">
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
+            <div className="col-span-12 md:col-span-8">
+              <div className="eyebrow text-paper-300 mb-3">Ready?</div>
+              <h2 className="font-display text-display-md max-w-reading">
+                Describe your stay. Hotels quote you direct.
+              </h2>
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              <Link
+                href={`/dashboard/new/?city=${encodeURIComponent(hotel.city)}&hotel=${encodeURIComponent(hotel.slug)}`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50 w-full md:w-auto"
+              >
+                <span>Get a quote from {hotel.name.split(' ').slice(0, 2).join(' ')}</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

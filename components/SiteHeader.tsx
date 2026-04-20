@@ -4,33 +4,67 @@ import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { User, LogOut, LayoutGrid } from 'lucide-react'
+import { LogOut, LayoutGrid, Menu, X } from 'lucide-react'
 
 export function SiteHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
     <header className="relative z-20">
       <div className="container-edge pt-7 pb-5 flex items-center justify-between">
-        <Link href="/" className="font-display text-2xl tracking-tight -ml-0.5">
+        <Link href="/" className="font-display text-2xl tracking-tight -ml-0.5" onClick={() => setMobileOpen(false)}>
           Stayward
         </Link>
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-ink-700">
-          <Link href="/dashboard/new/" className="link-underline">Start a listing</Link>
-          <Link href="/search/" className="link-underline">Browse hotels</Link>
+          <Link href="/dashboard/new/" className="link-underline">Plan a stay</Link>
           <Link href="/about/" className="link-underline">How it works</Link>
           <Link href="/for-hotels/" className="link-underline">For hotels</Link>
         </nav>
 
         <div className="flex items-center gap-4">
-          <AuthCorner />
+          <div className="hidden md:block">
+            <AuthCorner />
+          </div>
+
+          {/* Mobile: primary CTA + menu */}
+          <Link
+            href="/dashboard/new/"
+            className="md:hidden inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink-900 text-paper-50 text-xs"
+          >
+            Plan a stay
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((o) => !o)}
+            className="md:hidden p-1.5 text-ink-700"
+            aria-label="Menu"
+          >
+            {mobileOpen ? <X className="w-5 h-5" strokeWidth={1.5} /> : <Menu className="w-5 h-5" strokeWidth={1.5} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-ink-900/10 bg-paper-50">
+          <nav className="container-edge py-4 flex flex-col gap-1">
+            <Link href="/dashboard/new/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Plan a stay</Link>
+            <Link href="/about/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">How it works</Link>
+            <Link href="/for-hotels/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">For hotels</Link>
+            <div className="pt-3 mt-2 border-t border-ink-900/10">
+              <AuthCorner onNavigate={() => setMobileOpen(false)} />
+            </div>
+          </nav>
+        </div>
+      )}
+
       <div className="hairline" />
     </header>
   )
 }
 
-function AuthCorner() {
+function AuthCorner({ onNavigate }: { onNavigate?: () => void }) {
   const { data: session, status } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -52,17 +86,13 @@ function AuthCorner() {
 
   if (!session?.user) {
     return (
-      <>
-        <Link href="/login/" className="hidden md:inline-block text-sm text-ink-700 link-underline">
-          Sign in
-        </Link>
-        <Link
-          href="/dashboard/new/"
-          className="md:hidden inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink-900 text-paper-50 text-xs"
-        >
-          Start a listing
-        </Link>
-      </>
+      <Link
+        href="/login/"
+        onClick={onNavigate}
+        className="text-sm text-ink-700 link-underline"
+      >
+        Sign in
+      </Link>
     )
   }
 
@@ -107,7 +137,10 @@ function AuthCorner() {
           </div>
           <Link
             href="/dashboard/"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false)
+              onNavigate?.()
+            }}
             className="flex items-center gap-2 px-3 py-2.5 text-sm hover:bg-paper-100 transition-colors"
           >
             <LayoutGrid className="w-4 h-4" strokeWidth={1.5} />

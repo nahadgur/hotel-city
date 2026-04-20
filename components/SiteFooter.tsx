@@ -9,25 +9,23 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-2 max-w-reading">
             <div className="font-display text-2xl mb-4">Stayward</div>
             <p className="text-sm text-ink-600 leading-relaxed">
-              Hotels, found properly. No dark patterns, no surprise taxes, no fake urgency.
-              Search the way you'd describe it to a friend.
+              A different way to book a hotel. You describe the stay, five hotels quote you direct, no OTA in the middle. No public prices, no dark patterns, no surprise taxes.
             </p>
           </div>
 
           <div>
             <div className="eyebrow mb-4">Travellers</div>
             <ul className="space-y-2.5 text-sm text-ink-700">
-              <li><Link href="/search/" className="link-underline">Search</Link></li>
+              <li><Link href="/dashboard/new/" className="link-underline">Plan a stay</Link></li>
               <li><Link href="/about/" className="link-underline">How it works</Link></li>
-              <li><Link href="/about/#insider" className="link-underline">Insider membership</Link></li>
-              <li><Link href="/about/#price-drop" className="link-underline">Price Drop Protection</Link></li>
+              <li><Link href="/dashboard/" className="link-underline">My listings</Link></li>
             </ul>
           </div>
 
           <div>
             <div className="eyebrow mb-4">Hotels</div>
             <ul className="space-y-2.5 text-sm text-ink-700">
-              <li><Link href="/for-hotels/" className="link-underline">List your hotel</Link></li>
+              <li><Link href="/for-hotels/" className="link-underline">Join the pilot</Link></li>
               <li><Link href="/for-hotels/#pricing" className="link-underline">Pricing</Link></li>
               <li><Link href="/for-hotels/#vs-ota" className="link-underline">vs Booking.com</Link></li>
             </ul>

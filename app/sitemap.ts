@@ -7,7 +7,6 @@ const LAST_MOD = '2026-04-20'
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     '',
-    '/search',
     '/about',
     '/for-hotels',
   ].map((path) => ({
@@ -21,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE}/hotels/${h.slug}/`,
     lastModified: LAST_MOD,
     changeFrequency: 'weekly' as const,
-    priority: 0.9,
+    priority: 0.6,
   }))
 
   return [...staticRoutes, ...hotelRoutes]

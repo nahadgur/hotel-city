@@ -2,19 +2,18 @@ import type { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { SupabaseAdapter } from '@auth/supabase-adapter'
 
-// NextAuth v4 config returned from a factory function.
-//
-// WHY A FACTORY: reading process.env at module load in Next.js 14 App
-// Router can get cached between builds. A factory called on each request
-// reads fresh env each time. Cold starts re-evaluate, hot requests reuse.
+// Singleton pattern: build once on first access (per serverless invocation),
+// reuse thereafter. Reads env on first access at request time, not at module
+// load, so Vercel env changes picked up on next cold start.
 
-export function getAuthOptions(): NextAuthOptions {
+let _cached: NextAuthOptions | null = null
+
+function buildAuthOptions(): NextAuthOptions {
   const secret = process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || ''
 
   if (!secret) {
     console.error(
-      '[auth] NEXTAUTH_SECRET is not set. NextAuth will refuse to run. ' +
-        'Set NEXTAUTH_SECRET in Vercel Environment Variables (Production tick required) and redeploy.'
+      '[auth] NEXTAUTH_SECRET is missing at runtime. Set it in Vercel env (Production tick) and redeploy.'
     )
   }
 
@@ -68,13 +67,12 @@ export function getAuthOptions(): NextAuthOptions {
   }
 }
 
-// Back-compat export so existing imports of `authOptions` keep working.
-// Evaluated lazily via a Proxy that re-runs the factory on first property
-// access, so we still get runtime env resolution.
-export const authOptions: NextAuthOptions = new Proxy({} as NextAuthOptions, {
-  get(_target, prop, _receiver) {
-    const opts = getAuthOptions()
-    // @ts-expect-error dynamic access
-    return opts[prop]
-  },
-})
+export function getAuthOptions(): NextAuthOptions {
+  if (!_cached) _cached = buildAuthOptions()
+  return _cached
+}
+
+// Plain object export for NextAuth() handler registration.
+// Evaluated at module load on first request, but since the route handler
+// is already per-request, this is equivalent to request-time evaluation.
+export const authOptions: NextAuthOptions = getAuthOptions()

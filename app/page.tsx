@@ -6,35 +6,76 @@ export default function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden grain">
-        <div className="container-edge pt-12 md:pt-24 pb-20 md:pb-32">
-          <div className="max-w-4xl">
-            <div className="eyebrow eyebrow-rule mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '80ms' }}>
-              A different way to book a hotel
+        <div className="container-edge pt-10 md:pt-20 pb-16 md:pb-24">
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
+            {/* TEXT COLUMN */}
+            <div className="col-span-12 lg:col-span-6 xl:col-span-5">
+              <div className="eyebrow eyebrow-rule mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '80ms' }}>
+                A different way to book a hotel
+              </div>
+
+              <h1 className="font-display text-display-xl mb-8 animate-fade-up" style={{ animationDelay: '120ms' }}>
+                Describe your stay.{' '}
+                <span className="italic text-terracotta-500">Hotels quote you direct</span>.
+              </h1>
+
+              <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10 animate-fade-up" style={{ animationDelay: '260ms' }}>
+                Not a search engine. Not a booking site. You write a brief. We route it to five hotels that fit. They email you a private rate, below what Booking.com can show.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-5 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                <Link href="/dashboard/new/" className="btn-primary">
+                  <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+                  <span>Plan a stay</span>
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </Link>
+                <Link href="/about/" className="text-sm text-ink-700 link-underline">
+                  How it works
+                </Link>
+              </div>
+
+              <p className="mt-8 text-sm text-ink-500 italic max-w-reading animate-fade-up" style={{ animationDelay: '520ms' }}>
+                Free. Takes about a minute. Your email stays private until you accept a quote.
+              </p>
             </div>
 
-            <h1 className="font-display text-display-xl mb-8 animate-fade-up" style={{ animationDelay: '120ms' }}>
-              Describe your stay.{' '}
-              <span className="italic text-terracotta-500">Hotels quote you direct</span>.
-            </h1>
+            {/* VIDEO COLUMN */}
+            <div className="col-span-12 lg:col-span-6 xl:col-span-7 animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <figure className="relative overflow-hidden bg-ink-100 aspect-[4/3] md:aspect-[16/10]">
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/hero.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  poster="/hero-poster.jpg"
+                  aria-hidden="true"
+                />
 
-            <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10 animate-fade-up" style={{ animationDelay: '260ms' }}>
-              Not a search engine. Not a booking site. You write a brief. We route it to five hotels that fit. They email you a private rate, below what Booking.com can show.
-            </p>
+                {/* Bottom gradient: improves caption legibility and masks the watermark corner */}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-24 md:h-32 pointer-events-none"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(20, 18, 15, 0.75) 0%, rgba(20, 18, 15, 0.35) 45%, rgba(20, 18, 15, 0) 100%)',
+                  }}
+                />
 
-            <div className="flex flex-wrap items-center gap-5 animate-fade-up" style={{ animationDelay: '400ms' }}>
-              <Link href="/dashboard/new/" className="btn-primary">
-                <Sparkles className="w-4 h-4" strokeWidth={1.5} />
-                <span>Plan a stay</span>
-                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-              </Link>
-              <Link href="/about/" className="text-sm text-ink-700 link-underline">
-                How it works
-              </Link>
+                {/* Editorial caption sitting over the watermark corner */}
+                <figcaption className="absolute bottom-4 right-4 md:bottom-5 md:right-6 flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90">
+                  <span className="inline-block w-8 md:w-12 h-px bg-paper-50/50" />
+                  <span>A suite in the pilot</span>
+                </figcaption>
+
+                {/* Left-side caption, anchors the image editorially */}
+                <figcaption className="absolute top-4 left-4 md:top-5 md:left-6 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90 flex items-center gap-3">
+                  <span>Golden hour, sea-facing</span>
+                  <span className="inline-block w-8 md:w-12 h-px bg-paper-50/50" />
+                </figcaption>
+              </figure>
             </div>
-
-            <p className="mt-8 text-sm text-ink-500 italic max-w-reading animate-fade-up" style={{ animationDelay: '520ms' }}>
-              Free. Takes about a minute. Your email stays private until you accept a quote.
-            </p>
           </div>
         </div>
       </section>

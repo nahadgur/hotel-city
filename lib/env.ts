@@ -28,6 +28,15 @@ export function hasBriefPipeline(): boolean {
   )
 }
 
+// Google OAuth via NextAuth
+export function hasAuth(): boolean {
+  return Boolean(
+    process.env.GOOGLE_CLIENT_ID &&
+    process.env.GOOGLE_CLIENT_SECRET &&
+    process.env.NEXTAUTH_SECRET
+  )
+}
+
 // Outbound email domain. Resend's shared sender works with zero DNS.
 // Override via env once you have your own domain verified in Resend.
 export function getOutboundFromAddress(): string {

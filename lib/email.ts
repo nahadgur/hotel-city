@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { getOutboundFromAddress, getInboundDomain, getPublicBaseUrl } from './env'
-import type { BriefRow, BriefRoutingRow } from './supabase'
+import type { ListingRow, ListingRoutingRow } from './listing'
 
 let client: Resend | null = null
 function getClient(): Resend {
@@ -12,73 +12,80 @@ function getClient(): Resend {
   return client
 }
 
-// Build the reply-to address for a routing.
-// If RESEND_INBOUND_DOMAIN is set, we use the full unique address.
-// Without a domain, we encode the token in the subject and use a plain inbox.
-export function buildReplyToAddress(token: string): string {
+// --- Reply-to address construction ---
+
+// For initial brief: hotel replies land via `brief-{token}@...` (hotel initiated)
+export function buildBriefReplyToAddress(token: string): string {
   const domain = getInboundDomain()
   if (domain) return `brief-${token}@${domain}`
-  // Fallback: no domain yet. Use the outbound from-address so replies come
-  // back to the Resend account; the token is in the subject for matching.
   return getOutboundFromAddress()
 }
 
-export function buildBriefSubject(briefCity: string | null, token: string): string {
-  const cityPart = briefCity ? `${briefCity} ` : ''
-  // The [ref: xxx] tag is what we match on if the domain fallback is in use.
+// For ongoing thread: hotel replies to customer messages land via `thread-{token}@...`
+export function buildThreadReplyToAddress(token: string): string {
+  const domain = getInboundDomain()
+  if (domain) return `thread-${token}@${domain}`
+  return getOutboundFromAddress()
+}
+
+export function buildBriefSubject(city: string | null, token: string): string {
+  const cityPart = city ? `${city} ` : ''
   return `New ${cityPart}brief from Stayward [ref: ${token}]`
 }
 
-// Send the brief email to one hotel.
+export function buildThreadSubject(listingTitle: string, token: string): string {
+  return `Re: ${listingTitle} [thread: ${token}]`
+}
+
+// ======================================================
+// 1. Initial brief → hotel (Stayward-generated)
+// ======================================================
+
 export async function sendBriefToHotel(params: {
-  brief: BriefRow
-  routing: BriefRoutingRow
+  listing: ListingRow
+  routing: ListingRoutingRow
   baseUrl?: string
 }): Promise<{ messageId: string | null; error: string | null }> {
-  const { brief, routing } = params
+  const { listing, routing } = params
   const baseUrl = params.baseUrl || getPublicBaseUrl()
-  const replyTo = buildReplyToAddress(routing.reply_to_token)
-  const subject = buildBriefSubject(brief.city, routing.reply_to_token)
+  const replyTo = buildBriefReplyToAddress(routing.reply_to_token)
+  const subject = buildBriefSubject(listing.city, routing.reply_to_token)
 
-  const dates = brief.check_in && brief.check_out
-    ? `${formatDate(brief.check_in)} to ${formatDate(brief.check_out)}`
-    : 'Dates flexible'
+  const dates =
+    listing.check_in && listing.check_out
+      ? `${formatDate(listing.check_in)} to ${formatDate(listing.check_out)}`
+      : 'Dates flexible'
 
-  const budget = brief.max_price_gbp
-    ? `Up to \u00a3${brief.max_price_gbp} per night`
+  const budget = listing.max_price_gbp
+    ? `Up to \u00a3${listing.max_price_gbp} per night`
     : 'Open on budget'
 
-  const guests = brief.guests ? `${brief.guests} ${brief.guests === 1 ? 'guest' : 'guests'}` : '2 guests'
+  const guests = listing.guests
+    ? `${listing.guests} ${listing.guests === 1 ? 'guest' : 'guests'}`
+    : '2 guests'
 
-  const brandName = 'Stayward'
-  const briefLink = `${baseUrl}/brief/${brief.id}/`
+  const rooms = listing.rooms && listing.rooms > 1 ? `${listing.rooms} rooms` : null
 
   const textBody = [
     `Hello ${routing.hotel_name},`,
     '',
-    `A traveller has asked us to find a hotel matching their brief, and ${routing.hotel_name} is one of five we think fits. You're receiving this because your property matched what they described.`,
+    `A traveller using Stayward has described what they're after and asked for quotes from five hotels that fit. ${routing.hotel_name} is one of them.`,
     '',
     `WHAT THEY WANT`,
-    `"${brief.raw_query}"`,
+    `"${listing.raw_query}"`,
     '',
-    `WHEN`,
-    dates,
-    '',
-    `WHO`,
-    guests,
-    '',
-    `BUDGET`,
-    budget,
+    `WHEN: ${dates}`,
+    `GUESTS: ${guests}${rooms ? ` \u00b7 ${rooms}` : ''}`,
+    `BUDGET: ${budget}`,
     '',
     `HOW TO QUOTE`,
-    `Just reply to this email with your best available rate and any notes on availability. The traveller's direct details won't be shared until they accept your quote.`,
+    `Reply to this email with your best available rate. The traveller's email is kept private \u2014 your reply goes through Stayward to them.`,
     '',
-    `Because ${brandName} routes quotes directly from hotel to traveller, you're free to offer any rate you'd quote for a direct booking, outside of any parity terms you have with OTAs.`,
+    `Because this is a direct quote to a specific traveller (not a public rate), you're free to offer a rate outside of any OTA parity terms.`,
     '',
     '---',
-    `Matched because: ${(routing.match_reasons ?? []).slice(0, 3).join(', ') || 'vibe + location'}`,
+    `Matched because: ${(routing.match_reasons ?? []).slice(0, 3).join(', ') || 'city + vibe fit'}`,
     `Reference: ${routing.reply_to_token}`,
-    `Reply to this email within 24 hours to be included in the traveller's shortlist.`,
   ].join('\n')
 
   const htmlBody = `
@@ -91,11 +98,11 @@ export async function sendBriefToHotel(params: {
   </div>
 
   <p>Hello ${escapeHtml(routing.hotel_name)},</p>
-  <p>A traveller has asked us to find a hotel matching their brief, and ${escapeHtml(routing.hotel_name)} is one of five we think fits.</p>
+  <p>A traveller has asked us for quotes from five hotels that fit their brief. ${escapeHtml(routing.hotel_name)} is one of them.</p>
 
   <div style="background: white; border-left: 2px solid #B8522D; padding: 20px; margin: 24px 0;">
     <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6663; margin-bottom: 8px;">What they want</div>
-    <div style="font-size: 17px; font-style: italic; line-height: 1.45;">&ldquo;${escapeHtml(brief.raw_query)}&rdquo;</div>
+    <div style="font-size: 17px; font-style: italic; line-height: 1.45;">&ldquo;${escapeHtml(listing.raw_query)}&rdquo;</div>
   </div>
 
   <table style="width: 100%; border-collapse: collapse; margin: 24px 0;">
@@ -105,7 +112,7 @@ export async function sendBriefToHotel(params: {
     </tr>
     <tr>
       <td style="padding: 10px 0; border-bottom: 1px solid rgba(26,22,19,0.1); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6663;">Guests</td>
-      <td style="padding: 10px 0; border-bottom: 1px solid rgba(26,22,19,0.1);">${escapeHtml(guests)}</td>
+      <td style="padding: 10px 0; border-bottom: 1px solid rgba(26,22,19,0.1);">${escapeHtml(guests)}${rooms ? ' &middot; ' + escapeHtml(rooms) : ''}</td>
     </tr>
     <tr>
       <td style="padding: 10px 0; border-bottom: 1px solid rgba(26,22,19,0.1); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6663;">Budget</td>
@@ -113,14 +120,13 @@ export async function sendBriefToHotel(params: {
     </tr>
   </table>
 
-  <p><strong>How to quote:</strong> just reply to this email with your best available rate and any notes on availability. The traveller's direct details won't be shared until they accept your quote.</p>
+  <p><strong>How to quote:</strong> reply to this email with your best rate. The traveller stays anonymous \u2014 your reply is routed to them through Stayward.</p>
 
-  <p style="color: #6B6663; font-size: 14px;">Because Stayward routes quotes directly from hotel to traveller, you're free to offer any rate you'd quote for a direct booking, outside of any parity terms you have with OTAs.</p>
+  <p style="color: #6B6663; font-size: 14px;">Because this is a direct quote, you're free to offer any rate outside of OTA parity terms.</p>
 
   <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid rgba(26,22,19,0.15); font-size: 12px; color: #6B6663;">
-    <div><strong>Matched because:</strong> ${escapeHtml((routing.match_reasons ?? []).slice(0, 3).join(', ') || 'vibe + location')}</div>
+    <div><strong>Matched because:</strong> ${escapeHtml((routing.match_reasons ?? []).slice(0, 3).join(', ') || 'city + vibe fit')}</div>
     <div style="margin-top: 4px;">Reference: <code style="background: rgba(26,22,19,0.06); padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px;">${escapeHtml(routing.reply_to_token)}</code></div>
-    <div style="margin-top: 8px; font-style: italic;">Reply within 24 hours to be included in the traveller's shortlist.</div>
   </div>
 </body>
 </html>`.trim()
@@ -138,7 +144,6 @@ export async function sendBriefToHotel(params: {
     if ('error' in result && result.error) {
       return { messageId: null, error: String(result.error.message || result.error) }
     }
-
     const id = (result as any)?.data?.id || (result as any)?.id || null
     return { messageId: id, error: null }
   } catch (err) {
@@ -146,26 +151,96 @@ export async function sendBriefToHotel(params: {
   }
 }
 
-// Notify the traveller that at least one quote has arrived.
-export async function notifyTravellerOfQuote(params: {
-  brief: BriefRow
+// ======================================================
+// 2. Customer → hotel (ongoing thread message)
+// ======================================================
+
+export async function sendCustomerMessageToHotel(params: {
+  hotelEmail: string
   hotelName: string
+  customerName: string
+  threadToken: string
+  listingTitle: string
+  bodyText: string
+}): Promise<{ messageId: string | null; error: string | null }> {
+  const replyTo = buildThreadReplyToAddress(params.threadToken)
+  const subject = buildThreadSubject(params.listingTitle, params.threadToken)
+
+  const textBody = [
+    `Hello ${params.hotelName},`,
+    '',
+    `${params.customerName} has sent a reply regarding your quote:`,
+    '',
+    params.bodyText,
+    '',
+    '---',
+    `Reply to this email to respond to ${params.customerName} directly.`,
+    `Their email is routed through Stayward.`,
+    `Thread: ${params.threadToken}`,
+  ].join('\n')
+
+  const htmlBody = `
+<!doctype html>
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; color: #1A1613; max-width: 560px; margin: 0 auto; padding: 32px 24px; line-height: 1.55; background: #F7F3EC;">
+  <div style="padding-bottom: 16px; border-bottom: 1px solid rgba(26,22,19,0.15); margin-bottom: 24px;">
+    <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6663;">Stayward</div>
+    <div style="font-size: 20px; margin-top: 4px;">Reply from ${escapeHtml(params.customerName)}</div>
+  </div>
+
+  <p>Hello ${escapeHtml(params.hotelName)},</p>
+  <p>${escapeHtml(params.customerName)} has responded to your quote:</p>
+
+  <div style="background: white; border-left: 2px solid #B8522D; padding: 20px; margin: 24px 0; white-space: pre-wrap;">${escapeHtml(params.bodyText)}</div>
+
+  <p style="color: #6B6663; font-size: 14px;">Reply to this email to respond directly. ${escapeHtml(params.customerName)}'s email stays private \u2014 your reply is routed through Stayward.</p>
+
+  <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid rgba(26,22,19,0.15); font-size: 12px; color: #6B6663;">
+    Thread: <code style="background: rgba(26,22,19,0.06); padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px;">${escapeHtml(params.threadToken)}</code>
+  </div>
+</body>
+</html>`.trim()
+
+  try {
+    const result = await getClient().emails.send({
+      from: getOutboundFromAddress(),
+      to: [params.hotelEmail],
+      replyTo,
+      subject,
+      text: textBody,
+      html: htmlBody,
+    })
+    if ('error' in result && result.error) {
+      return { messageId: null, error: String(result.error.message || result.error) }
+    }
+    const id = (result as any)?.data?.id || (result as any)?.id || null
+    return { messageId: id, error: null }
+  } catch (err) {
+    return { messageId: null, error: err instanceof Error ? err.message : String(err) }
+  }
+}
+
+// ======================================================
+// 3. Notify customer when a hotel replies
+// ======================================================
+
+export async function notifyCustomerOfReply(params: {
+  customerEmail: string
+  customerName: string
+  hotelName: string
+  listingId: string
   baseUrl?: string
 }): Promise<void> {
-  const { brief, hotelName } = params
   const baseUrl = params.baseUrl || getPublicBaseUrl()
-  const { signBriefId } = await import('./signing')
-  const token = signBriefId(brief.id)
-  const link = `${baseUrl}/brief/${brief.id}/?t=${token}`
+  const link = `${baseUrl}/dashboard/listings/${params.listingId}/`
+  const firstName = params.customerName.split(' ')[0] || 'there'
 
   const text = [
-    `Hi ${brief.traveller_name.split(' ')[0] || 'there'},`,
+    `Hi ${firstName},`,
     '',
-    `${hotelName} just sent you a quote for your Stayward brief.`,
+    `${params.hotelName} just replied to your Stayward listing.`,
     '',
-    `View it here: ${link}`,
-    '',
-    'More quotes may arrive over the next 24 hours. We\u2019ll email you each time.',
+    `View the message: ${link}`,
     '',
     'Stayward',
   ].join('\n')
@@ -175,28 +250,29 @@ export async function notifyTravellerOfQuote(params: {
 <html>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; color: #1A1613; max-width: 520px; margin: 0 auto; padding: 32px 24px; background: #F7F3EC;">
   <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6663; margin-bottom: 4px;">Stayward</div>
-  <h1 style="font-size: 24px; margin: 0 0 16px 0; font-weight: 400;">A quote just arrived.</h1>
-  <p>Hi ${escapeHtml(brief.traveller_name.split(' ')[0] || 'there')},</p>
-  <p><strong>${escapeHtml(hotelName)}</strong> just sent you a quote for your brief.</p>
+  <h1 style="font-size: 24px; margin: 0 0 16px 0; font-weight: 400;">A reply just arrived.</h1>
+  <p>Hi ${escapeHtml(firstName)},</p>
+  <p><strong>${escapeHtml(params.hotelName)}</strong> just replied to your listing.</p>
   <p style="margin: 32px 0;">
-    <a href="${link}" style="display: inline-block; background: #1A1613; color: #F7F3EC; padding: 12px 24px; text-decoration: none; font-size: 14px;">View your quotes</a>
+    <a href="${link}" style="display: inline-block; background: #1A1613; color: #F7F3EC; padding: 12px 24px; text-decoration: none; font-size: 14px;">View the message</a>
   </p>
-  <p style="color: #6B6663; font-size: 14px;">More quotes may arrive over the next 24 hours. We&rsquo;ll email you each time.</p>
 </body>
 </html>`.trim()
 
   try {
     await getClient().emails.send({
       from: getOutboundFromAddress(),
-      to: [brief.traveller_email],
-      subject: `${hotelName} sent you a quote`,
+      to: [params.customerEmail],
+      subject: `${params.hotelName} replied to your listing`,
       text,
       html,
     })
   } catch (err) {
-    console.error('[notifyTravellerOfQuote] failed:', err)
+    console.error('[notifyCustomerOfReply] failed:', err)
   }
 }
+
+// --- Helpers ---
 
 function formatDate(iso: string): string {
   try {

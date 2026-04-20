@@ -68,7 +68,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-14 pt-10 hairline">
-            <Link href="/brief/new/" className="btn-primary">
+            <Link href="/dashboard/new/" className="btn-primary">
               <Sparkles className="w-4 h-4" strokeWidth={1.5} />
               <span>Start your brief</span>
               <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
@@ -199,7 +199,7 @@ export default function AboutPage() {
                 lands with the right hotels.
               </p>
               <div>
-                <Link href="/brief/new/" className="link-underline text-ink-900">
+                <Link href="/dashboard/new/" className="link-underline text-ink-900">
                   Try it with your own brief →
                 </Link>
               </div>
@@ -221,7 +221,7 @@ export default function AboutPage() {
             </div>
             <div className="col-span-12 md:col-span-4">
               <Link
-                href="/brief/new/"
+                href="/dashboard/new/"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50 w-full"
               >
                 <Sparkles className="w-4 h-4" strokeWidth={1.5} />

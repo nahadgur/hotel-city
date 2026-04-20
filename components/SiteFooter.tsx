@@ -16,7 +16,7 @@ export function SiteFooter() {
           <div>
             <div className="eyebrow mb-4">Travellers</div>
             <ul className="space-y-2.5 text-sm text-ink-700">
-              <li><Link href="/dashboard/new/" className="link-underline">Plan a stay</Link></li>
+              <li><Link href="/plan/" className="link-underline">Plan a stay</Link></li>
               <li><Link href="/about/" className="link-underline">How it works</Link></li>
               <li><Link href="/dashboard/" className="link-underline">My listings</Link></li>
             </ul>

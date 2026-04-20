@@ -1,143 +1,165 @@
 # Stayward
 
-A Next.js hotel quote-routing platform. Think HeadBox for hotel rooms.
+A human-run concierge for direct hotel quotes. Travellers describe the stay they want, a small team in London reads every brief and emails back quotes within 24 hours. Not a search engine, not a booking site, not a marketplace.
 
-Customers sign in with Google, create a listing describing what they want, and five matching hotels quote them directly by email — usually below the public rate, because direct quotes sit outside OTA parity clauses. Bidirectional email threads live in the customer dashboard.
+## Stack
 
----
+- **Next.js 14** App Router, TypeScript, Tailwind v3
+- **Google Sheets + Apps Script** — where every brief lands for the team to action
+- **Supabase** — stores listings for logged-in users so they can see history at `/dashboard/`
+- **NextAuth + Google OAuth** — optional sign-in for traveller dashboard
+- **Vercel** — deployment
 
-## Deploy checklist
+No Resend, no OpenAI, no Pinecone, no Anthropic SDK in this build. The team replies to travellers by email manually.
 
-1. **Push this repo to GitHub** (nahadgur or vimldn).
-2. **Import to Vercel.** Build will succeed with no env vars — the site runs in mock mode (no auth, no emails, no agentic matching).
-3. **Set up the four services** — full walkthroughs in the `PART*_SETUP.md` files:
-   - Anthropic + OpenAI + Pinecone → agentic search (`PART3_SETUP.md` covers all services including these two parts)
-   - Supabase → database
-   - Resend → email
-   - Google Cloud Console → OAuth (`PART4A_SETUP.md`)
-4. **Run both SQL migrations** in Supabase in order:
-   - `supabase/schema.sql` (Part 3)
-   - `supabase/migration_part4a.sql` (Part 4a — upgrades Part 3 schema to thread-aware)
-5. **Set env vars** on Vercel (see `.env.example`).
-6. **Redeploy.**
-7. **Seed Pinecone** once locally with `npm run seed` after cloning and setting `.env.local`.
+## Routes
 
----
+- `/` homepage
+- `/plan/` submission form (no login required)
+- `/plan/received/` confirmation page with brief echo
+- `/about/` how it works
+- `/for-hotels/` partner pitch
+- `/login/` Google sign-in (optional)
+- `/dashboard/` signed-in user's brief history
+- `/dashboard/listings/[id]/` individual brief with current status
 
-## What you get
+## Setup
 
-**Public site (indexable):**
-- `/` — homepage
-- `/hotels/[slug]/` — 12 hotel detail pages (SSG)
-- `/search/` — natural-language search (agentic when API keys present, mock otherwise)
-- `/about/` — how it works
-- `/for-hotels/` — B2B pitch
+### 1. Google Sheet + Apps Script webhook (required)
 
-**Authenticated dashboard:**
-- `/login/` — Google sign-in
-- `/dashboard/` — user's listings
-- `/dashboard/new/` — create a listing (auth required)
-- `/dashboard/listings/[id]/` — per-hotel message threads with reply box
+1. Create a new Google Sheet.
+2. Extensions -> Apps Script.
+3. Delete default code, paste `scripts/stayward-webhook.gs`.
+4. Update `NOTIFY_EMAIL` at the top of the script to your real email.
+5. Deploy -> New deployment -> Web app -> Execute as Me, Access for Anyone -> Deploy, authorise.
+6. Copy the Web app URL.
 
-**Under the hood:**
-- `POST /api/listings` — create a listing (auth)
-- `GET /api/listings/[id]` — poll for updates (auth + owner)
-- `POST /api/listings/[id]/messages` — customer sends a reply (auth + owner)
-- `POST /api/inbound` — Resend webhook captures hotel replies
-- `/api/auth/[...nextauth]` — NextAuth handler
+### 2. Supabase (required for logged-in users)
 
----
+1. Create a project at supabase.com.
+2. SQL Editor -> run `supabase/schema.sql` then `supabase/migration_part4a.sql`.
+3. Run the additional grant SQL (see "One-time DB setup" below) to enable the `next_auth` schema and permissions.
+4. Project Settings -> API -> copy Project URL and service_role key.
 
-## File map
+### 3. Google OAuth (required for sign-in)
+
+1. console.cloud.google.com -> new project.
+2. OAuth consent screen -> External -> fill in name and contact.
+3. Credentials -> Create OAuth client ID -> Web application.
+4. Authorised origins: `http://localhost:3000` and your Vercel URL.
+5. Authorised redirect URIs: `http://localhost:3000/api/auth/callback/google` and `https://YOUR-VERCEL-URL/api/auth/callback/google`.
+
+### 4. Env vars
+
+Copy `.env.example` to `.env.local`, fill in all values. Generate secrets with:
 
 ```
-app/
-  layout.tsx, page.tsx, globals.css, not-found.tsx
-  sitemap.ts, robots.ts
-  search/page.tsx, search/loading.tsx
-  hotels/[slug]/page.tsx                  SSG, 12 pages
-  about/page.tsx                          How it works
-  for-hotels/page.tsx                     B2B
-  login/page.tsx + LoginClient.tsx        Google sign-in
-  dashboard/page.tsx                      Listings list
-  dashboard/new/page.tsx + ListingFormClient.tsx
-  dashboard/listings/[id]/page.tsx + ListingDetailClient.tsx
-  api/auth/[...nextauth]/route.ts
-  api/listings/route.ts
-  api/listings/[id]/route.ts
-  api/listings/[id]/messages/route.ts
-  api/inbound/route.ts
-
-components/
-  SiteHeader.tsx                Auth-aware nav with user dropdown
-  SiteFooter.tsx
-  SearchInput.tsx               Rotating placeholder input
-  HotelCard.tsx                 Used on search results
-  AuthProvider.tsx              NextAuth SessionProvider wrapper
-
-lib/
-  types.ts                      Hotel, Amenity, ParsedQuery, MatchResult
-  env.ts                        hasAgenticKeys, hasBriefPipeline, hasAuth
-  auth.ts                       NextAuth config (Google + Supabase adapter)
-  session.ts                    getSessionUser, requireUser
-  supabase.ts                   Server client with service role
-  signing.ts                    HMAC tokens for magic links + reply routing
-  claude.ts                     Query parser + match reasons
-  embeddings.ts                 OpenAI text-embedding-3-small
-  pinecone.ts                   ANN query + upsert
-  search.ts                     Mock fallback search
-  search-agentic.ts             Real search orchestrator with graceful fallback
-  email.ts                      Resend: sendBriefToHotel, sendCustomerMessageToHotel, notifyCustomerOfReply
-  listing.ts                    Listings orchestration: create, fetch, postMessage
-
-data/
-  hotels.ts                     12 seed hotels with hidden amenity metadata
-
-supabase/
-  schema.sql                    Part 3 base schema
-  migration_part4a.sql          Part 4a upgrade (run after schema.sql)
-
-scripts/
-  seed-pinecone.ts              One-shot seed for Pinecone vibe index
-
-Setup docs:
-  PART3_SETUP.md                Supabase + Resend walkthrough
-  PART4A_SETUP.md               Google OAuth + migration walkthrough
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ```
 
----
+In Vercel, set the same values under Project -> Settings -> Environment Variables (tick Production, Preview, Development on each).
 
-## Local development
+Then **redeploy** (Deployments -> latest -> Redeploy, untick Build Cache).
 
-```cmd
+## One-time DB setup
+
+After running the two SQL files in Supabase, run these grants to make NextAuth work:
+
+```sql
+-- Expose the next_auth schema to PostgREST (also do this via dashboard:
+-- Project Settings -> Data API -> Exposed schemas -> add next_auth)
+
+-- Create the next_auth schema tables NextAuth expects
+CREATE SCHEMA IF NOT EXISTS next_auth;
+GRANT USAGE ON SCHEMA next_auth TO service_role, authenticated, anon;
+
+CREATE TABLE IF NOT EXISTS next_auth.users (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  name text,
+  email text,
+  "emailVerified" timestamp with time zone,
+  image text,
+  PRIMARY KEY (id),
+  UNIQUE (email)
+);
+
+CREATE TABLE IF NOT EXISTS next_auth.sessions (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  expires timestamp with time zone NOT NULL,
+  "sessionToken" text NOT NULL,
+  "userId" uuid REFERENCES next_auth.users(id) ON DELETE CASCADE,
+  PRIMARY KEY (id),
+  UNIQUE ("sessionToken")
+);
+
+CREATE TABLE IF NOT EXISTS next_auth.accounts (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  type text NOT NULL,
+  provider text NOT NULL,
+  "providerAccountId" text NOT NULL,
+  refresh_token text,
+  access_token text,
+  expires_at bigint,
+  token_type text,
+  scope text,
+  id_token text,
+  session_state text,
+  oauth_token_secret text,
+  oauth_token text,
+  "userId" uuid REFERENCES next_auth.users(id) ON DELETE CASCADE,
+  PRIMARY KEY (id),
+  UNIQUE (provider, "providerAccountId")
+);
+
+CREATE TABLE IF NOT EXISTS next_auth.verification_tokens (
+  identifier text,
+  token text NOT NULL,
+  expires timestamp with time zone NOT NULL,
+  PRIMARY KEY (token),
+  UNIQUE (token, identifier)
+);
+
+GRANT ALL ON ALL TABLES IN SCHEMA next_auth TO anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA next_auth TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA next_auth GRANT ALL ON TABLES TO anon, authenticated, service_role;
+
+-- Public tables written via service_role only
+ALTER TABLE public.listings DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.listing_routings DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.messages DISABLE ROW LEVEL SECURITY;
+
+GRANT ALL ON public.listings TO service_role;
+GRANT ALL ON public.listing_routings TO service_role;
+GRANT ALL ON public.messages TO service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO service_role;
+
+-- Point listings.user_id FK at next_auth.users (where NextAuth writes users)
+ALTER TABLE public.listings DROP CONSTRAINT IF EXISTS listings_user_id_fkey;
+ALTER TABLE public.listings
+  ADD CONSTRAINT listings_user_id_fkey
+  FOREIGN KEY (user_id) REFERENCES next_auth.users(id) ON DELETE SET NULL;
+
+NOTIFY pgrst, 'reload config';
+```
+
+## Listing statuses
+
+Update the `status` column in Supabase Table Editor as you work through a brief:
+
+| Status | Meaning | What the user sees |
+|---|---|---|
+| `received` | New brief, not yet worked | "We\'ve got your brief. Expect a reply within 24 hours." |
+| `working` | Team is reaching out to hotels | "The team is reaching out to hotels that fit." |
+| `quotes_sent` | You\'ve emailed them quotes | "Check your inbox. We\'ve emailed you the quotes." |
+| `closed` | Archived | "This listing is archived." |
+
+## Dev
+
+```bash
 npm install
 npm run dev
 ```
 
-Visit http://localhost:3000.
+## Deploy
 
-For auth to work locally, you need to:
-1. Add `http://localhost:3000/api/auth/callback/google` as an Authorised Redirect URI in Google Cloud Console.
-2. Set `NEXTAUTH_URL=http://localhost:3000` in `.env.local`.
-
-Without the env vars, the site still runs — just with mock search and no auth.
-
----
-
-## Design system
-
-- Fonts: Fraunces (display serif) + Inter Tight (body) + JetBrains Mono (tabular)
-- Palette: Paper `#F7F3EC` / Ink `#1A1613` / Terracotta `#B8522D` / Sage `#6B7A5C`
-- `trailingSlash: true` everywhere
-- Editorial layout, generous whitespace, no urgency theatre
-
----
-
-## What's next (Part 4b)
-
-SEO programmatic pages:
-- `/hotels/` — all hotels index
-- `/[city]/` — city landing pages
-- `/[city]/hotels-with-[tag]/` — hidden-tag programmatic pages
-
-Not yet built. Ask for "Part 4b" when ready.
+Push to GitHub. Vercel auto-deploys. Redeploy manually after any env var change (Deployments -> latest -> Redeploy, untick Build Cache).

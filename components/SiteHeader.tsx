@@ -17,7 +17,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-ink-700">
-          <Link href="/dashboard/new/" className="link-underline">Plan a stay</Link>
+          <Link href="/plan/" className="link-underline">Plan a stay</Link>
           <Link href="/about/" className="link-underline">How it works</Link>
           <Link href="/for-hotels/" className="link-underline">For hotels</Link>
         </nav>
@@ -29,7 +29,7 @@ export function SiteHeader() {
 
           {/* Mobile: primary CTA + menu */}
           <Link
-            href="/dashboard/new/"
+            href="/plan/"
             className="md:hidden inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink-900 text-paper-50 text-xs"
           >
             Plan a stay
@@ -49,7 +49,7 @@ export function SiteHeader() {
       {mobileOpen && (
         <div className="md:hidden border-t border-ink-900/10 bg-paper-50">
           <nav className="container-edge py-4 flex flex-col gap-1">
-            <Link href="/dashboard/new/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Plan a stay</Link>
+            <Link href="/plan/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Plan a stay</Link>
             <Link href="/about/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">How it works</Link>
             <Link href="/for-hotels/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">For hotels</Link>
             <div className="pt-3 mt-2 border-t border-ink-900/10">

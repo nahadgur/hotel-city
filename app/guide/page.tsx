@@ -124,6 +124,78 @@ export default function GuidePage() {
       <div className="hairline" />
 
       <section className="container-edge py-12 md:py-16">
+        <div className="eyebrow mb-8">Explore by theme</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 max-w-5xl">
+          <Link
+            href="/guide/afternoon-tea/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl">Afternoon tea</h3>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              The hotels where the meal is still taken seriously.
+            </p>
+          </Link>
+
+          <Link
+            href="/guide/michelin-starred-hotels/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl">Michelin-starred</h3>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              Hotels where the restaurant is the reason to book.
+            </p>
+          </Link>
+
+          <Link
+            href="/guide/dog-friendly-hotels/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl">Dog-friendly</h3>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              Hotels that actively want your dog.
+            </p>
+          </Link>
+
+          <Link
+            href="/guide/historic-hotels/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl">Historic hotels</h3>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              Grade I and II* listed buildings where the architecture is the draw.
+            </p>
+          </Link>
+
+          <Link
+            href="/guide/small-luxury-hotels/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="font-display text-xl">Small luxury</h3>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              Boutique properties under 50 rooms where scale is the point.
+            </p>
+          </Link>
+        </div>
+      </section>
+
+      <div className="hairline" />
+
+      <section className="container-edge py-12 md:py-16">
         <div className="max-w-reading">
           <div className="eyebrow mb-5">Start here</div>
           <p className="text-ink-700 leading-relaxed mb-6">

@@ -19,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/guide/bath-oxford-and-country', priority: 0.85 },
     { path: '/guide/rate-parity', priority: 0.7 },
     { path: '/guide/private-rates', priority: 0.7 },
+    { path: '/guide/afternoon-tea', priority: 0.8 },
+    { path: '/guide/michelin-starred-hotels', priority: 0.8 },
+    { path: '/guide/dog-friendly-hotels', priority: 0.8 },
+    { path: '/guide/historic-hotels', priority: 0.8 },
+    { path: '/guide/small-luxury-hotels', priority: 0.8 },
     { path: '/about', priority: 0.8 },
     { path: '/for-hotels', priority: 0.8 },
   ]

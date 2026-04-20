@@ -20,6 +20,13 @@ const HOTEL_NAMES: Record<string, string> = {
   'chiltern-firehouse-london': 'Chiltern Firehouse, London',
   'the-beaumont-london': 'The Beaumont, London',
   'rosewood-london': 'Rosewood London',
+  '45-park-lane-london': '45 Park Lane, London',
+  'mandarin-oriental-hyde-park-london': 'Mandarin Oriental Hyde Park, London',
+  'soho-farmhouse-cotswolds': 'Soho Farmhouse, Cotswolds',
+  'thyme-cotswolds': 'Thyme, Cotswolds',
+  'the-lygon-arms-cotswolds': 'The Lygon Arms, Cotswolds',
+  'barnsley-house-cotswolds': 'Barnsley House, Cotswolds',
+  'the-wild-rabbit-cotswolds': 'The Wild Rabbit, Cotswolds',
 }
 
 const EXAMPLES = [

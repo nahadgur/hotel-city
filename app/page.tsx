@@ -42,8 +42,12 @@ export default function HomePage() {
             {/* VIDEO COLUMN */}
             <div className="col-span-12 lg:col-span-6 xl:col-span-7 animate-fade-in" style={{ animationDelay: '200ms' }}>
               <figure className="relative overflow-hidden bg-ink-100 aspect-[4/3] md:aspect-[16/10]">
+                {/* Video crops a strip off the bottom-right so the watermark never enters the frame.
+                    Scale + translate pushes the source further than the container, then object-cover
+                    crops the excess. This is the belt; the figcaption bar below is the braces. */}
                 <video
                   className="absolute inset-0 w-full h-full object-cover"
+                  style={{ transform: 'scale(1.04) translate(-0.5%, -1%)', transformOrigin: 'center center' }}
                   src="/hero.mp4"
                   autoPlay
                   muted
@@ -54,25 +58,45 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
 
-                {/* Bottom gradient: improves caption legibility and masks the watermark corner */}
+                {/* Bottom ink bar: solid caption shelf, full width, sits under the video.
+                    Serves as design element (editorial caption strip) and masks the watermark region. */}
+                <div className="absolute inset-x-0 bottom-0 pointer-events-none">
+                  <div
+                    className="h-16 md:h-20"
+                    style={{
+                      background:
+                        'linear-gradient(to top, rgba(20, 18, 15, 1) 0%, rgba(20, 18, 15, 0.92) 55%, rgba(20, 18, 15, 0) 100%)',
+                    }}
+                  />
+                </div>
+
+                {/* Top gradient: subtle, anchors the top caption */}
                 <div
-                  className="absolute inset-x-0 bottom-0 h-24 md:h-32 pointer-events-none"
+                  className="absolute inset-x-0 top-0 h-20 pointer-events-none"
                   style={{
                     background:
-                      'linear-gradient(to top, rgba(20, 18, 15, 0.75) 0%, rgba(20, 18, 15, 0.35) 45%, rgba(20, 18, 15, 0) 100%)',
+                      'linear-gradient(to bottom, rgba(20, 18, 15, 0.5) 0%, rgba(20, 18, 15, 0) 100%)',
                   }}
                 />
 
-                {/* Editorial caption sitting over the watermark corner */}
-                <figcaption className="absolute bottom-4 right-4 md:bottom-5 md:right-6 flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90">
-                  <span className="inline-block w-8 md:w-12 h-px bg-paper-50/50" />
-                  <span>A suite in the pilot</span>
+                {/* Bottom caption, full-width row, small caps. Sits on the solid bar. */}
+                <figcaption className="absolute inset-x-0 bottom-0 pointer-events-none">
+                  <div className="flex items-center justify-between gap-4 px-4 md:px-6 pb-4 md:pb-5 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90">
+                    <div className="flex items-center gap-3">
+                      <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
+                      <span>Stayward pilot, 2026</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span>A suite in the pilot</span>
+                      <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
+                    </div>
+                  </div>
                 </figcaption>
 
-                {/* Left-side caption, anchors the image editorially */}
-                <figcaption className="absolute top-4 left-4 md:top-5 md:left-6 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90 flex items-center gap-3">
+                {/* Top-left caption */}
+                <figcaption className="absolute top-4 left-4 md:top-5 md:left-6 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90 flex items-center gap-3 pointer-events-none">
                   <span>Golden hour, sea-facing</span>
-                  <span className="inline-block w-8 md:w-12 h-px bg-paper-50/50" />
+                  <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
                 </figcaption>
               </figure>
             </div>

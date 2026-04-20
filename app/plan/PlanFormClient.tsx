@@ -18,6 +18,8 @@ const HOTEL_NAMES: Record<string, string> = {
   'the-berkeley-london': 'The Berkeley, London',
   'the-ned-london': 'The Ned, London',
   'chiltern-firehouse-london': 'Chiltern Firehouse, London',
+  'the-beaumont-london': 'The Beaumont, London',
+  'rosewood-london': 'Rosewood London',
 }
 
 const EXAMPLES = [

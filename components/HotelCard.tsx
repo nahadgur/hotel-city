@@ -28,10 +28,10 @@ export function HotelCard({ hotel, match }: { hotel: Hotel; match?: MatchResult 
           <div>
             <div className="flex items-baseline justify-between gap-4 mb-1">
               <div className="eyebrow text-ink-500">
-                {hotel.city} \u00B7 {hotel.neighbourhood}
+                {hotel.city} · {hotel.neighbourhood}
               </div>
               <div className="text-xs text-ink-500 tabular">
-                {'\u2605'.repeat(hotel.stars)}
+                {'★'.repeat(hotel.stars)}
               </div>
             </div>
 
@@ -47,7 +47,7 @@ export function HotelCard({ hotel, match }: { hotel: Hotel; match?: MatchResult 
               <div className="mb-5 space-y-1.5">
                 {match.matchReasons.map((r) => (
                   <div key={r} className="flex items-start gap-2 text-sm text-ink-700">
-                    <span className="text-terracotta-500 mt-0.5">\u2014</span>
+                    <span className="text-terracotta-500 mt-0.5">–</span>
                     <span>{r}</span>
                   </div>
                 ))}
@@ -67,7 +67,7 @@ export function HotelCard({ hotel, match }: { hotel: Hotel; match?: MatchResult 
             <div>
               <div className="text-xs text-ink-500 mb-1">All-in, per night</div>
               <div className="font-display text-2xl tabular">
-                \u00A3{hotel.priceFrom}
+                £{hotel.priceFrom}
               </div>
             </div>
             <div className="flex items-center gap-2 text-sm text-ink-700 group-hover:text-terracotta-500 transition-colors">

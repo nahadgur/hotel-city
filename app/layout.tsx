@@ -6,12 +6,12 @@ import { SiteFooter } from '@/components/SiteFooter'
 export const metadata: Metadata = {
   metadataBase: new URL('https://stayward.vercel.app'),
   title: {
-    default: 'Stayward \u2014 Hotels, found properly.',
-    template: '%s \u2014 Stayward',
+    default: 'Stayward – Hotels, found properly.',
+    template: '%s – Stayward',
   },
   description: 'Search boutique hotels the way you\'d describe them to a friend. No dark patterns, no surprise taxes, no fake urgency.',
   openGraph: {
-    title: 'Stayward \u2014 Hotels, found properly.',
+    title: 'Stayward – Hotels, found properly.',
     description: 'Search boutique hotels the way you\'d describe them to a friend.',
     type: 'website',
     siteName: 'Stayward',

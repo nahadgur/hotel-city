@@ -4,7 +4,7 @@ export default function Loading() {
       <div className="max-w-reading">
         <div className="eyebrow eyebrow-rule mb-6 text-ink-500">Reading your request</div>
         <div className="font-display text-display-md text-ink-300 animate-pulse">
-          Searching\u2026
+          Searching…
         </div>
       </div>
     </section>

@@ -21,7 +21,7 @@ export default function ForHotelsPage() {
               of your room revenue.
             </h1>
             <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10">
-              Flat monthly fee instead of 15\u201325% commission. Direct relationships with the
+              Flat monthly fee instead of 15–25% commission. Direct relationships with the
               guests who booked. A listing that looks like your hotel, not a catalogue entry.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -44,27 +44,27 @@ export default function ForHotelsPage() {
             <div className="col-span-12 md:col-span-5">
               <div className="eyebrow text-paper-300 mb-3">The maths</div>
               <h2 className="font-display text-display-md">
-                You\u2019re losing roughly{' '}
+                You're losing roughly{' '}
                 <span className="italic text-terracotta-400">a room a week</span>{' '}
                 to Booking.com.
               </h2>
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading">
               <p className="text-lg text-paper-200 leading-relaxed mb-8">
-                A 20-room boutique at \u00A3200/night, 70% occupancy, 60% booked via OTAs at 18%
-                commission, loses roughly \u00A3110,000 a year in commission alone. That\u2019s nine
-                rooms of revenue, handed to an intermediary, for every year you\u2019re open.
+                A 20-room boutique at £200/night, 70% occupancy, 60% booked via OTAs at 18%
+                commission, loses roughly £110,000 a year in commission alone. That's nine
+                rooms of revenue, handed to an intermediary, for every year you're open.
               </p>
 
               <div className="border-t border-paper-50/15 pt-8 space-y-4">
                 {[
                   ['Rooms', '20'],
-                  ['ADR', '\u00A3200'],
+                  ['ADR', '£200'],
                   ['Occupancy', '70%'],
                   ['Via OTAs', '60% of bookings'],
                   ['OTA commission', '18% (blended)'],
-                  ['Annual commission lost', '\u00A3110,376'],
-                  ['On Stayward instead (flat fee)', '\u00A34,788/year'],
+                  ['Annual commission lost', '£110,376'],
+                  ['On Stayward instead (flat fee)', '£4,788/year'],
                 ].map(([k, v], i) => (
                   <div
                     key={k}
@@ -99,7 +99,7 @@ export default function ForHotelsPage() {
             {[
               {
                 name: 'Atelier',
-                price: '\u00A3199',
+                price: '£199',
                 period: 'per month',
                 desc: 'Up to 10 rooms. Best for small guesthouses and townhouses.',
                 features: [
@@ -113,7 +113,7 @@ export default function ForHotelsPage() {
               },
               {
                 name: 'Maison',
-                price: '\u00A3399',
+                price: '£399',
                 period: 'per month',
                 desc: 'Up to 50 rooms. Our typical boutique hotel fit.',
                 features: [
@@ -128,7 +128,7 @@ export default function ForHotelsPage() {
               },
               {
                 name: 'Maison+',
-                price: '\u00A3799',
+                price: '£799',
                 period: 'per month',
                 desc: '50+ rooms. Small chains and premium properties.',
                 features: [
@@ -203,13 +203,13 @@ export default function ForHotelsPage() {
               <div className="eyebrow mb-5 text-ink-500">Booking.com</div>
               <ul className="space-y-4">
                 {[
-                  '15\u201325% commission per booking',
+                  '15–25% commission per booking',
                   'No direct relationship with guest',
                   'Email address routed through them',
                   'Price-parity clauses constrain you',
                   'Listing sits among 27,000 others',
-                  'Sponsored-first sort \u2014 you pay to appear',
-                  '\u201C5 people are looking!\u201D pressure on your room',
+                  'Sponsored-first sort – you pay to appear',
+                  '"5 people are looking!" pressure on your room',
                 ].map((s) => (
                   <li key={s} className="flex items-start gap-3 text-ink-700">
                     <X className="w-4 h-4 mt-0.5 shrink-0 text-terracotta-500" strokeWidth={1.5} />
@@ -250,8 +250,8 @@ export default function ForHotelsPage() {
               We onboard slowly, on purpose.
             </h2>
             <p className="text-ink-700 leading-relaxed mb-8">
-              We\u2019re not trying to hit 100,000 hotels. We\u2019re looking for boutique and
-              independent properties that take the detail seriously. We\u2019ll visit yours
+              We're not trying to hit 100,000 hotels. We're looking for boutique and
+              independent properties that take the detail seriously. We'll visit yours
               before you go live.
             </p>
             <button className="btn-primary">

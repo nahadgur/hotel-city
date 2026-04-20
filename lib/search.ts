@@ -12,7 +12,7 @@ const CITY_ALIASES: Record<string, string> = {
   lisboa: 'Lisbon',
   kyoto: 'Kyoto',
   copenhagen: 'Copenhagen',
-  k\u00F8benhavn: 'Copenhagen',
+  københavn: 'Copenhagen',
   'new york': 'New York',
   nyc: 'New York',
   brooklyn: 'New York',
@@ -65,9 +65,9 @@ export function parseQuery(rawQuery: string): ParsedQuery {
     }
   }
 
-  // Price detection: "under \u00A3300", "below 250", "budget 200"
+  // Price detection: "under £300", "below 250", "budget 200"
   let maxPriceGbp: number | undefined
-  const priceMatch = q.match(/(?:under|below|less than|budget|around|max)\s*\u00A3?\s*(\d{2,4})/i)
+  const priceMatch = q.match(/(?:under|below|less than|budget|around|max)\s*£?\s*(\d{2,4})/i)
   if (priceMatch) {
     maxPriceGbp = parseInt(priceMatch[1], 10)
   }
@@ -169,7 +169,7 @@ function structuredScore(hotel: Hotel, parsed: ParsedQuery): { score: number; re
     pass = false
   } else if (parsed.maxPriceGbp) {
     score += 0.2
-    reasons.push(`From \u00A3${hotel.priceFrom} (under \u00A3${parsed.maxPriceGbp})`)
+    reasons.push(`From £${hotel.priceFrom} (under £${parsed.maxPriceGbp})`)
   }
 
   // Soft match: amenities
@@ -180,7 +180,7 @@ function structuredScore(hotel: Hotel, parsed: ParsedQuery): { score: number; re
       score += 0.25
       const amenity = hotel.amenities.find((a) => a.name.toLowerCase() === found)
       if (amenity) {
-        reasons.push(amenity.detail ? `${amenity.name} \u2014 ${amenity.detail}` : amenity.name)
+        reasons.push(amenity.detail ? `${amenity.name} – ${amenity.detail}` : amenity.name)
       }
     }
   }
@@ -233,7 +233,7 @@ export function summariseIntent(parsed: ParsedQuery): string {
   if (parsed.city) parts.push(`in ${parsed.city}`)
   if (parsed.workMode === 'deep-work') parts.push('for deep work')
   if (parsed.noisePreference === 'silent') parts.push('somewhere quiet')
-  if (parsed.maxPriceGbp) parts.push(`under \u00A3${parsed.maxPriceGbp}`)
+  if (parsed.maxPriceGbp) parts.push(`under £${parsed.maxPriceGbp}`)
   if (parsed.requiredAmenities.length > 0) {
     const list = parsed.requiredAmenities.slice(0, 3).join(', ')
     parts.push(`with ${list}`)

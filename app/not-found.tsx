@@ -6,10 +6,10 @@ export default function NotFound() {
       <div className="max-w-reading">
         <div className="eyebrow eyebrow-rule mb-8">Not found</div>
         <h1 className="font-display text-display-lg mb-6">
-          That page doesn\u2019t exist.
+          That page doesn't exist.
         </h1>
         <p className="font-display italic text-xl text-ink-700 mb-10">
-          Or it did, and we retired it. Either way, you\u2019re here now.
+          Or it did, and we retired it. Either way, you're here now.
         </p>
         <Link href="/" className="btn-primary">
           Start again

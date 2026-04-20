@@ -7,7 +7,7 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 const PLACEHOLDERS = [
   'a quiet room in Paris with a deep soaking tub and fast Wi-Fi for a 3-day work sprint',
   'somewhere on an island, off-grid, for a week with my partner',
-  'a design-led loft in Copenhagen, under \u00A3300, with a canal view',
+  'a design-led loft in Copenhagen, under £300, with a canal view',
   'a silent place in Kyoto for our honeymoon, ideally with a private bath',
   'a hotel in Shoreditch where I can actually work, with a proper desk',
 ]
@@ -15,7 +15,7 @@ const PLACEHOLDERS = [
 const SUGGESTIONS = [
   'Quiet Paris, deep tub, fast wifi',
   'Off-grid Scotland, just the two of us',
-  'Design-led Copenhagen under \u00A3300',
+  'Design-led Copenhagen under £300',
   'Silent Kyoto, honeymoon',
 ]
 
@@ -69,7 +69,7 @@ export function SearchInput({ initialQuery = '', autoFocus = false }: { initialQ
           <div className="flex items-center justify-between px-5 md:px-7 pb-5">
             <div className="text-xs text-ink-500">
               <span className="hidden md:inline">Press Enter. Shift + Enter for a new line.</span>
-              <span className="md:hidden">Tell us what you\u2019re after.</span>
+              <span className="md:hidden">Tell us what you're after.</span>
             </div>
             <button
               type="submit"

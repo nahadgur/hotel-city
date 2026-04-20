@@ -28,10 +28,10 @@ export default function SearchPage({ searchParams }: Props) {
         <div className="container-edge py-10 md:py-14">
           <div className="eyebrow text-paper-300 mb-3">What we heard</div>
           <p className="font-display italic text-2xl md:text-3xl max-w-reading leading-snug">
-            \u201C{query}\u201D
+            "{query}"
           </p>
           <p className="mt-4 text-paper-200 text-sm md:text-base max-w-reading">
-            {summary}. {results.length === 0 ? 'Nothing matches yet \u2014 try broadening.' : `${results.length} ${results.length === 1 ? 'hotel matches' : 'hotels match'}.`}
+            {summary}. {results.length === 0 ? 'Nothing matches yet – try broadening.' : `${results.length} ${results.length === 1 ? 'hotel matches' : 'hotels match'}.`}
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function SearchPage({ searchParams }: Props) {
             <h2 className="font-display text-display-md mb-4">Try something less specific.</h2>
             <p className="text-ink-700 leading-relaxed">
               The request you made is narrow. Drop a constraint (the city, the price, the
-              specific amenity) and you\u2019ll see more.
+              specific amenity) and you'll see more.
             </p>
           </div>
         ) : (
@@ -81,10 +81,10 @@ function EmptyState() {
         <div className="max-w-3xl">
           <div className="eyebrow eyebrow-rule mb-8">Search</div>
           <h1 className="font-display text-display-lg mb-6">
-            Tell us what you\u2019re after.
+            Tell us what you're after.
           </h1>
           <p className="font-display italic text-xl text-ink-700 max-w-reading mb-10">
-            In a sentence. The way you\u2019d tell a friend. We read the whole thing, find
+            In a sentence. The way you'd tell a friend. We read the whole thing, find
             what fits, and tell you why we picked it.
           </p>
           <SearchInput autoFocus />

@@ -67,10 +67,10 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-12 max-w-reading">
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">01</div>
-                <h3 className="font-display text-xl mb-2">Describe it, don\u2019t filter it.</h3>
+                <h3 className="font-display text-xl mb-2">Describe it, don't filter it.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Type \u201Cquiet Paris, deep tub, fast wifi\u201D the way you\u2019d tell a friend.
-                  We understand the sentence. You don\u2019t click fourteen boxes.
+                  Type "quiet Paris, deep tub, fast wifi" the way you'd tell a friend.
+                  We understand the sentence. You don't click fourteen boxes.
                 </p>
               </div>
 
@@ -133,7 +133,7 @@ export default function HomePage() {
                   {hotel.name}
                 </h3>
                 <p className="text-sm text-ink-600 italic">{hotel.tagline}</p>
-                <div className="mt-3 text-sm tabular">From \u00A3{hotel.priceFrom} / night, all-in</div>
+                <div className="mt-3 text-sm tabular">From £{hotel.priceFrom} / night, all-in</div>
               </Link>
             ))}
           </div>
@@ -155,27 +155,27 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-5">
               <div className="eyebrow mb-4">Honest comparison</div>
               <h2 className="font-display text-display-md">
-                We don\u2019t try to trick you into booking.
+                We don't try to trick you into booking.
               </h2>
               <p className="mt-5 text-ink-700 max-w-reading leading-relaxed">
-                Here\u2019s exactly what you won\u2019t find on this site.
+                Here's exactly what you won't find on this site.
               </p>
             </div>
 
             <div className="col-span-12 md:col-span-7 md:col-start-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
                 {[
-                  ['\u201C5 people are looking now\u201D', 'counters'],
-                  ['\u201COnly 1 room left!\u201D', 'scarcity banners'],
+                  ['"5 people are looking now"', 'counters'],
+                  ['"Only 1 room left!"', 'scarcity banners'],
                   ['Price reveals at checkout', 'surprise taxes'],
                   ['Pre-ticked insurance', 'upsells by default'],
                   ['Forced account creation', 'to see a price'],
                   ['Fake countdown timers', 'urgency games'],
                   ['Hidden fees', 'cleaning, resort, service'],
-                  ['Sponsored-first sort', 'masquerading as \u201Cbest match\u201D'],
+                  ['Sponsored-first sort', 'masquerading as "best match"'],
                 ].map(([thing, what]) => (
                   <div key={thing} className="py-3 hairline flex items-start gap-3">
-                    <span className="text-terracotta-500 mt-1 tabular text-xs">\u2715</span>
+                    <span className="text-terracotta-500 mt-1 tabular text-xs">×</span>
                     <div>
                       <div className="text-ink-900">{thing}</div>
                       <div className="text-sm text-ink-500">{what}</div>
@@ -200,7 +200,7 @@ export default function HomePage() {
                 {' '}of your revenue.
               </h2>
               <p className="mt-6 text-paper-200 max-w-reading leading-relaxed text-lg">
-                Flat monthly fee instead of a 15\u201325% commission. Direct relationships with
+                Flat monthly fee instead of a 15–25% commission. Direct relationships with
                 your guests. A listing that actually looks like your hotel.
               </p>
             </div>

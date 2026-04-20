@@ -20,8 +20,8 @@ export default function AboutPage() {
           </h1>
           <p className="font-display italic text-xl md:text-2xl text-ink-700 leading-snug max-w-reading">
             Hotel booking sites have grown so hostile to the person actually booking
-            that using one feels like negotiating with a cornered animal. We don\u2019t
-            want to build that. So we haven\u2019t.
+            that using one feels like negotiating with a cornered animal. We don't
+            want to build that. So we haven't.
           </p>
         </div>
       </section>
@@ -40,7 +40,7 @@ export default function AboutPage() {
               {
                 n: '01',
                 t: 'Describe it.',
-                d: '\u201CQuiet Paris, deep soaking tub, fast wifi, for a 3-day work sprint.\u201D The sentence is the query. You don\u2019t click filters.',
+                d: '"Quiet Paris, deep soaking tub, fast wifi, for a 3-day work sprint." The sentence is the query. You don\'t click filters.',
               },
               {
                 n: '02',
@@ -50,7 +50,7 @@ export default function AboutPage() {
               {
                 n: '03',
                 t: 'Book without the theatre.',
-                d: 'All-in price on the card. Reserve in three taps. No pre-ticked upsells, no account required to see the price, no \u201COnly 1 room left!\u201D',
+                d: 'All-in price on the card. Reserve in three taps. No pre-ticked upsells, no account required to see the price, no "Only 1 room left!"',
               },
             ].map((s) => (
               <div key={s.n}>
@@ -82,7 +82,7 @@ export default function AboutPage() {
               </p>
               <p className="text-ink-700 leading-relaxed mb-6">
                 It works because we hold the booking until check-in. Every six hours we re-check
-                the current rate for your room. If it\u2019s lower, the delta goes straight to
+                the current rate for your room. If it's lower, the delta goes straight to
                 your Stayward account as a credit, ready for your next booking.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-10 text-sm">
@@ -91,8 +91,8 @@ export default function AboutPage() {
                   <div className="text-ink-600">Re-check cadence</div>
                 </div>
                 <div>
-                  <div className="font-display text-2xl tabular text-terracotta-500 mb-1">\u00A310</div>
-                  <div className="text-ink-600">Minimum credit \u2014 avoids noise</div>
+                  <div className="font-display text-2xl tabular text-terracotta-500 mb-1">£10</div>
+                  <div className="text-ink-600">Minimum credit – avoids noise</div>
                 </div>
                 <div>
                   <div className="font-display text-2xl tabular text-terracotta-500 mb-1">Auto</div>
@@ -109,7 +109,7 @@ export default function AboutPage() {
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
             <div className="col-span-12 md:col-span-5">
-              <div className="eyebrow text-paper-300 mb-3">\u00A349 per year</div>
+              <div className="eyebrow text-paper-300 mb-3">£49 per year</div>
               <h2 className="font-display text-display-md">
                 Insider{' '}
                 <span className="italic text-terracotta-400">membership</span>.
@@ -117,19 +117,19 @@ export default function AboutPage() {
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading">
               <p className="text-lg text-paper-200 leading-relaxed mb-8">
-                A private rate card, a first look at new hotels before they\u2019re public, and
-                priority on the rooms every boutique holds back. \u00A349 a year. The first booking
+                A private rate card, a first look at new hotels before they're public, and
+                priority on the rooms every boutique holds back. £49 a year. The first booking
                 usually pays for it.
               </p>
               <ul className="space-y-4">
                 {[
-                  ['Private rate card', 'Rates that bypass the public listing, often 8\u201315% lower on direct.'],
+                  ['Private rate card', 'Rates that bypass the public listing, often 8–15% lower on direct.'],
                   ['Early access inventory', 'Rooms hotels hold back specifically for us. First look is yours.'],
                   ['Silent upgrades', 'Where an upgrade is available at check-in, you get it. Same price.'],
                   ['Transferable credits', 'Refer a friend. Both of you get a credit on your next stay.'],
                 ].map(([t, d]) => (
                   <li key={t} className="py-4 border-t border-paper-50/15 flex gap-5">
-                    <span className="text-terracotta-400 tabular text-xs mt-1.5">\u25CF</span>
+                    <span className="text-terracotta-400 tabular text-xs mt-1.5">●</span>
                     <div>
                       <div className="font-display text-xl mb-1">{t}</div>
                       <div className="text-paper-200 text-sm leading-relaxed">{d}</div>
@@ -143,7 +143,7 @@ export default function AboutPage() {
                   <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
                 </button>
                 <div className="mt-3 text-xs text-paper-300">
-                  Coming at launch. We\u2019ll let you know.
+                  Coming at launch. We'll let you know.
                 </div>
               </div>
             </div>
@@ -163,8 +163,8 @@ export default function AboutPage() {
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
               <p>
-                \u201CFast Wi-Fi\u201D is not a specification. Neither is \u201Csoaking tub.\u201D
-                Neither is \u201Cquiet room.\u201D All three of those phrases have decided an entire
+                "Fast Wi-Fi" is not a specification. Neither is "soaking tub."
+                Neither is "quiet room." All three of those phrases have decided an entire
                 stay against somebody who booked in good faith.
               </p>
               <p>
@@ -179,7 +179,7 @@ export default function AboutPage() {
               </p>
               <div>
                 <Link href="/search/" className="link-underline text-ink-900">
-                  Search with it \u2192
+                  Search with it →
                 </Link>
               </div>
             </div>

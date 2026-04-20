@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: `${hotel.name}, ${hotel.city}`,
     description: `${hotel.tagline} ${hotel.signatureDetail}`,
     openGraph: {
-      title: `${hotel.name} \u2014 ${hotel.city}`,
+      title: `${hotel.name} – ${hotel.city}`,
       description: hotel.tagline,
       images: [hotel.heroImage],
     },
@@ -50,7 +50,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
     .filter((h) => h.slug !== hotel.slug && (h.country === hotel.country || h.atmosphere.some((t) => hotel.atmosphere.includes(t))))
     .slice(0, 3)
 
-  // JSON-LD \u2014 Hotel type, no fake aggregateRating
+  // JSON-LD – Hotel type, no fake aggregateRating
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Hotel',
@@ -68,7 +68,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
       longitude: hotel.coordinates.lng,
     },
     starRating: { '@type': 'Rating', ratingValue: hotel.stars },
-    priceRange: `\u00A3${hotel.priceFrom}\u2013\u00A3${hotel.priceFrom * 2}`,
+    priceRange: `£${hotel.priceFrom}–£${hotel.priceFrom * 2}`,
     image: [hotel.heroImage, ...hotel.gallery],
   }
 
@@ -80,7 +80,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
       <section className="container-edge pt-6 md:pt-10 pb-8">
         <div className="mb-6">
           <Link href="/search/" className="text-xs text-ink-500 link-underline">
-            \u2190 All hotels
+            ← All hotels
           </Link>
         </div>
 
@@ -100,7 +100,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
               <div key={src} className="relative aspect-[4/3] overflow-hidden bg-ink-100">
                 <Image
                   src={src}
-                  alt={`${hotel.name} \u2014 ${i + 1}`}
+                  alt={`${hotel.name} – ${i + 1}`}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover"
@@ -113,7 +113,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
         <div className="grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 md:col-span-8">
             <div className="eyebrow text-ink-500 mb-3">
-              {hotel.city} \u00B7 {hotel.neighbourhood} \u00B7 {hotel.country}
+              {hotel.city} · {hotel.neighbourhood} · {hotel.country}
             </div>
             <h1 className="font-display text-display-lg mb-4">{hotel.name}</h1>
             <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-8">
@@ -151,11 +151,11 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
               <div className="flex items-baseline justify-between mb-1">
                 <div className="eyebrow text-ink-500">From</div>
                 <div className="text-xs text-ink-500 tabular">
-                  {'\u2605'.repeat(hotel.stars)}
+                  {'★'.repeat(hotel.stars)}
                 </div>
               </div>
               <div className="font-display text-5xl tabular mb-1">
-                \u00A3{hotel.priceFrom}
+                £{hotel.priceFrom}
               </div>
               <div className="text-xs text-ink-500 mb-6">
                 Per night, all-in. Taxes included.
@@ -165,11 +165,11 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <div className="text-xs text-ink-500 mb-1">Check in</div>
-                    <div className="tabular">\u2014</div>
+                    <div className="tabular">–</div>
                   </div>
                   <div>
                     <div className="text-xs text-ink-500 mb-1">Check out</div>
-                    <div className="tabular">\u2014</div>
+                    <div className="tabular">–</div>
                   </div>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
               <div className="pt-4 hairline space-y-3 text-xs text-ink-600">
                 <div className="flex items-start gap-2">
                   <ShieldCheck className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
-                  <span>Price Drop Protection included \u2014 we credit you if the rate falls.</span>
+                  <span>Price Drop Protection included – we credit you if the rate falls.</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
@@ -192,14 +192,14 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
             </div>
 
             <div className="mt-6 text-xs text-ink-500">
-              <div className="mb-1">{hotel.rooms} rooms \u00B7 Opened {hotel.yearOpened ?? ''}</div>
-              <div className="italic">Work-friendliness: {hotel.workFriendliness}/5 \u00B7 Noise: {hotel.noiseLevel}</div>
+              <div className="mb-1">{hotel.rooms} rooms · Opened {hotel.yearOpened ?? ''}</div>
+              <div className="italic">Work-friendliness: {hotel.workFriendliness}/5 · Noise: {hotel.noiseLevel}</div>
             </div>
           </aside>
         </div>
       </section>
 
-      {/* AMENITIES \u2014 THE DETAIL EXPEDIA IGNORES */}
+      {/* AMENITIES – THE DETAIL EXPEDIA IGNORES */}
       <section className="bg-paper-50 mt-12">
         <div className="hairline" />
         <div className="container-edge py-section">
@@ -264,7 +264,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
           <div className="col-span-12 md:col-span-7 space-y-2">
             {hotel.bestFor.map((b) => (
               <div key={b} className="py-3 hairline flex items-center gap-3">
-                <span className="text-terracotta-500 tabular text-xs">\u2014</span>
+                <span className="text-terracotta-500 tabular text-xs">–</span>
                 <span className="font-display text-xl capitalize">{b}</span>
               </div>
             ))}

@@ -94,11 +94,11 @@ export const hotels: Hotel[] = [
   },
   {
     slug: 'casa-do-pateo',
-    name: 'Casa do P\u00E1teo',
-    tagline: 'A restored townhouse in Prin\u00E7\u00EDpe Real.',
+    name: 'Casa do Páteo',
+    tagline: 'A restored townhouse in Prinçípe Real.',
     city: 'Lisbon',
     country: 'Portugal',
-    neighbourhood: 'Prin\u00E7\u00EDpe Real',
+    neighbourhood: 'Prinçípe Real',
     coordinates: { lat: 38.7174, lng: -9.1478 },
     heroImage: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=80',
     gallery: [
@@ -116,11 +116,11 @@ export const hotels: Hotel[] = [
     workFriendliness: 4,
     noiseLevel: 'low',
     bestFor: ['sabbatical weeks', 'couples', 'early risers', 'swimmers'],
-    signatureDetail: 'The courtyard pool is heated to 26\u00B0C year-round.',
+    signatureDetail: 'The courtyard pool is heated to 26°C year-round.',
     rawDescription:
-      'Prin\u00E7\u00EDpe Real is the district Lisbon locals keep for themselves. Plane trees, second-hand bookshops, the best natural wine bar in the city. The house sits on a quiet street five minutes from everything.',
+      'Prinçípe Real is the district Lisbon locals keep for themselves. Plane trees, second-hand bookshops, the best natural wine bar in the city. The house sits on a quiet street five minutes from everything.',
     amenities: [
-      { name: 'Heated courtyard pool (26\u00B0C)', category: 'service', verified: true },
+      { name: 'Heated courtyard pool (26°C)', category: 'service', verified: true },
       { name: 'Breakfast until noon', category: 'food', verified: true },
       { name: 'Wifi speed 150Mbps', category: 'work', verified: true },
       { name: 'Desk, full-size', category: 'work', verified: true },
@@ -179,7 +179,7 @@ export const hotels: Hotel[] = [
   },
   {
     slug: 'hotel-sankt-annae',
-    name: 'Hotel Sankt Ann\u00E6',
+    name: 'Hotel Sankt Annæ',
     tagline: 'Harbourside minimalism in Christianshavn.',
     city: 'Copenhagen',
     country: 'Denmark',

@@ -10,7 +10,7 @@ export function SiteFooter() {
             <div className="font-display text-2xl mb-4">Stayward</div>
             <p className="text-sm text-ink-600 leading-relaxed">
               Hotels, found properly. No dark patterns, no surprise taxes, no fake urgency.
-              Search the way you\u2019d describe it to a friend.
+              Search the way you'd describe it to a friend.
             </p>
           </div>
 

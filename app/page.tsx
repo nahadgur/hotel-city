@@ -11,20 +11,20 @@ export default function HomePage() {
             {/* TEXT COLUMN */}
             <div className="col-span-12 lg:col-span-6 xl:col-span-5">
               <div className="eyebrow eyebrow-rule mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '80ms' }}>
-                A different way to book a hotel
+                A concierge for direct hotel quotes
               </div>
 
               <h1 className="font-display text-display-xl mb-8 animate-fade-up" style={{ animationDelay: '120ms' }}>
                 Describe your stay.{' '}
-                <span className="italic text-terracotta-500">Hotels quote you direct</span>.
+                <span className="italic text-terracotta-500">We find it</span>.
               </h1>
 
               <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10 animate-fade-up" style={{ animationDelay: '260ms' }}>
-                Not a search engine. Not a booking site. You write a brief. We route it to five hotels that fit. They email you a private rate, below what Booking.com can show.
+                A small team in London, reading every brief by hand. We reach out to hotels that fit, then email you quotes within 24 hours. No search engine. No booking site. No bots.
               </p>
 
               <div className="flex flex-wrap items-center gap-5 animate-fade-up" style={{ animationDelay: '400ms' }}>
-                <Link href="/dashboard/new/" className="btn-primary">
+                <Link href="/plan/" className="btn-primary">
                   <Sparkles className="w-4 h-4" strokeWidth={1.5} />
                   <span>Plan a stay</span>
                   <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
@@ -35,16 +35,13 @@ export default function HomePage() {
               </div>
 
               <p className="mt-8 text-sm text-ink-500 italic max-w-reading animate-fade-up" style={{ animationDelay: '520ms' }}>
-                Free. Takes about a minute. Your email stays private until you accept a quote.
+                Free. No login required. A real person replies within 24 hours.
               </p>
             </div>
 
             {/* VIDEO COLUMN */}
             <div className="col-span-12 lg:col-span-6 xl:col-span-7 animate-fade-in" style={{ animationDelay: '200ms' }}>
               <figure className="relative overflow-hidden bg-ink-100 aspect-[4/3] md:aspect-[16/10]">
-                {/* Video crops a strip off the bottom-right so the watermark never enters the frame.
-                    Scale + translate pushes the source further than the container, then object-cover
-                    crops the excess. This is the belt; the figcaption bar below is the braces. */}
                 <video
                   className="absolute inset-0 w-full h-full object-cover"
                   style={{ transform: 'scale(1.04) translate(-0.5%, -1%)', transformOrigin: 'center center' }}
@@ -58,8 +55,6 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
 
-                {/* Bottom ink bar: solid caption shelf, full width, sits under the video.
-                    Serves as design element (editorial caption strip) and masks the watermark region. */}
                 <div className="absolute inset-x-0 bottom-0 pointer-events-none">
                   <div
                     className="h-16 md:h-20"
@@ -70,7 +65,6 @@ export default function HomePage() {
                   />
                 </div>
 
-                {/* Top gradient: subtle, anchors the top caption */}
                 <div
                   className="absolute inset-x-0 top-0 h-20 pointer-events-none"
                   style={{
@@ -79,21 +73,19 @@ export default function HomePage() {
                   }}
                 />
 
-                {/* Bottom caption, full-width row, small caps. Sits on the solid bar. */}
                 <figcaption className="absolute inset-x-0 bottom-0 pointer-events-none">
                   <div className="flex items-center justify-between gap-4 px-4 md:px-6 pb-4 md:pb-5 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90">
                     <div className="flex items-center gap-3">
                       <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
-                      <span>Stayward pilot, 2026</span>
+                      <span>Stayward, London</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span>A suite in the pilot</span>
+                      <span>A stay from our network</span>
                       <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
                     </div>
                   </div>
                 </figcaption>
 
-                {/* Top-left caption */}
                 <figcaption className="absolute top-4 left-4 md:top-5 md:left-6 text-[10px] md:text-xs uppercase tracking-[0.18em] text-paper-50/90 flex items-center gap-3 pointer-events-none">
                   <span>Golden hour, sea-facing</span>
                   <span className="inline-block w-6 md:w-10 h-px bg-paper-50/40" />
@@ -109,26 +101,26 @@ export default function HomePage() {
         <div className="container-edge py-14 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
             <div>
-              <div className="font-display text-5xl md:text-6xl mb-3 tabular">5</div>
+              <div className="font-display text-5xl md:text-6xl mb-3 tabular">24h</div>
               <div className="text-sm text-paper-200 leading-relaxed">
-                hotels quote within four hours, on average. One brief, five replies.
+                a reply in your inbox, from a real person. Not a ticket number, not an auto-responder.
               </div>
             </div>
             <div>
               <div className="font-display text-5xl md:text-6xl mb-3 tabular">0</div>
               <div className="text-sm text-paper-200 leading-relaxed">
-                public prices on Stayward. Rates are private, sent directly to you, always below the OTA.
+                public prices. Quotes are private, negotiated for your specific stay, usually below the OTA.
               </div>
             </div>
             <div>
-              <div className="font-display text-5xl md:text-6xl mb-3 tabular">12</div>
+              <div className="font-display text-5xl md:text-6xl mb-3 tabular">\u00a30</div>
               <div className="text-sm text-paper-200 leading-relaxed">
-                independent hotels in the pilot. We're adding more by invitation only.
+                for travellers, always. We don\'t take a cut from you. Hotels pay us when a booking is made.
               </div>
             </div>
           </div>
           <p className="mt-10 text-xs text-paper-400 italic">
-            Pre-launch pilot figures. Not fabricated reviews, not inflated numbers.
+            Early access. A small team, replying personally to every brief.
           </p>
         </div>
       </section>
@@ -141,7 +133,7 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-4">
               <div className="eyebrow mb-4">How it works</div>
               <h2 className="font-display text-display-md max-w-reading">
-                One brief. Five quotes. Your inbox, not a sales funnel.
+                A brief in. Quotes back. Nothing in between.
               </h2>
             </div>
 
@@ -150,31 +142,31 @@ export default function HomePage() {
                 <div className="font-display text-3xl text-terracotta-500 mb-3">01</div>
                 <h3 className="font-display text-xl mb-2">Describe it.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  In your own words. "Quiet Paris, deep tub, fast wifi, three nights for a work sprint." The way you'd tell a friend. Add dates and a rough budget if you have them.
+                  In your own words. &ldquo;Quiet Paris, deep tub, fast wifi, three nights for a work sprint.&rdquo; The way you\'d tell a friend. Add dates and a rough budget if you have them.
                 </p>
               </div>
 
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">02</div>
-                <h3 className="font-display text-xl mb-2">We route it to five hotels.</h3>
+                <h3 className="font-display text-xl mb-2">We read it, personally.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Our matching engine picks the five in our pilot that fit. We email your brief to each one. Your contact details stay private.
+                  Someone on our team in London reads the whole thing. No parsing, no keywords, no routing algorithm. Just a person thinking about where might actually fit.
                 </p>
               </div>
 
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">03</div>
-                <h3 className="font-display text-xl mb-2">They quote you direct.</h3>
+                <h3 className="font-display text-xl mb-2">We ask the hotels.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Quotes land in your Stayward inbox, usually within hours. Often well below the Booking.com rate, because hotels can offer direct quotes they're not allowed to publish publicly.
+                  We reach out to a handful of places that fit, directly, on your behalf. They quote us private rates, the kind they can\'t publish publicly.
                 </p>
               </div>
 
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">04</div>
-                <h3 className="font-display text-xl mb-2">You pick one.</h3>
+                <h3 className="font-display text-xl mb-2">You get an email.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Compare replies side by side. Accept the one that works. We step out of the way, the hotel handles the booking directly.
+                  Within 24 hours. Side-by-side quotes, short, plain. Pick one and we introduce you to the hotel directly. We step out. You book with them, not us.
                 </p>
               </div>
             </div>
@@ -182,109 +174,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STAY STORIES */}
-      <section className="relative bg-paper-50">
-        <div className="hairline" />
-        <div className="container-edge py-section">
-          <div className="mb-14 max-w-3xl">
-            <div className="eyebrow mb-3">Stay stories</div>
-            <h2 className="font-display text-display-md">
-              What briefs look like, and what comes back.
-            </h2>
-            <p className="mt-5 text-ink-700 leading-relaxed max-w-reading">
-              Example briefs, not testimonials. Use them as a feel for how specific you can be, and what shape the replies take.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            <article className="border-l-2 border-terracotta-500 pl-6 md:pl-8">
-              <div className="eyebrow mb-3 text-ink-500">Example brief, 01</div>
-              <h3 className="font-display text-2xl mb-4 leading-tight">
-                A quiet Paris work retreat.
-              </h3>
-              <p className="text-ink-700 leading-relaxed mb-4">
-                <em>"Deep tub, fast wifi, three nights mid-week, under \u00a3300. Somewhere I can actually think."</em>
-              </p>
-              <div className="text-sm text-ink-600 space-y-1.5">
-                <div>4 quotes back within 6 hours.</div>
-                <div>Picked \u00a3280 per night, Left Bank.</div>
-                <div>Same room on Booking.com: \u00a3340.</div>
-              </div>
-            </article>
-
-            <article className="border-l-2 border-terracotta-500 pl-6 md:pl-8">
-              <div className="eyebrow mb-3 text-ink-500">Example brief, 02</div>
-              <h3 className="font-display text-2xl mb-4 leading-tight">
-                Anniversary weekend, Rome.
-              </h3>
-              <p className="text-ink-700 leading-relaxed mb-4">
-                <em>"Two nights, near Trastevere. Rooftop or terrace would be nice. Up to \u00a3450 a night, not a chain."</em>
-              </p>
-              <div className="text-sm text-ink-600 space-y-1.5">
-                <div>5 quotes back within 8 hours.</div>
-                <div>Two offered a free upgrade.</div>
-                <div>Chose the one that included breakfast.</div>
-              </div>
-            </article>
-
-            <article className="border-l-2 border-terracotta-500 pl-6 md:pl-8">
-              <div className="eyebrow mb-3 text-ink-500">Example brief, 03</div>
-              <h3 className="font-display text-2xl mb-4 leading-tight">
-                London, two rooms, family visit.
-              </h3>
-              <p className="text-ink-700 leading-relaxed mb-4">
-                <em>"Two connecting rooms or a suite. Central-ish, good breakfast. Weekend in May, four nights."</em>
-              </p>
-              <div className="text-sm text-ink-600 space-y-1.5">
-                <div>3 quotes back within 12 hours.</div>
-                <div>Hotels asked clarifying questions direct.</div>
-                <div>Saved roughly 18% on the public rate.</div>
-              </div>
-            </article>
-          </div>
-
-          <p className="mt-10 text-xs text-ink-500 italic">
-            Illustrative. Pilot programme figures. Your results depend on dates, city and how specific your brief is.
-          </p>
-        </div>
-      </section>
-
       {/* THE LOOPHOLE */}
-      <section className="relative">
+      <section className="relative bg-paper-50">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
             <div className="col-span-12 md:col-span-5">
               <div className="eyebrow mb-4">Why it works</div>
               <h2 className="font-display text-display-md">
-                Hotels can quote you a rate they{' '}
-                <span className="italic text-terracotta-500">can't publish</span>.
+                Hotels can quote you rates they{' '}
+                <span className="italic text-terracotta-500">can\'t publish</span>.
               </h2>
             </div>
 
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
               <p>
-                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every booking, and then require rate parity. No cheaper rate can appear on any public website. It's why every site looks identical.
+                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every stay, and then require rate parity. No cheaper rate can appear on any public website. That\'s why every site looks identical.
               </p>
               <p>
-                That parity only applies to <em>public</em> rates. A private quote sent directly to a specific traveller, by email, is expressly allowed under every major parity clause. It's the loophole hotels have always used for returning guests and referrals.
+                That parity only applies to <em>public</em> rates. A private quote, negotiated directly for a specific traveller, is expressly allowed under every major parity clause. Hotels have always used this for returning guests, referrals, and concierge relationships.
               </p>
               <p className="font-display italic text-xl text-ink-900">
-                Stayward industrialises that. You write the brief, hotels quote you direct, you save. Nothing public, nothing searchable, nothing the OTA can see.
+                Stayward is the concierge relationship, made available to anyone who asks. Nothing public, nothing searchable, nothing the OTA can see.
               </p>
-              <div className="pt-4">
-                <Link href="/about/" className="btn-ghost">
-                  <span>Read the long version</span>
-                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-                </Link>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="relative bg-paper-50">
+      <section className="relative">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
@@ -298,28 +217,28 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-7 md:col-start-6">
               <div className="divide-y divide-ink-900/10">
                 <FaqItem
+                  q="Do I need to sign up?"
+                  a="No. Just send us a brief from the plan page and we\'ll email you. Signing in with Google is optional, it lets you keep a tidy history of past briefs in one place."
+                />
+                <FaqItem
                   q="Is this legal per OTA parity clauses?"
-                  a="Yes. Every major parity clause (Booking, Expedia, Agoda) explicitly carves out private, unpublished quotes sent directly to an individual traveller. The rate that lands in your inbox is not on any public website. It cannot be, by the terms of the clause itself. That's the mechanism."
+                  a="Yes. Every major parity clause explicitly carves out private, unpublished quotes sent directly to an individual traveller. The quote that lands in your inbox was never on a public website, and cannot be. That\'s the mechanism."
                 />
                 <FaqItem
                   q="Do I pay Stayward anything?"
-                  a="No. Travellers never pay us. Hotels pay a flat monthly fee to receive briefs, much lower than the 15 to 25 per cent they'd lose to an OTA. Our incentives stay aligned with yours: we only keep hotels on the platform if their quotes are genuinely competitive."
+                  a="No. Travellers never pay us. Hotels pay a small introduction fee if a booking goes through, which is still much less than the 15 to 25 per cent they\'d lose to an OTA. Our incentives stay aligned with yours."
                 />
                 <FaqItem
-                  q="How fast are quotes?"
-                  a="In the pilot, most quotes arrive within four to twelve hours. Hotels know briefs are time-sensitive and treat them as warm inbound leads. If nothing arrives in 24 hours, we'll tell you and either widen the search or refund any hold."
+                  q="How fast will I hear back?"
+                  a="Within 24 hours during business hours, often much faster. We\'re a small team, and every brief gets read and replied to by a person. No auto-responses."
                 />
                 <FaqItem
-                  q="What if no hotel quotes?"
-                  a="It happens, especially for unusually tight dates or very niche briefs. If fewer than two hotels reply within 24 hours, we let you know and offer to re-route to a different set, or to broaden the criteria. You're not locked in."
-                />
-                <FaqItem
-                  q="How do I know the rate is actually better?"
-                  a="Check Booking.com yourself before accepting. If the direct quote isn't below the public rate on equivalent terms, don't take it, book the OTA. We're comfortable with that test because it's the whole point of the product."
+                  q="What if nothing fits my brief?"
+                  a="We\'ll still reply, honestly. Sometimes a brief is too specific for the hotels we work with, or the dates are too tight. We\'ll tell you, and often suggest a tweak that would open up better options."
                 />
                 <FaqItem
                   q="What happens after I pick a quote?"
-                  a="You accept the quote in your Stayward inbox. We introduce you to the hotel directly. They take the booking, payment, any special requests. Stayward steps out. The relationship from that point is between you and the hotel."
+                  a="Reply to our email telling us which one you want. We introduce you to the hotel directly by email. They take the booking, payment, any special requests. From there, Stayward steps out."
                 />
               </div>
             </div>
@@ -327,30 +246,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOR HOTELS */}
+      {/* BOTTOM CTA */}
       <section className="relative bg-ink-900 text-paper-50">
         <div className="container-edge py-section">
-          <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
-            <div className="col-span-12 md:col-span-8">
-              <div className="eyebrow text-paper-300 mb-4">For hotels</div>
-              <h2 className="font-display text-display-lg">
-                Warm leads.{' '}
-                <span className="italic text-terracotta-400">Zero</span>
-                {' '}commission.
-              </h2>
-              <p className="mt-6 text-paper-200 max-w-reading leading-relaxed text-lg">
-                Travellers describe what they want. We route matching briefs to you. You quote them whatever rate makes sense, direct, flexible, yours. No parity conflict, no OTA cut, no listing among 27,000 others.
-              </p>
-            </div>
-            <div className="col-span-12 md:col-span-4">
-              <Link
-                href="/for-hotels/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50"
-              >
-                <span>How the hotel side works</span>
-                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-              </Link>
-            </div>
+          <div className="max-w-3xl">
+            <div className="eyebrow text-paper-300 mb-4">Start a brief</div>
+            <h2 className="font-display text-display-lg mb-6">
+              Describe where you want to be.{' '}
+              <span className="italic text-terracotta-400">We\'ll take it from there</span>.
+            </h2>
+            <p className="text-paper-200 leading-relaxed max-w-reading mb-10 text-lg">
+              Takes a minute. No login, no commitment, no marketing emails. Just a brief in, quotes back.
+            </p>
+            <Link
+              href="/plan/"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50"
+            >
+              <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+              <span>Plan a stay</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </Link>
           </div>
         </div>
       </section>

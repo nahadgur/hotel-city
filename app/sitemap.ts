@@ -1,27 +1,20 @@
 import type { MetadataRoute } from 'next'
-import { hotels } from '@/data/hotels'
 
-const SITE = 'https://stayward.vercel.app'
+const SITE = 'https://hotel-city-khaki.vercel.app'
 const LAST_MOD = '2026-04-20'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
-    '',
-    '/about',
-    '/for-hotels',
-  ].map((path) => ({
+    { path: '', priority: 1 },
+    { path: '/plan', priority: 0.9 },
+    { path: '/about', priority: 0.8 },
+    { path: '/for-hotels', priority: 0.8 },
+  ]
+
+  return staticRoutes.map(({ path, priority }) => ({
     url: `${SITE}${path}/`,
     lastModified: LAST_MOD,
     changeFrequency: 'weekly' as const,
-    priority: path === '' ? 1 : 0.8,
+    priority,
   }))
-
-  const hotelRoutes = hotels.map((h) => ({
-    url: `${SITE}/hotels/${h.slug}/`,
-    lastModified: LAST_MOD,
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
-
-  return [...staticRoutes, ...hotelRoutes]
 }

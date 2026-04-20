@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { requireUser } from '@/lib/session'
-import { fetchUserListings } from '@/lib/listing'
-import { ArrowRight, Sparkles, Clock, Check } from 'lucide-react'
+import { fetchUserListings, statusLabel, statusHelp, type ListingStatus } from '@/lib/listing'
+import { ArrowRight, Sparkles, Clock, Check, Mail, Archive } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Your briefs',
   robots: { index: false, follow: false },
 }
 
@@ -20,15 +20,15 @@ export default async function DashboardPage() {
       <section className="container-edge pt-10 md:pt-16 pb-8">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-2">
           <div>
-            <div className="eyebrow eyebrow-rule mb-6">Dashboard</div>
+            <div className="eyebrow eyebrow-rule mb-6">Your briefs</div>
             <h1 className="font-display text-display-lg">
               Hello, {user.name?.split(' ')[0] || 'you'}.
             </h1>
           </div>
 
-          <Link href="/dashboard/new/" className="btn-primary">
+          <Link href="/plan/" className="btn-primary">
             <Sparkles className="w-4 h-4" strokeWidth={1.5} />
-            <span>New listing</span>
+            <span>New brief</span>
             <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
           </Link>
         </div>
@@ -37,24 +37,23 @@ export default async function DashboardPage() {
       <section className="container-edge pb-section">
         {listings.length === 0 ? (
           <div className="max-w-reading py-10">
-            <div className="eyebrow mb-3 text-ink-500">No listings yet</div>
+            <div className="eyebrow mb-3 text-ink-500">No briefs yet</div>
             <h2 className="font-display text-display-md mb-4">
-              Start your first listing.
+              Send us your first one.
             </h2>
             <p className="text-ink-700 leading-relaxed mb-8 max-w-reading">
-              Describe the hotel you want. We'll route it to five matching hotels,
-              and they'll quote you direct. Usually well below the public rate.
+              Describe the stay you want. A real person on our team will read it and reply within 24 hours with quotes from hotels that fit.
             </p>
-            <Link href="/dashboard/new/" className="btn-primary">
+            <Link href="/plan/" className="btn-primary">
               <Sparkles className="w-4 h-4" strokeWidth={1.5} />
-              <span>Create a listing</span>
+              <span>Start a brief</span>
               <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
             </Link>
           </div>
         ) : (
           <div>
             <div className="eyebrow mb-6 text-ink-500">
-              {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
+              {listings.length} {listings.length === 1 ? 'brief' : 'briefs'}
             </div>
             <div className="space-y-3">
               {listings.map((listing) => (
@@ -65,8 +64,8 @@ export default async function DashboardPage() {
                 >
                   <div className="p-5 md:p-6 grid grid-cols-12 gap-4 items-start">
                     <div className="col-span-12 md:col-span-7">
-                      <div className="flex flex-wrap items-baseline gap-3 mb-1">
-                        <ListingStatusPill status={listing.status} />
+                      <div className="flex flex-wrap items-baseline gap-3 mb-2">
+                        <StatusPill status={listing.status} />
                         {listing.city && (
                           <div className="eyebrow text-ink-500">{listing.city}</div>
                         )}
@@ -78,7 +77,7 @@ export default async function DashboardPage() {
                         {listing.title || truncate(listing.raw_query, 80)}
                       </h3>
                       <p className="mt-2 text-sm text-ink-700 italic line-clamp-2 max-w-reading">
-                        "{listing.raw_query}"
+                        &ldquo;{listing.raw_query}&rdquo;
                       </p>
                     </div>
 
@@ -87,14 +86,14 @@ export default async function DashboardPage() {
                         <div className="md:text-right">
                           <div className="eyebrow text-ink-500 mb-0.5">Dates</div>
                           <div className="tabular">
-                            {formatDate(listing.check_in)} – {formatDate(listing.check_out)}
+                            {formatDate(listing.check_in)} &ndash; {formatDate(listing.check_out)}
                           </div>
                         </div>
                       )}
                       {listing.max_price_gbp && (
                         <div className="md:text-right">
                           <div className="eyebrow text-ink-500 mb-0.5">Max / night</div>
-                          <div className="tabular">£{listing.max_price_gbp}</div>
+                          <div className="tabular">\u00a3{listing.max_price_gbp}</div>
                         </div>
                       )}
                     </div>
@@ -109,27 +108,38 @@ export default async function DashboardPage() {
   )
 }
 
-function ListingStatusPill({ status }: { status: string }) {
-  if (status === 'quotes_ready') {
+function StatusPill({ status }: { status: ListingStatus | string }) {
+  const s = status as ListingStatus
+  const label = statusLabel(s)
+
+  if (s === 'quotes_sent') {
     return (
       <div className="inline-flex items-center gap-1.5 text-xs px-2 py-0.5 bg-terracotta-500/10 text-terracotta-600 border border-terracotta-500/30">
-        <Sparkles className="w-3 h-3" strokeWidth={1.5} />
-        <span>Quotes in</span>
+        <Mail className="w-3 h-3" strokeWidth={1.5} />
+        <span>{label}</span>
       </div>
     )
   }
-  if (status === 'booked') {
+  if (s === 'working') {
     return (
       <div className="inline-flex items-center gap-1.5 text-xs px-2 py-0.5 bg-sage-500/10 text-sage-600 border border-sage-500/30">
-        <Check className="w-3 h-3" strokeWidth={1.5} />
-        <span>Booked</span>
+        <Sparkles className="w-3 h-3" strokeWidth={1.5} />
+        <span>{label}</span>
+      </div>
+    )
+  }
+  if (s === 'closed') {
+    return (
+      <div className="inline-flex items-center gap-1.5 text-xs px-2 py-0.5 border border-ink-900/15 text-ink-500">
+        <Archive className="w-3 h-3" strokeWidth={1.5} />
+        <span>{label}</span>
       </div>
     )
   }
   return (
     <div className="inline-flex items-center gap-1.5 text-xs px-2 py-0.5 border border-ink-900/15 text-ink-500">
       <Clock className="w-3 h-3" strokeWidth={1.5} />
-      <span>Routing</span>
+      <span>{label}</span>
     </div>
   )
 }
@@ -159,5 +169,5 @@ function formatRelative(iso: string): string {
 }
 
 function truncate(s: string, n: number): string {
-  return s.length > n ? s.slice(0, n - 1).trim() + '…' : s
+  return s.length > n ? s.slice(0, n - 1).trim() + '\u2026' : s
 }

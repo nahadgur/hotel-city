@@ -47,6 +47,13 @@ const HOTEL_NAMES: Record<string, string> = {
   'middlethorpe-hall-yorkshire': 'Middlethorpe Hall, York',
   'grantley-hall-yorkshire': 'Grantley Hall, Yorkshire',
   'swinton-park-yorkshire': 'Swinton Park, Yorkshire',
+  'the-royal-crescent-bath': 'The Royal Crescent Hotel & Spa, Bath',
+  'macdonald-bath-spa-other': 'Macdonald Bath Spa Hotel, Bath',
+  'the-randolph-oxford': 'The Randolph Hotel, Oxford',
+  'old-parsonage-oxford': 'Old Parsonage Hotel, Oxford',
+  'chewton-glen-other': 'Chewton Glen, New Forest',
+  'hartwell-house-other': 'Hartwell House, Buckinghamshire',
+  'le-manoir-aux-quat-saisons-other': "Le Manoir aux Quat'Saisons, Oxfordshire",
 }
 
 const EXAMPLES = [

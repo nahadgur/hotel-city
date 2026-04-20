@@ -105,6 +105,19 @@ export default function GuidePage() {
               Grantley Hall, Swinton Park, Middlethorpe Hall, The Star at Harome.
             </p>
           </Link>
+
+          <Link
+            href="/guide/bath-oxford-and-country/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h2 className="font-display text-2xl">Bath, Oxford and country</h2>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+            </div>
+            <p className="text-sm text-ink-700 italic">
+              The Royal Crescent, The Randolph, Old Parsonage, Chewton Glen, Hartwell House, Le Manoir.
+            </p>
+          </Link>
         </div>
       </section>
 

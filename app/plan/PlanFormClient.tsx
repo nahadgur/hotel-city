@@ -27,6 +27,13 @@ const HOTEL_NAMES: Record<string, string> = {
   'the-lygon-arms-cotswolds': 'The Lygon Arms, Cotswolds',
   'barnsley-house-cotswolds': 'Barnsley House, Cotswolds',
   'the-wild-rabbit-cotswolds': 'The Wild Rabbit, Cotswolds',
+  'dormy-house-cotswolds': 'Dormy House, Cotswolds',
+  'the-slaughters-manor-house-cotswolds': 'The Slaughters Manor House, Cotswolds',
+  'gleneagles-scotland': 'Gleneagles, Perthshire',
+  'the-fife-arms-scotland': 'The Fife Arms, Braemar',
+  'the-balmoral-scotland': 'The Balmoral, Edinburgh',
+  'cromlix-scotland': 'Cromlix, Perthshire',
+  'inverlochy-castle-scotland': 'Inverlochy Castle, Fort William',
 }
 
 const EXAMPLES = [

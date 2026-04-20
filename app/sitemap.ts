@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/guide', priority: 0.9 },
     { path: '/guide/london', priority: 0.85 },
     { path: '/guide/cotswolds', priority: 0.85 },
+    { path: '/guide/scotland', priority: 0.85 },
     { path: '/guide/rate-parity', priority: 0.7 },
     { path: '/guide/private-rates', priority: 0.7 },
     { path: '/about', priority: 0.8 },

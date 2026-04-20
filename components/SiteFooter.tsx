@@ -9,7 +9,7 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-2 max-w-reading">
             <div className="font-display text-2xl mb-4">Stayward</div>
             <p className="text-sm text-ink-600 leading-relaxed">
-              A different way to book a hotel. You describe the stay, five hotels quote you direct, no OTA in the middle. No public prices, no dark patterns, no surprise taxes.
+              A concierge for direct hotel quotes. You describe the stay, a real person replies with private rates within 24 hours. No bots, no OTA in the middle, no public prices.
             </p>
           </div>
 
@@ -18,7 +18,6 @@ export function SiteFooter() {
             <ul className="space-y-2.5 text-sm text-ink-700">
               <li><Link href="/plan/" className="link-underline">Plan a stay</Link></li>
               <li><Link href="/about/" className="link-underline">How it works</Link></li>
-              <li><Link href="/dashboard/" className="link-underline">My listings</Link></li>
             </ul>
           </div>
 
@@ -26,8 +25,6 @@ export function SiteFooter() {
             <div className="eyebrow mb-4">Hotels</div>
             <ul className="space-y-2.5 text-sm text-ink-700">
               <li><Link href="/for-hotels/" className="link-underline">Join the pilot</Link></li>
-              <li><Link href="/for-hotels/#pricing" className="link-underline">Pricing</Link></li>
-              <li><Link href="/for-hotels/#vs-ota" className="link-underline">vs Booking.com</Link></li>
             </ul>
           </div>
         </div>

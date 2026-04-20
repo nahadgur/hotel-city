@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
-import { AuthProvider } from '@/components/AuthProvider'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://stayward.vercel.app'),
   title: {
-    default: 'Stayward – Direct hotel quotes, below the public rate.',
-    template: '%s – Stayward',
+    default: 'Stayward \u2013 A concierge for direct hotel quotes.',
+    template: '%s \u2013 Stayward',
   },
-  description: 'Describe what you want. Hotels quote you direct by email. Often below the public rate, because direct quotes sit outside OTA parity.',
+  description:
+    'Describe the stay you want. A small team in London replies with direct hotel quotes by email within 24 hours. Usually below what you\'d find on Booking.com.',
   openGraph: {
-    title: 'Stayward – Direct hotel quotes, below the public rate.',
-    description: 'Describe what you want. Hotels quote you direct.',
+    title: 'Stayward \u2013 A concierge for direct hotel quotes.',
+    description: 'Describe your stay. A real person replies with quotes within 24 hours.',
     type: 'website',
     siteName: 'Stayward',
   },
@@ -32,11 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen flex flex-col">
-        <AuthProvider>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-        </AuthProvider>
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   )

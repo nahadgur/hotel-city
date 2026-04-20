@@ -12,13 +12,7 @@ const EXAMPLES = [
   'A silent place in Kyoto for our honeymoon, ideally with a private bath.',
 ]
 
-type Props = {
-  initialEmail?: string | null
-  initialName?: string | null
-  signedIn: boolean
-}
-
-export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
+export function PlanFormClient() {
   const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +20,8 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
 
   const [form, setForm] = useState({
     rawQuery: '',
-    email: initialEmail || '',
+    name: '',
+    email: '',
     city: '',
     checkIn: '',
     checkOut: '',
@@ -56,6 +51,7 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           rawQuery: form.rawQuery,
+          name: form.name || undefined,
           email: form.email || undefined,
           city: form.city || undefined,
           checkIn: form.checkIn || undefined,
@@ -74,12 +70,12 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
         return
       }
 
-      // Stash the brief in sessionStorage so the confirmation page can echo it
       try {
         sessionStorage.setItem(
           'stayward:last-brief',
           JSON.stringify({
             rawQuery: form.rawQuery,
+            name: form.name,
             email: form.email,
             city: form.city,
             checkIn: form.checkIn,
@@ -90,15 +86,10 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
           })
         )
       } catch {
-        // sessionStorage blocked in private mode, fine
+        // sessionStorage blocked, fine
       }
 
-      // If signed in and we got a listing id, send them to the listing page
-      if (data.listingId && data.signedIn) {
-        router.push(`/dashboard/listings/${data.listingId}/`)
-      } else {
-        router.push('/plan/received/')
-      }
+      router.push('/plan/received/')
     } catch {
       setError('Network error. Please try again.')
       setSubmitting(false)
@@ -109,7 +100,7 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
     <form onSubmit={submit} className="max-w-3xl">
       <div className="mb-10">
         <label htmlFor="rawQuery" className="eyebrow mb-3 block">
-          What you're looking for
+          What you\'re looking for
         </label>
         <div className="relative border border-ink-900/15 bg-paper-50 focus-within:border-ink-900 transition-colors">
           <div className="flex items-start gap-4 p-5 md:p-6">
@@ -144,7 +135,21 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-10">
-        <div className="md:col-span-2">
+        <div>
+          <label htmlFor="name" className="eyebrow mb-2 block">
+            Your name <span className="text-ink-400 normal-case tracking-normal">(optional)</span>
+          </label>
+          <input
+            id="name"
+            type="text"
+            value={form.name}
+            onChange={(e) => update('name', e.target.value)}
+            placeholder="First name is fine"
+            className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base"
+          />
+        </div>
+
+        <div>
           <label htmlFor="email" className="eyebrow mb-2 block">
             Your email
           </label>
@@ -155,14 +160,8 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
             value={form.email}
             onChange={(e) => update('email', e.target.value)}
             placeholder="you@domain.com"
-            disabled={signedIn && !!initialEmail}
-            className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base disabled:opacity-70"
+            className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base"
           />
-          {signedIn && initialEmail && (
-            <p className="mt-2 text-xs text-ink-500 italic">
-              Using the email on your account. {initialName ? `Hi ${initialName.split(' ')[0]}.` : ''}
-            </p>
-          )}
         </div>
 
         <div className="md:col-span-2">
@@ -256,7 +255,7 @@ export function PlanFormClient({ initialEmail, initialName, signedIn }: Props) {
         </button>
 
         <p className="text-xs text-ink-500 italic max-w-xs">
-          We'll read it and reply with quotes within 24 hours.
+          We\'ll read it and reply with quotes within 24 hours.
         </p>
       </div>
     </form>

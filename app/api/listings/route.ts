@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createListing, type ListingInput } from '@/lib/listing'
-import { getSessionUser } from '@/lib/session'
 import { hasPlanWebhook } from '@/lib/env'
 
 export const runtime = 'nodejs'
@@ -31,12 +30,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Email is always required so we have somewhere to reply.
-  // For logged-in users, prefer their session email unless they overrode it.
-  const user = await getSessionUser()
-  const bodyEmail = String(body.email || '').trim().toLowerCase()
-  const email = bodyEmail || user?.email?.toLowerCase() || ''
-
+  const email = String(body.email || '').trim().toLowerCase()
   if (!email || !EMAIL_RE.test(email)) {
     return NextResponse.json(
       { error: 'A valid email address is required so we can reply with quotes.' },
@@ -44,14 +38,15 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  const name = String(body.name || '').trim()
+
   const toInt = (v: unknown): number | undefined => {
     const n = typeof v === 'number' ? v : parseInt(String(v), 10)
     return Number.isFinite(n) && n > 0 ? n : undefined
   }
 
   const input: ListingInput = {
-    userId: user?.id ?? null,
-    userName: user?.name ?? null,
+    name: name || null,
     email,
     rawQuery,
     city: body.city ? String(body.city).trim() || undefined : undefined,
@@ -68,9 +63,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: result.error }, { status: 500 })
   }
 
-  return NextResponse.json({
-    ok: true,
-    listingId: result.listingId,
-    signedIn: Boolean(user),
-  })
+  return NextResponse.json({ ok: true })
 }

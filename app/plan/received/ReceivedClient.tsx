@@ -107,7 +107,7 @@ export function ReceivedClient() {
           <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
         </Link>
         <p className="text-xs text-ink-500 italic">
-          Want to track this and future briefs in one place? <Link href="/login/" className="link-underline">Sign in with Google</Link>.
+          Keep an eye on your inbox. If you don\'t hear back within 24 hours, drop us a line at hello@stayward.co.
         </p>
       </div>
     </div>

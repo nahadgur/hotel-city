@@ -217,8 +217,8 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-7 md:col-start-6">
               <div className="divide-y divide-ink-900/10">
                 <FaqItem
-                  q="Do I need to sign up?"
-                  a="No. Just send us a brief from the plan page and we\'ll email you. Signing in with Google is optional, it lets you keep a tidy history of past briefs in one place."
+                  q="Do I need an account?"
+                  a="No account, no login, nothing to set up. Send us a brief from the plan page and we\'ll email you within 24 hours."
                 />
                 <FaqItem
                   q="Is this legal per OTA parity clauses?"

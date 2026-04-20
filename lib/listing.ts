@@ -114,19 +114,38 @@ export async function createListing(input: ListingInput): Promise<CreateListingR
     searchResult = { ...searchMock(input.rawQuery), usedAgentic: false }
   }
 
-  const topMatches = searchResult.results
-    .filter((r) => {
+  const allResults = searchResult.results
+
+  // First pass: apply both user filters (city + budget) as hard constraints
+  const strictMatches = allResults.filter((r) => {
+    if (input.city && r.hotel.city !== input.city) return false
+    if (input.maxPriceGbp && r.hotel.priceFrom > input.maxPriceGbp) return false
+    return true
+  })
+
+  // Second pass: if too few strict matches, relax budget but keep city
+  let pool = strictMatches
+  if (pool.length < MAX_HOTELS_TO_ROUTE && input.maxPriceGbp) {
+    pool = allResults.filter((r) => {
       if (input.city && r.hotel.city !== input.city) return false
-      if (input.maxPriceGbp && r.hotel.priceFrom > input.maxPriceGbp) return false
       return true
     })
-    .slice(0, MAX_HOTELS_TO_ROUTE)
+  }
+
+  // Third pass: if still too few, drop all filters and use the full scored set.
+  // The user gets 5 quotes regardless. Hotels that don't fit perfectly will just
+  // quote a less appealing rate or decline to quote, which is fine.
+  if (pool.length < MAX_HOTELS_TO_ROUTE) {
+    pool = allResults
+  }
+
+  const topMatches = pool.slice(0, MAX_HOTELS_TO_ROUTE)
 
   if (topMatches.length < MIN_HOTELS_TO_ROUTE) {
     return {
       ok: false,
       error:
-        'No hotels matched. Try broadening: drop the city, raise the budget, or describe more loosely.',
+        'No hotels available in the pilot right now. Please try again in a day or two.',
     }
   }
 

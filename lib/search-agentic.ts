@@ -124,11 +124,10 @@ export async function searchAgentic(
       vibeScoreBySlug.set(hit.slug, hit.score)
     }
 
-    // 5. Combine with hard filter + structured score
+    // 5. Score every hotel (no hard filter — caller applies constraints as a
+    //    soft preference with graceful fallback to ensure we always route 5)
     const scored: MatchResult[] = []
     for (const hotel of hotels) {
-      if (!passesHardFilter(hotel, parsed)) continue
-
       const vibeScore = vibeScoreBySlug.get(hotel.slug) ?? 0
       const structScore = structuredFit(hotel, parsed)
       const quality = (hotel.stars - 3) * 0.3

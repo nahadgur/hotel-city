@@ -46,7 +46,7 @@ export function PlanFormClient() {
     setSubmitting(true)
 
     try {
-      const res = await fetch('/api/listings', {
+      const res = await fetch('/api/plan/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

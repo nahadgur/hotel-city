@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { redirect } from 'next/navigation'
+import { getSessionUser } from '@/lib/session'
 import { LoginClient } from './LoginClient'
 
 export const metadata: Metadata = {
@@ -7,7 +9,22 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function LoginPage() {
+type SearchParams = { [key: string]: string | string[] | undefined }
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams?: SearchParams
+}) {
+  // If already signed in, skip the login UI and send them through
+  // to wherever they were headed. Default to /dashboard.
+  const user = await getSessionUser()
+  if (user) {
+    const nextRaw = searchParams?.next
+    const next = typeof nextRaw === 'string' && nextRaw.startsWith('/') ? nextRaw : '/dashboard'
+    redirect(next)
+  }
+
   return (
     <section className="container-edge py-section">
       <div className="max-w-md mx-auto text-center pt-10">

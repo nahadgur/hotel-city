@@ -1,16 +1,32 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ArrowRight, ShieldCheck, Mail, Sparkles, ChevronDown } from 'lucide-react'
+import { webPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'For hotels',
   description:
     'Warm, pre-qualified leads from the Stayward concierge team. No OTA commission, no parity conflict, no platform fees. You set the rate, quote when it fits, decline when it doesn\'t.',
+  alternates: { canonical: '/for-hotels/' },
 }
 
 export default function ForHotelsPage() {
+  const schemas = [
+    webPageSchema({
+      name: 'Stayward for hotels',
+      description: 'How hotels work with Stayward: warm pre-qualified leads, no OTA commission, direct relationships.',
+      url: '/for-hotels/',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'For hotels', url: '/for-hotels/' },
+    ]),
+  ]
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
+
       {/* HERO */}
       <section className="container-edge pt-12 md:pt-20 pb-16">
         <div className="max-w-3xl">

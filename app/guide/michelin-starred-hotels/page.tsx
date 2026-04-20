@@ -22,6 +22,9 @@ export default function MichelinGuide() {
         "Tasting menus at all these properties range from roughly £120 to £220 per person, with wine pairings typically adding 60 to 100 per cent on top. Booking lead times vary substantially: the three-star rooms require months of advance planning; several one-star rooms have weekday tables available within a week or two.",
       ]}
       hotelSlugs={MICHELIN_STARRED_HOTELS}
+      canonicalPath="/guide/michelin-starred-hotels/"
+      schemaName="Michelin-starred hotels in Britain"
+      schemaDescription="British hotels with Michelin-starred restaurants, profiled by star level and region."
       relatedGuides={[
         { href: '/guide/afternoon-tea/', label: 'Afternoon tea at British hotels' },
         { href: '/guide/small-luxury-hotels/', label: 'Small luxury hotels in Britain' },

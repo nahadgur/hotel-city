@@ -22,6 +22,9 @@ export default function DogFriendlyGuide() {
         "Chewton Glen, worth noting specifically, permits dogs only in the treehouses, not the main hotel; this is the most restrictive policy on this list but the treehouse setting is arguably the best-suited accommodation for a dog-accompanied stay of any British hotel.",
       ]}
       hotelSlugs={DOG_FRIENDLY_HOTELS}
+      canonicalPath="/guide/dog-friendly-hotels/"
+      schemaName="Dog-friendly luxury hotels in Britain"
+      schemaDescription="British hotels with documented dog-friendly policies, profiled by region."
       relatedGuides={[
         { href: '/guide/historic-hotels/', label: 'Historic hotels of Britain' },
         { href: '/guide/small-luxury-hotels/', label: 'Small luxury hotels in Britain' },

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { collectionPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'The guide',
@@ -9,8 +10,23 @@ export const metadata: Metadata = {
 }
 
 export default function GuidePage() {
+  const schemas = [
+    collectionPageSchema({
+      name: 'The Stayward guide',
+      description: 'Editorial guide to British hotels grouped by region and theme, plus essays on the mechanics of hotel booking.',
+      url: '/guide/',
+      numberOfItems: 14,
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Guide', url: '/guide/' },
+    ]),
+  ]
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
+
       <section className="container-edge pt-10 md:pt-16 pb-12">
         <div className="max-w-3xl">
           <div className="eyebrow eyebrow-rule mb-6">The guide</div>

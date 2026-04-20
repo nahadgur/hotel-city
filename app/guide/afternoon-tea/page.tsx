@@ -21,6 +21,9 @@ export default function AfternoonTeaGuide() {
         "Rates for afternoon tea at these properties range from roughly £55 to £120 per person for the base service, with champagne packages adding £25 to £50. Tea service is typically 90 minutes to two hours. Reservations are required at all the hotels on this list.",
       ]}
       hotelSlugs={AFTERNOON_TEA_HOTELS}
+      canonicalPath="/guide/afternoon-tea/"
+      schemaName="Afternoon tea at British hotels"
+      schemaDescription="The British hotels where afternoon tea is genuinely worth booking, profiled by region."
       relatedGuides={[
         { href: '/guide/michelin-starred-hotels/', label: 'Michelin-starred hotels in Britain' },
         { href: '/guide/historic-hotels/', label: 'Historic hotels of Britain' },

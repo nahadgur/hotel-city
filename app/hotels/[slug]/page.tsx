@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight, MapPin, Building2, Users, Utensils } from 'lucide-react'
 import { hotels, getHotel } from '@/data/hotels'
+import { hotelSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const dynamicParams = false
 
@@ -29,25 +30,31 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
     .filter((h): h is NonNullable<typeof h> => Boolean(h))
     .slice(0, 4)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Hotel',
-    name: hotel.name,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: hotel.address,
-      postalCode: hotel.postcode,
-      addressLocality: hotel.city,
-      addressCountry: 'GB',
-    },
-    url: `https://hotel-city-khaki.vercel.app/hotels/${hotel.slug}/`,
-  }
+  const regionLabel = hotel.region === 'london' ? 'London'
+    : hotel.region === 'cotswolds' ? 'Cotswolds'
+    : hotel.region === 'scotland' ? 'Scotland'
+    : hotel.region === 'lake-district' ? 'Lake District'
+    : hotel.region === 'cornwall' ? 'Cornwall'
+    : hotel.region === 'yorkshire' ? 'Yorkshire'
+    : 'Bath, Oxford and country'
+
+  const regionPath = hotel.region === 'other' ? 'bath-oxford-and-country' : hotel.region
+
+  const schemas = [
+    hotelSchema(hotel),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Hotels', url: '/hotels/' },
+      { name: regionLabel, url: `/guide/${regionPath}/` },
+      { name: hotel.name, url: `/hotels/${hotel.slug}/` },
+    ]),
+  ]
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLdScript(schemas)}
       />
 
       <section className="container-edge pt-10 md:pt-16 pb-6">

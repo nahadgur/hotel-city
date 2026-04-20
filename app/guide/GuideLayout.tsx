@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { hotels, type Hotel } from '@/data/hotels'
+import { collectionPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 type GuideLayoutProps = {
   eyebrow: string
@@ -10,6 +11,9 @@ type GuideLayoutProps = {
   hotelSlugs: string[]
   relatedGuides: { href: string; label: string }[]
   closingNote?: string
+  canonicalPath: string
+  schemaName: string
+  schemaDescription: string
 }
 
 export function GuideLayout({
@@ -20,10 +24,27 @@ export function GuideLayout({
   hotelSlugs,
   relatedGuides,
   closingNote,
+  canonicalPath,
+  schemaName,
+  schemaDescription,
 }: GuideLayoutProps) {
   const matchedHotels: Hotel[] = hotelSlugs
     .map((slug) => hotels.find((h) => h.slug === slug))
     .filter((h): h is Hotel => Boolean(h))
+
+  const schemas = [
+    collectionPageSchema({
+      name: schemaName,
+      description: schemaDescription,
+      url: canonicalPath,
+      numberOfItems: matchedHotels.length,
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Guide', url: '/guide/' },
+      { name: eyebrow, url: canonicalPath },
+    ]),
+  ]
 
   // Group by region for the card list
   const regionOrder = ['london', 'cotswolds', 'scotland', 'lake-district', 'cornwall', 'yorkshire', 'other']
@@ -47,6 +68,8 @@ export function GuideLayout({
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
+
       <section className="container-edge pt-10 md:pt-16 pb-8">
         <div className="max-w-reading">
           <div className="eyebrow eyebrow-rule mb-6">

@@ -1,9 +1,15 @@
 import Link from 'next/link'
 import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react'
+import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema'
 
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript([organizationSchema(), websiteSchema()])}
+      />
+
       {/* HERO */}
       <section className="relative overflow-hidden grain">
         <div className="container-edge pt-10 md:pt-20 pb-16 md:pb-24">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { articleSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Why every hotel site quotes you the same price',
@@ -8,8 +9,23 @@ export const metadata: Metadata = {
 }
 
 export default function RateParity() {
+  const schemas = [
+    articleSchema({
+      headline: 'Why every hotel site quotes you the same price',
+      description: "How rate parity works, why Booking.com and a hotel's own website show identical prices, and where the contractual gaps are.",
+      url: '/guide/rate-parity/',
+      datePublished: '2026-04-20',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Guide', url: '/guide/' },
+      { name: 'Rate parity', url: '/guide/rate-parity/' },
+    ]),
+  ]
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
       <section className="container-edge pt-10 md:pt-16 pb-8">
         <div className="max-w-reading">
           <div className="eyebrow eyebrow-rule mb-6">

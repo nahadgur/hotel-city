@@ -23,6 +23,9 @@ export default function SmallLuxuryGuide() {
         "When working on behalf of guests, small hotels are often more flexible on room-type upgrades and bundled inclusions than on pure rate discounts. The commercial logic: a 15-room hotel losing a single booking to a competitor is proportionally three times the revenue hit of a 45-room hotel losing the same booking, so these properties tend to negotiate carefully on base rate but more willingly on inclusions that cost them less to offer.",
       ]}
       hotelSlugs={SMALL_LUXURY_HOTELS}
+      canonicalPath="/guide/small-luxury-hotels/"
+      schemaName="Small luxury hotels in Britain"
+      schemaDescription="Boutique British hotels under 50 rooms, profiled by region."
       relatedGuides={[
         { href: '/guide/historic-hotels/', label: 'Historic hotels of Britain' },
         { href: '/guide/dog-friendly-hotels/', label: 'Dog-friendly luxury hotels' },

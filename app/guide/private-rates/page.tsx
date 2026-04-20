@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { articleSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'What a private rate actually is',
@@ -8,8 +9,23 @@ export const metadata: Metadata = {
 }
 
 export default function PrivateRates() {
+  const schemas = [
+    articleSchema({
+      headline: 'What a private rate actually is',
+      description: 'The contractual carve-out in every major OTA agreement that lets hotels offer rates below their public parity price.',
+      url: '/guide/private-rates/',
+      datePublished: '2026-04-20',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Guide', url: '/guide/' },
+      { name: 'Private rates', url: '/guide/private-rates/' },
+    ]),
+  ]
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
       <section className="container-edge pt-10 md:pt-16 pb-8">
         <div className="max-w-reading">
           <div className="eyebrow eyebrow-rule mb-6">

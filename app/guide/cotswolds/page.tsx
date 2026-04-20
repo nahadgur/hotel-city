@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { getHotelsByRegion } from '@/data/hotels'
+import { collectionPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Cotswolds hotels',
@@ -12,8 +13,25 @@ export const metadata: Metadata = {
 export default function CotswoldsGuide() {
   const cotswoldsHotels = getHotelsByRegion('cotswolds')
 
-  return (
+  
+  const schemas = [
+    collectionPageSchema({
+      name: 'Cotswolds hotels',
+      description: 'Editorial profiles of Cotswolds hotels.',
+      url: '/guide/cotswolds/',
+      numberOfItems: cotswoldsHotels.length,
+    }),
+    breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Guide', url: '/guide/' },
+      { name: 'Cotswolds', url: '/guide/cotswolds/' },
+    ]),
+  ]
+
+return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(schemas)} />
+
       <section className="container-edge pt-10 md:pt-16 pb-10">
         <div className="max-w-3xl">
           <div className="eyebrow eyebrow-rule mb-6">

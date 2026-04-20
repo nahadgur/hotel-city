@@ -23,6 +23,9 @@ export default function HistoricGuide() {
         "The early twentieth-century properties (The Ritz, The Dorchester, The Headland) close the list. After 1930, British commercial luxury construction essentially stopped until the 1990s; the hotels on this list effectively constitute the surviving inventory of British heritage luxury hospitality.",
       ]}
       hotelSlugs={HISTORIC_HOTELS}
+      canonicalPath="/guide/historic-hotels/"
+      schemaName="Historic hotels of Britain"
+      schemaDescription="Grade I and Grade II* listed hotel buildings across Britain, profiled by region and period."
       relatedGuides={[
         { href: '/guide/small-luxury-hotels/', label: 'Small luxury hotels in Britain' },
         { href: '/guide/michelin-starred-hotels/', label: 'Michelin-starred hotels' },

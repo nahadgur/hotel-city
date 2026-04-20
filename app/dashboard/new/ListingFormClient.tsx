@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowRight, Loader2, Sparkles } from 'lucide-react'
+import { DateRangePicker } from './DateRangePicker'
 
 const EXAMPLES = [
   'A quiet room in Paris with a deep soaking tub, fast wifi, for a 3-day work sprint.',
@@ -124,6 +125,15 @@ export function ListingFormClient() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-10">
+        {/* Dates, full-width row */}
+        <div className="md:col-span-2">
+          <DateRangePicker
+            checkIn={form.checkIn}
+            checkOut={form.checkOut}
+            onChange={(r) => setForm((f) => ({ ...f, checkIn: r.checkIn, checkOut: r.checkOut }))}
+          />
+        </div>
+
         <div>
           <label htmlFor="city" className="eyebrow mb-2 block">
             City <span className="text-ink-400 normal-case tracking-normal">(optional)</span>
@@ -150,32 +160,6 @@ export function ListingFormClient() {
             value={form.maxPriceGbp}
             onChange={(e) => update('maxPriceGbp', e.target.value)}
             placeholder="e.g. 350"
-            className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base tabular"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="checkIn" className="eyebrow mb-2 block">
-            Check in <span className="text-ink-400 normal-case tracking-normal">(optional)</span>
-          </label>
-          <input
-            id="checkIn"
-            type="date"
-            value={form.checkIn}
-            onChange={(e) => update('checkIn', e.target.value)}
-            className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base tabular"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="checkOut" className="eyebrow mb-2 block">
-            Check out <span className="text-ink-400 normal-case tracking-normal">(optional)</span>
-          </label>
-          <input
-            id="checkOut"
-            type="date"
-            value={form.checkOut}
-            onChange={(e) => update('checkOut', e.target.value)}
             className="w-full px-4 py-3 bg-paper-50 border border-ink-900/15 focus:border-ink-900 outline-none text-base tabular"
           />
         </div>

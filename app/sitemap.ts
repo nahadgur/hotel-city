@@ -7,7 +7,7 @@ const LAST_MOD = '2026-04-20'
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     '',
-    '/brief/new',
+    '/dashboard/new',
     '/search',
     '/about',
     '/for-hotels',

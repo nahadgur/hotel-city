@@ -1,13 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { hotels } from '@/data/hotels'
 
-const SITE = 'https://hotel-city.vercel.app'
-const LAST_MOD = '2026-04-20'
+const SITE = 'https://hotel-city.vercel.app'const LAST_MOD = '2026-04-20'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     '',
-    '/dashboard/new',
     '/search',
     '/about',
     '/for-hotels',

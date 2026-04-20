@@ -67,25 +67,31 @@ export default function GuidePage() {
             </p>
           </Link>
 
-          <div className="block border-t border-ink-900/15 pt-5 opacity-50">
+          <Link
+            href="/guide/lake-district/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
             <div className="flex items-start justify-between gap-3 mb-2">
-              <h2 className="font-display text-2xl text-ink-500">Lake District</h2>
-              <span className="text-xs text-ink-400 mt-2 tabular">Coming</span>
+              <h2 className="font-display text-2xl">Lake District</h2>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
             </div>
-            <p className="text-sm text-ink-500 italic">
-              Sharrow Bay, Gilpin, Linthwaite, Another Place.
+            <p className="text-sm text-ink-700 italic">
+              Gilpin Hotel, Another Place The Lake, Linthwaite House.
             </p>
-          </div>
+          </Link>
 
-          <div className="block border-t border-ink-900/15 pt-5 opacity-50">
+          <Link
+            href="/guide/cornwall/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
             <div className="flex items-start justify-between gap-3 mb-2">
-              <h2 className="font-display text-2xl text-ink-500">Cornwall</h2>
-              <span className="text-xs text-ink-400 mt-2 tabular">Coming</span>
+              <h2 className="font-display text-2xl">Cornwall</h2>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
             </div>
-            <p className="text-sm text-ink-500 italic">
-              Tresanton, Idle Rocks, The Nare, The Headland, Watergate Bay.
+            <p className="text-sm text-ink-700 italic">
+              The Headland, The Idle Rocks. More coming.
             </p>
-          </div>
+          </Link>
 
           <div className="block border-t border-ink-900/15 pt-5 opacity-50">
             <div className="flex items-start justify-between gap-3 mb-2">

@@ -34,6 +34,12 @@ const HOTEL_NAMES: Record<string, string> = {
   'the-balmoral-scotland': 'The Balmoral, Edinburgh',
   'cromlix-scotland': 'Cromlix, Perthshire',
   'inverlochy-castle-scotland': 'Inverlochy Castle, Fort William',
+  'the-torridon-scotland': 'The Torridon, Wester Ross',
+  'gilpin-hotel-lake-district': 'Gilpin Hotel & Lake House, Lake District',
+  'another-place-lake-district': 'Another Place, The Lake, Lake District',
+  'linthwaite-house-lake-district': 'Linthwaite House, Lake District',
+  'the-headland-cornwall': 'The Headland, Newquay',
+  'the-idle-rocks-cornwall': 'The Idle Rocks, St Mawes',
 }
 
 const EXAMPLES = [

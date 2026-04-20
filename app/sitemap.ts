@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/guide/scotland', priority: 0.85 },
     { path: '/guide/lake-district', priority: 0.85 },
     { path: '/guide/cornwall', priority: 0.85 },
+    { path: '/guide/yorkshire', priority: 0.85 },
     { path: '/guide/rate-parity', priority: 0.7 },
     { path: '/guide/private-rates', priority: 0.7 },
     { path: '/about', priority: 0.8 },

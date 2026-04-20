@@ -93,15 +93,18 @@ export default function GuidePage() {
             </p>
           </Link>
 
-          <div className="block border-t border-ink-900/15 pt-5 opacity-50">
+          <Link
+            href="/guide/yorkshire/"
+            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
+          >
             <div className="flex items-start justify-between gap-3 mb-2">
-              <h2 className="font-display text-2xl text-ink-500">Yorkshire</h2>
-              <span className="text-xs text-ink-400 mt-2 tabular">Coming</span>
+              <h2 className="font-display text-2xl">Yorkshire</h2>
+              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
             </div>
-            <p className="text-sm text-ink-500 italic">
+            <p className="text-sm text-ink-700 italic">
               Grantley Hall, Swinton Park, Middlethorpe Hall, The Star at Harome.
             </p>
-          </div>
+          </Link>
         </div>
       </section>
 

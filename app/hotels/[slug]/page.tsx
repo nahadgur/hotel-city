@@ -174,7 +174,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 max-w-5xl">
           <div>
             <div className="eyebrow mb-4">
-              {hotel.region === 'london' ? 'Other grand London hotels' : hotel.region === 'cotswolds' ? 'Other Cotswolds hotels' : hotel.region === 'scotland' ? 'Other Scotland hotels' : hotel.region === 'lake-district' ? 'Other Lake District hotels' : hotel.region === 'cornwall' ? 'Other Cornwall hotels' : 'Other hotels we cover'}
+              {hotel.region === 'london' ? 'Other grand London hotels' : hotel.region === 'cotswolds' ? 'Other Cotswolds hotels' : hotel.region === 'scotland' ? 'Other Scotland hotels' : hotel.region === 'lake-district' ? 'Other Lake District hotels' : hotel.region === 'cornwall' ? 'Other Cornwall hotels' : hotel.region === 'yorkshire' ? 'Other Yorkshire hotels' : 'Other hotels we cover'}
             </div>
             <ul className="space-y-2.5">
               {siblings.map((sib) => (
@@ -202,7 +202,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
               </li>
               <li>
                 <Link href={`/guide/${hotel.region}/`} className="text-ink-900 link-underline">
-                  All {hotel.region === 'london' ? 'London' : hotel.region === 'cotswolds' ? 'Cotswolds' : hotel.region === 'scotland' ? 'Scotland' : hotel.region === 'lake-district' ? 'Lake District' : hotel.region === 'cornwall' ? 'Cornwall' : ''} hotels we cover
+                  All {hotel.region === 'london' ? 'London' : hotel.region === 'cotswolds' ? 'Cotswolds' : hotel.region === 'scotland' ? 'Scotland' : hotel.region === 'lake-district' ? 'Lake District' : hotel.region === 'cornwall' ? 'Cornwall' : hotel.region === 'yorkshire' ? 'Yorkshire' : ''} hotels we cover
                 </Link>
               </li>
             </ul>

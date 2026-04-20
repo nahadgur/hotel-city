@@ -40,6 +40,13 @@ const HOTEL_NAMES: Record<string, string> = {
   'linthwaite-house-lake-district': 'Linthwaite House, Lake District',
   'the-headland-cornwall': 'The Headland, Newquay',
   'the-idle-rocks-cornwall': 'The Idle Rocks, St Mawes',
+  'watergate-bay-cornwall': 'Watergate Bay Hotel, Cornwall',
+  'hotel-tresanton-cornwall': 'Hotel Tresanton, St Mawes',
+  'the-nare-cornwall': 'The Nare, Cornwall',
+  'the-star-at-harome-yorkshire': 'The Star Inn at Harome, Yorkshire',
+  'middlethorpe-hall-yorkshire': 'Middlethorpe Hall, York',
+  'grantley-hall-yorkshire': 'Grantley Hall, Yorkshire',
+  'swinton-park-yorkshire': 'Swinton Park, Yorkshire',
 }
 
 const EXAMPLES = [

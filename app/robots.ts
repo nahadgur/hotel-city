@@ -5,10 +5,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/brief/new/'],
-        disallow: ['/search/', '/api/', '/brief/'],
+        allow: '/',
+        disallow: ['/search/', '/api/', '/dashboard/', '/login/'],
       },
     ],
-    sitemap: 'https://stayward.vercel.app/sitemap.xml',
+    sitemap: 'https://hotel-city.vercel.app/sitemap.xml',
   }
 }

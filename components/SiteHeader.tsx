@@ -15,6 +15,8 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-ink-700">
+          <Link href="/hotels/" className="link-underline">Hotels</Link>
+          <Link href="/guide/" className="link-underline">Guide</Link>
           <Link href="/plan/" className="link-underline">Plan a stay</Link>
           <Link href="/about/" className="link-underline">How it works</Link>
           <Link href="/for-hotels/" className="link-underline">For hotels</Link>
@@ -41,6 +43,8 @@ export function SiteHeader() {
       {mobileOpen && (
         <div className="md:hidden border-t border-ink-900/10 bg-paper-50">
           <nav className="container-edge py-4 flex flex-col gap-1">
+            <Link href="/hotels/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Hotels</Link>
+            <Link href="/guide/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Guide</Link>
             <Link href="/plan/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">Plan a stay</Link>
             <Link href="/about/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">How it works</Link>
             <Link href="/for-hotels/" onClick={() => setMobileOpen(false)} className="py-3 text-ink-900">For hotels</Link>

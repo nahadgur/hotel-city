@@ -41,18 +41,15 @@ export default function GuidePage() {
             </p>
           </Link>
 
-          <Link
-            href="/guide/cotswolds/"
-            className="group block border-t border-ink-900/15 pt-5 hover:border-ink-900 transition-colors"
-          >
+          <div className="block border-t border-ink-900/15 pt-5 opacity-50">
             <div className="flex items-start justify-between gap-3 mb-2">
-              <h2 className="font-display text-2xl">Cotswolds</h2>
-              <ArrowUpRight className="w-4 h-4 mt-1.5 text-ink-400 group-hover:text-terracotta-500 transition-colors shrink-0" strokeWidth={1.5} />
+              <h2 className="font-display text-2xl text-ink-500">Cotswolds</h2>
+              <span className="text-xs text-ink-400 mt-2 tabular">Coming</span>
             </div>
-            <p className="text-sm text-ink-700 italic">
-              Country-house hotels and farm estates across Oxfordshire, Gloucestershire, and Worcestershire.
+            <p className="text-sm text-ink-500 italic">
+              Country-house hotels in the Cotswolds, written up properly.
             </p>
-          </Link>
+          </div>
 
           <div className="block border-t border-ink-900/15 pt-5 opacity-50">
             <div className="flex items-start justify-between gap-3 mb-2">

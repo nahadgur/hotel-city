@@ -173,9 +173,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
       <section className="container-edge py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 max-w-5xl">
           <div>
-            <div className="eyebrow mb-4">
-              {hotel.region === 'london' ? 'Other grand London hotels' : hotel.region === 'cotswolds' ? 'Other Cotswolds hotels' : 'Other hotels we cover'}
-            </div>
+            <div className="eyebrow mb-4">Other grand London hotels</div>
             <ul className="space-y-2.5">
               {siblings.map((sib) => (
                 <li key={sib.slug}>
@@ -201,8 +199,8 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
                 </Link>
               </li>
               <li>
-                <Link href={`/guide/${hotel.region}/`} className="text-ink-900 link-underline">
-                  All {hotel.region === 'london' ? 'London' : hotel.region === 'cotswolds' ? 'Cotswolds' : ''} hotels we cover
+                <Link href="/guide/london/" className="text-ink-900 link-underline">
+                  All London hotels we cover
                 </Link>
               </li>
             </ul>

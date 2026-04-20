@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { PlanFormClient } from './PlanFormClient'
 
 export const metadata: Metadata = {
@@ -28,7 +29,9 @@ export default function PlanPage() {
       </section>
 
       <section className="container-edge pb-section">
-        <PlanFormClient />
+        <Suspense fallback={<div className="h-96" />}>
+          <PlanFormClient />
+        </Suspense>
       </section>
     </>
   )

@@ -113,9 +113,9 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <div className="font-display text-5xl md:text-6xl mb-3 tabular">\u00a30</div>
+              <div className="font-display text-5xl md:text-6xl mb-3 tabular">£0</div>
               <div className="text-sm text-paper-200 leading-relaxed">
-                for travellers, always. We don\'t take a cut from you. Hotels pay us when a booking is made.
+                for travellers, always. We don't take a cut from you. Hotels pay us when a booking is made.
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function HomePage() {
                 <div className="font-display text-3xl text-terracotta-500 mb-3">01</div>
                 <h3 className="font-display text-xl mb-2">Describe it.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  In your own words. &ldquo;Quiet Paris, deep tub, fast wifi, three nights for a work sprint.&rdquo; The way you\'d tell a friend. Add dates and a rough budget if you have them.
+                  In your own words. &ldquo;Quiet Paris, deep tub, fast wifi, three nights for a work sprint.&rdquo; The way you'd tell a friend. Add dates and a rough budget if you have them.
                 </p>
               </div>
 
@@ -158,7 +158,7 @@ export default function HomePage() {
                 <div className="font-display text-3xl text-terracotta-500 mb-3">03</div>
                 <h3 className="font-display text-xl mb-2">We ask the hotels.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  We reach out to a handful of places that fit, directly, on your behalf. They quote us private rates, the kind they can\'t publish publicly.
+                  We reach out to a handful of places that fit, directly, on your behalf. They quote us private rates, the kind they can't publish publicly.
                 </p>
               </div>
 
@@ -183,13 +183,13 @@ export default function HomePage() {
               <div className="eyebrow mb-4">Why it works</div>
               <h2 className="font-display text-display-md">
                 Hotels can quote you rates they{' '}
-                <span className="italic text-terracotta-500">can\'t publish</span>.
+                <span className="italic text-terracotta-500">can't publish</span>.
               </h2>
             </div>
 
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
               <p>
-                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every stay, and then require rate parity. No cheaper rate can appear on any public website. That\'s why every site looks identical.
+                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every stay, and then require rate parity. No cheaper rate can appear on any public website. That's why every site looks identical.
               </p>
               <p>
                 That parity only applies to <em>public</em> rates. A private quote, negotiated directly for a specific traveller, is expressly allowed under every major parity clause. Hotels have always used this for returning guests, referrals, and concierge relationships.
@@ -253,7 +253,7 @@ export default function HomePage() {
             <div className="eyebrow text-paper-300 mb-4">Start a brief</div>
             <h2 className="font-display text-display-lg mb-6">
               Describe where you want to be.{' '}
-              <span className="italic text-terracotta-400">We\'ll take it from there</span>.
+              <span className="italic text-terracotta-400">We'll take it from there</span>.
             </h2>
             <p className="text-paper-200 leading-relaxed max-w-reading mb-10 text-lg">
               Takes a minute. No login, no commitment, no marketing emails. Just a brief in, quotes back.

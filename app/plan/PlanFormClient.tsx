@@ -100,7 +100,7 @@ export function PlanFormClient() {
     <form onSubmit={submit} className="max-w-3xl">
       <div className="mb-10">
         <label htmlFor="rawQuery" className="eyebrow mb-3 block">
-          What you\'re looking for
+          What you&apos;re looking for
         </label>
         <div className="relative border border-ink-900/15 bg-paper-50 focus-within:border-ink-900 transition-colors">
           <div className="flex items-start gap-4 p-5 md:p-6">
@@ -244,7 +244,7 @@ export function PlanFormClient() {
           {submitting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
-              <span>Sending to the team\u2026</span>
+              <span>Sending to the team&hellip;</span>
             </>
           ) : (
             <>
@@ -255,7 +255,7 @@ export function PlanFormClient() {
         </button>
 
         <p className="text-xs text-ink-500 italic max-w-xs">
-          We\'ll read it and reply with quotes within 24 hours.
+          We&apos;ll read it and reply with quotes within 24 hours.
         </p>
       </div>
     </form>

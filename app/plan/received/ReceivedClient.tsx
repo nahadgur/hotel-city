@@ -51,10 +51,10 @@ export function ReceivedClient() {
       </div>
 
       <h1 className="font-display text-display-lg mb-4">
-        We\'ve got it. Expect a reply within 24 hours.
+        We've got it. Expect a reply within 24 hours.
       </h1>
       <p className="text-ink-700 leading-relaxed mb-10 max-w-reading">
-        A real person on the Stayward team is reading your brief now. We\'ll reach out to the hotels that fit and email you quotes{brief?.email ? ` at ${brief.email}` : ''}, usually within a day during business hours.
+        A real person on the Stayward team is reading your brief now. We'll reach out to the hotels that fit and email you quotes{brief?.email ? ` at ${brief.email}` : ''}, usually within a day during business hours.
       </p>
 
       {brief?.rawQuery && (
@@ -94,7 +94,7 @@ export function ReceivedClient() {
             {brief.maxPriceGbp && (
               <div>
                 <div className="eyebrow mb-1 text-ink-500">Max / night</div>
-                <div className="text-ink-900 tabular">\u00a3{brief.maxPriceGbp}</div>
+                <div className="text-ink-900 tabular">£{brief.maxPriceGbp}</div>
               </div>
             )}
           </div>
@@ -107,7 +107,7 @@ export function ReceivedClient() {
           <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
         </Link>
         <p className="text-xs text-ink-500 italic">
-          Keep an eye on your inbox. If you don\'t hear back within 24 hours, drop us a line at hello@stayward.co.
+          Keep an eye on your inbox. If you don't hear back within 24 hours, drop us a line at hello@stayward.co.
         </p>
       </div>
     </div>

@@ -20,7 +20,7 @@ export default function ForHotelsPage() {
             <span className="italic text-terracotta-500">Zero commission</span>.
           </h1>
           <p className="font-display italic text-xl md:text-2xl text-ink-700 leading-snug max-w-reading">
-            We\'re a small team in London, reading traveller briefs by hand and reaching out to hotels that fit. You quote what makes sense, decline what doesn\'t, and keep 100% of the booking when one closes.
+            We're a small team in London, reading traveller briefs by hand and reaching out to hotels that fit. You quote what makes sense, decline what doesn't, and keep 100% of the booking when one closes.
           </p>
           <div className="mt-10 flex flex-wrap gap-5 items-center">
             <a href="mailto:hotels@stayward.co?subject=Stayward%20pilot%20enquiry" className="btn-primary">
@@ -84,16 +84,16 @@ export default function ForHotelsPage() {
             <div className="col-span-12 md:col-span-5">
               <div className="eyebrow mb-3">Versus the OTAs</div>
               <h2 className="font-display text-display-md">
-                Stayward isn\'t fighting the OTA.{' '}
+                Stayward isn't fighting the OTA.{' '}
                 <span className="italic text-terracotta-500">It routes around it</span>.
               </h2>
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
               <p>
-                Parity clauses stop you from publishing a better rate publicly. They don\'t stop you from quoting a specific traveller a specific price in a private message. Every major OTA contract expressly allows it.
+                Parity clauses stop you from publishing a better rate publicly. They don't stop you from quoting a specific traveller a specific price in a private message. Every major OTA contract expressly allows it.
               </p>
               <p>
-                That\'s all we do: we bring you specific travellers, and you send them a private quote. Nothing appears on any public channel. Nothing your OTA account manager can see or flag. The travellers who come through us are travellers who wouldn\'t have been on Booking.com at all.
+                That's all we do: we bring you specific travellers, and you send them a private quote. Nothing appears on any public channel. Nothing your OTA account manager can see or flag. The travellers who come through us are travellers who wouldn't have been on Booking.com at all.
               </p>
               <p className="font-display italic text-xl text-ink-900 leading-snug">
                 The OTA keeps its volume. You keep 100% of the traveller.
@@ -128,7 +128,7 @@ export default function ForHotelsPage() {
               <div className="text-sm text-ink-700 space-y-3 leading-relaxed">
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
-                  <span>No fee if the traveller doesn\'t book with you.</span>
+                  <span>No fee if the traveller doesn't book with you.</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
@@ -186,7 +186,7 @@ export default function ForHotelsPage() {
                     <>
                       Email{' '}
                       <a href="mailto:hotels@stayward.co" className="link-underline">hotels@stayward.co</a>{' '}
-                      with the name of your hotel, a link to your site, and what sort of stays suit you best. We\'ll be in touch within a day.
+                      with the name of your hotel, a link to your site, and what sort of stays suit you best. We'll be in touch within a day.
                     </>
                   }
                 />

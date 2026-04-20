@@ -19,7 +19,7 @@ export default function PlanPage() {
             Tell us what you want.
           </h1>
           <p className="text-ink-700 leading-relaxed max-w-reading mb-3">
-            We read every brief personally. No bots, no mass-routing. Within 24 hours you\'ll get an email from the Stayward team with direct quotes that fit, usually below what you\'d find on Booking.com.
+            We read every brief personally. No bots, no mass-routing. Within 24 hours you'll get an email from the Stayward team with direct quotes that fit, usually below what you'd find on Booking.com.
           </p>
           <p className="text-sm text-ink-500 italic max-w-reading">
             No account needed. Free. Takes about a minute.

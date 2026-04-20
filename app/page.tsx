@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { SearchInput } from '@/components/SearchInput'
 import { hotels } from '@/data/hotels'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react'
 
 export default function HomePage() {
   const featured = hotels.slice(0, 3)
@@ -15,22 +14,33 @@ export default function HomePage() {
           <div className="grid grid-cols-12 gap-6 md:gap-10">
             <div className="col-span-12 lg:col-span-8">
               <div className="eyebrow eyebrow-rule mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '80ms' }}>
-                A different way to find a hotel
+                A different way to book a hotel
               </div>
 
               <h1 className="font-display text-display-xl mb-6 animate-fade-up" style={{ animationDelay: '120ms' }}>
-                Hotels, found{' '}
-                <span className="italic text-terracotta-500">properly</span>.
+                Skip the OTA. Get quotes{' '}
+                <span className="italic text-terracotta-500">direct</span>.
               </h1>
 
-              <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-12 animate-fade-up" style={{ animationDelay: '260ms' }}>
-                No dark patterns. No surprise taxes. No fake urgency. Just rooms,
-                photographed honestly, described properly, priced in full.
+              <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10 animate-fade-up" style={{ animationDelay: '260ms' }}>
+                Describe what you want. We route your brief to the five hotels that fit.
+                They quote you direct, often well below the public rate. You pick one.
               </p>
 
-              <div className="animate-fade-up" style={{ animationDelay: '400ms' }}>
-                <SearchInput />
+              <div className="flex flex-wrap items-center gap-5 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                <Link href="/brief/new/" className="btn-primary">
+                  <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+                  <span>Start a brief</span>
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </Link>
+                <Link href="/search/" className="text-sm text-ink-700 link-underline">
+                  Or browse the hotels
+                </Link>
               </div>
+
+              <p className="mt-8 text-sm text-ink-500 italic max-w-reading animate-fade-up" style={{ animationDelay: '520ms' }}>
+                Takes a minute. Free. Your email stays private until you accept a quote.
+              </p>
             </div>
 
             <div className="hidden lg:block lg:col-span-4 animate-fade-in" style={{ animationDelay: '600ms' }}>
@@ -52,43 +62,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* MANIFESTO */}
+      {/* HOW IT WORKS */}
       <section className="relative">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
             <div className="col-span-12 md:col-span-4">
-              <div className="eyebrow mb-4">The idea</div>
+              <div className="eyebrow mb-4">How it works</div>
               <h2 className="font-display text-display-md max-w-reading">
-                A booking site that behaves like a good concierge, not a street hawker.
+                One brief. Five quotes. Your inbox, not a sales funnel.
               </h2>
             </div>
 
             <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-12 max-w-reading">
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">01</div>
-                <h3 className="font-display text-xl mb-2">Describe it, don't filter it.</h3>
+                <h3 className="font-display text-xl mb-2">Describe it.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Type "quiet Paris, deep tub, fast wifi" the way you'd tell a friend.
-                  We understand the sentence. You don't click fourteen boxes.
+                  "Quiet Paris, deep tub, fast wifi, for a 3-day work sprint." The way
+                  you'd tell a friend. Add dates and a budget if you have them.
                 </p>
               </div>
 
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">02</div>
-                <h3 className="font-display text-xl mb-2">The price you see is the price you pay.</h3>
+                <h3 className="font-display text-xl mb-2">We route to five hotels.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Every number is all-in. Taxes, fees, city levies, all of it. If the price
-                  drops after you book, we credit you automatically.
+                  Our matching engine picks the five that fit your brief. We email them
+                  each with your dates and what you want. Your contact details stay private.
                 </p>
               </div>
 
               <div>
                 <div className="font-display text-3xl text-terracotta-500 mb-3">03</div>
-                <h3 className="font-display text-xl mb-2">Details Expedia ignores.</h3>
+                <h3 className="font-display text-xl mb-2">They quote you direct.</h3>
                 <p className="text-ink-700 leading-relaxed">
-                  Tub depth in centimetres. Wifi speed, tested. Whether the AC rattles. Whether
-                  the shower has pressure. The small things that decide whether a room is good.
+                  Quotes land in your Stayward inbox. Often well below the Booking.com rate,
+                  because hotels can offer direct rates they can't publish publicly. You pick one.
                 </p>
               </div>
             </div>
@@ -103,10 +113,10 @@ export default function HomePage() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <div className="eyebrow mb-3">Selected</div>
-              <h2 className="font-display text-display-lg">Just opened, worth knowing.</h2>
+              <h2 className="font-display text-display-lg">Hotels that quote direct.</h2>
             </div>
             <Link href="/search/" className="hidden md:inline-flex items-center gap-2 text-sm link-underline">
-              <span>See them all</span>
+              <span>Browse them all</span>
               <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
             </Link>
           </div>
@@ -133,22 +143,62 @@ export default function HomePage() {
                   {hotel.name}
                 </h3>
                 <p className="text-sm text-ink-600 italic">{hotel.tagline}</p>
-                <div className="mt-3 text-sm tabular">From £{hotel.priceFrom} / night, all-in</div>
+                <div className="mt-3 text-sm tabular text-ink-500">From £{hotel.priceFrom} / night, public rate</div>
               </Link>
             ))}
           </div>
 
           <div className="mt-10 md:hidden">
             <Link href="/search/" className="btn-ghost w-full">
-              <span>See them all</span>
+              <span>Browse them all</span>
               <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* VS BOOKING.COM */}
+      {/* THE LOOPHOLE */}
       <section className="relative">
+        <div className="hairline" />
+        <div className="container-edge py-section">
+          <div className="grid grid-cols-12 gap-6 md:gap-10">
+            <div className="col-span-12 md:col-span-5">
+              <div className="eyebrow mb-4">Why it works</div>
+              <h2 className="font-display text-display-md">
+                Hotels can quote you a rate they{' '}
+                <span className="italic text-terracotta-500">can't publish</span>.
+              </h2>
+            </div>
+
+            <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
+              <p>
+                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every booking,
+                and then require rate parity — no cheaper rate can appear on any public website.
+                It's why every site looks identical.
+              </p>
+              <p>
+                But that rate parity only applies to public rates. A private quote sent directly to
+                a specific traveller, by email, is expressly allowed. That's the loophole hotels
+                have always used for returning guests and referrals.
+              </p>
+              <p className="font-display italic text-xl text-ink-900">
+                Stayward industrialises that. We route your brief, the hotel quotes you direct,
+                you save. Nothing public, nothing searchable, nothing the OTA can see.
+              </p>
+              <div className="pt-4">
+                <Link href="/brief/new/" className="btn-ghost">
+                  <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+                  <span>Start your brief</span>
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VS BOOKING.COM */}
+      <section className="relative bg-paper-50">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
@@ -195,13 +245,14 @@ export default function HomePage() {
             <div className="col-span-12 md:col-span-8">
               <div className="eyebrow text-paper-300 mb-4">For hotels</div>
               <h2 className="font-display text-display-lg">
-                Keep{' '}
-                <span className="italic text-terracotta-400">100%</span>
-                {' '}of your revenue.
+                Warm leads.{' '}
+                <span className="italic text-terracotta-400">Zero</span>
+                {' '}commission.
               </h2>
               <p className="mt-6 text-paper-200 max-w-reading leading-relaxed text-lg">
-                Flat monthly fee instead of a 15–25% commission. Direct relationships with
-                your guests. A listing that actually looks like your hotel.
+                Travellers describe what they want. We route matching briefs to you.
+                You quote them whatever rate makes sense — direct, flexible, yours.
+                No parity conflict, no OTA cut, no listing among 27,000 others.
               </p>
             </div>
             <div className="col-span-12 md:col-span-4">
@@ -209,7 +260,7 @@ export default function HomePage() {
                 href="/for-hotels/"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50"
               >
-                <span>See our pricing</span>
+                <span>How the hotel side works</span>
                 <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
               </Link>
             </div>

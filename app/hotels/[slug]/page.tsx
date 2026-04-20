@@ -149,7 +149,7 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
           <aside className="col-span-12 md:col-span-4">
             <div className="md:sticky md:top-6 border border-ink-900/15 bg-paper-50 p-6">
               <div className="flex items-baseline justify-between mb-1">
-                <div className="eyebrow text-ink-500">From</div>
+                <div className="eyebrow text-ink-500">Public rate from</div>
                 <div className="text-xs text-ink-500 tabular">
                   {'★'.repeat(hotel.stars)}
                 </div>
@@ -158,35 +158,29 @@ export default function HotelPage({ params }: { params: { slug: string } }) {
                 £{hotel.priceFrom}
               </div>
               <div className="text-xs text-ink-500 mb-6">
-                Per night, all-in. Taxes included.
+                Per night. The direct quote is usually lower.
               </div>
 
-              <div className="space-y-3 mb-6 text-sm">
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <div className="text-xs text-ink-500 mb-1">Check in</div>
-                    <div className="tabular">–</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-ink-500 mb-1">Check out</div>
-                    <div className="tabular">–</div>
-                  </div>
-                </div>
-              </div>
-
-              <button className="btn-primary w-full mb-3">
-                <span>Reserve</span>
+              <Link
+                href={`/brief/new/?city=${encodeURIComponent(hotel.city)}&hotel=${encodeURIComponent(hotel.slug)}`}
+                className="btn-primary w-full mb-3 text-center justify-center"
+              >
+                <span>Get a direct quote</span>
                 <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
-              </button>
+              </Link>
 
               <div className="pt-4 hairline space-y-3 text-xs text-ink-600">
                 <div className="flex items-start gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
-                  <span>Price Drop Protection included – we credit you if the rate falls.</span>
+                  <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
+                  <span>Your brief reaches this hotel plus four others that match.</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
-                  <span>No hidden fees. Free cancellation up to 48 hours before.</span>
+                  <span>They quote you direct by email, usually within hours.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-sage-500" strokeWidth={1.5} />
+                  <span>Your email stays private until you accept a quote.</span>
                 </div>
               </div>
             </div>

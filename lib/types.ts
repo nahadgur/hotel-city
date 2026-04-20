@@ -22,6 +22,7 @@ export type Hotel = {
   rawDescription: string
   sustainability?: string[]
   yearOpened?: number
+  contactEmail?: string
 }
 
 export type Amenity = {

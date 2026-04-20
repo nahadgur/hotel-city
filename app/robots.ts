@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: '/search/',
+        allow: ['/', '/brief/new/'],
+        disallow: ['/search/', '/api/', '/brief/'],
       },
     ],
     sitemap: 'https://stayward.vercel.app/sitemap.xml',

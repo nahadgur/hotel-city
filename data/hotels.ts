@@ -46,6 +46,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['B Corp certified', 'Refillable toiletries'],
     yearOpened: 2021,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'maison-du-petit-moulin',
@@ -91,6 +92,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Local sourcing within 100km', 'Zero-plastic room amenities'],
     yearOpened: 2018,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'casa-do-pateo',
@@ -134,6 +136,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Solar water heating', 'Rainwater collection'],
     yearOpened: 2020,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'kanra-machiya',
@@ -176,6 +179,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Original building restoration', 'Local artisan sourcing'],
     yearOpened: 2019,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'hotel-sankt-annae',
@@ -219,6 +223,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Carbon-neutral operations since 2022', 'Local Danish sourcing'],
     yearOpened: 2019,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'the-ludlow-print-house',
@@ -259,6 +264,7 @@ export const hotels: Hotel[] = [
       { name: 'High ceilings (3m)', category: 'layout', verified: true },
     ],
     yearOpened: 2017,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'palazzo-segreto',
@@ -298,6 +304,7 @@ export const hotels: Hotel[] = [
       { name: 'Canal-facing rooms (silent)', category: 'sleep', verified: true },
     ],
     yearOpened: 1960,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'the-crofter-skye',
@@ -338,6 +345,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Ground-source heat pumps', 'Local Highland sourcing'],
     yearOpened: 2022,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'the-atelier-antwerp',
@@ -377,6 +385,7 @@ export const hotels: Hotel[] = [
       { name: 'Silent-mode AC', category: 'sleep', verified: true },
     ],
     yearOpened: 2020,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'finca-los-olivos',
@@ -416,6 +425,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['Organic farming certified', 'Off-grid solar'],
     yearOpened: 2015,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'hotel-norddalen',
@@ -456,6 +466,7 @@ export const hotels: Hotel[] = [
     ],
     sustainability: ['100% hydroelectric power', 'Norwegian sourcing'],
     yearOpened: 2021,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
   {
     slug: 'the-printhouse-brooklyn',
@@ -496,6 +507,7 @@ export const hotels: Hotel[] = [
       { name: 'Joe Coffee in lobby', category: 'food', verified: true },
     ],
     yearOpened: 2018,
+    contactEmail: 'jerwinmanongsong2@gmail.com',
   },
 ]
 

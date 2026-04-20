@@ -1,149 +1,173 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, Mail, ShieldCheck, Sparkles } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'How we think',
-  description: 'No dark patterns, no surprise taxes, no fake urgency. A different way to book a hotel.',
+  title: 'How it works',
+  description: 'One brief, five quotes, direct from the hotels. How Stayward routes around the OTA tax without breaking any rules.',
 }
 
 export default function AboutPage() {
   return (
     <>
+      {/* HERO */}
       <section className="container-edge pt-12 md:pt-20 pb-16">
         <div className="max-w-3xl">
-          <div className="eyebrow eyebrow-rule mb-8">Philosophy</div>
+          <div className="eyebrow eyebrow-rule mb-8">How it works</div>
           <h1 className="font-display text-display-xl mb-8">
-            We thought the whole{' '}
-            <span className="italic text-terracotta-500">thing</span>{' '}
-            could be better.
+            A booking site that behaves like a{' '}
+            <span className="italic text-terracotta-500">good concierge</span>,
+            not a street hawker.
           </h1>
           <p className="font-display italic text-xl md:text-2xl text-ink-700 leading-snug max-w-reading">
-            Hotel booking sites have grown so hostile to the person actually booking
-            that using one feels like negotiating with a cornered animal. We don't
-            want to build that. So we haven't.
+            You describe what you want. Five hotels quote you directly. You pick one.
+            No dark patterns, no surprise taxes, no fake urgency — and usually a better
+            rate than anything Booking.com will ever let you see.
           </p>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* THE FOUR STEPS */}
       <section className="bg-paper-50">
         <div className="hairline" />
         <div className="container-edge py-section">
-          <div className="eyebrow mb-3">How it works</div>
+          <div className="eyebrow mb-3">The flow</div>
           <h2 className="font-display text-display-md mb-14 max-w-reading">
-            Type a sentence. Read what we matched. Book in one screen.
+            Four steps. One inbox. No login required.
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10">
             {[
               {
                 n: '01',
-                t: 'Describe it.',
-                d: '"Quiet Paris, deep soaking tub, fast wifi, for a 3-day work sprint." The sentence is the query. You don\'t click filters.',
+                t: 'Start a brief.',
+                d: '"Quiet Paris, deep soaking tub, fast wifi, for a 3-day work sprint." That sentence is your brief. Add dates and a budget if you have them.',
               },
               {
                 n: '02',
-                t: 'We read it properly.',
-                d: 'We parse what you said into structure (city, price, amenities) and vibe (quiet, work-focused, grown-up). We search both. We show you the match with reasons, not scores.',
+                t: 'We route it.',
+                d: 'Our matching engine picks the five hotels that genuinely fit what you described. We email each with your dates and brief.',
               },
               {
                 n: '03',
-                t: 'Book without the theatre.',
-                d: 'All-in price on the card. Reserve in three taps. No pre-ticked upsells, no account required to see the price, no "Only 1 room left!"',
+                t: 'They quote you.',
+                d: 'Quotes land in your inbox on Stayward, usually within a few hours. You see the rate, the message from the hotel, and how they match your brief.',
+              },
+              {
+                n: '04',
+                t: 'Pick one.',
+                d: 'When you accept a quote, you\'re put in direct contact with that hotel. They handle the booking through their own system.',
               },
             ].map((s) => (
               <div key={s.n}>
-                <div className="font-display text-4xl text-terracotta-500 mb-4">{s.n}</div>
-                <h3 className="font-display text-2xl mb-3">{s.t}</h3>
-                <p className="text-ink-700 leading-relaxed">{s.d}</p>
+                <div className="font-display text-3xl text-terracotta-500 mb-3">{s.n}</div>
+                <h3 className="font-display text-xl mb-2">{s.t}</h3>
+                <p className="text-ink-700 leading-relaxed text-sm">{s.d}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-14 pt-10 hairline">
+            <Link href="/brief/new/" className="btn-primary">
+              <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+              <span>Start your brief</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* PRICE DROP PROTECTION */}
-      <section id="price-drop" className="scroll-mt-10">
+      {/* WHY QUOTES ARE CHEAPER */}
+      <section>
+        <div className="container-edge py-section">
+          <div className="grid grid-cols-12 gap-6 md:gap-10">
+            <div className="col-span-12 md:col-span-5">
+              <div className="eyebrow mb-3">Why the quotes are often cheaper</div>
+              <h2 className="font-display text-display-md">
+                The parity loophole,{' '}
+                <span className="italic text-terracotta-500">explained</span>.
+              </h2>
+            </div>
+            <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5">
+              <p className="text-ink-700 leading-relaxed">
+                Booking.com and Expedia charge hotels 15 to 25 per cent commission on every
+                booking. Then they require rate parity: the hotel can't display a cheaper rate
+                on its own website, on Google, or on any public listing. That's how every
+                booking site ends up showing you an identical price.
+              </p>
+              <p className="text-ink-700 leading-relaxed">
+                But there's a specific carve-out. Every major OTA contract explicitly allows
+                hotels to offer cheaper rates in{' '}
+                <span className="italic">private quotes sent directly to a specific traveller</span>.
+                It's how returning guests, referrals, and corporate accounts have always worked.
+              </p>
+              <p className="font-display italic text-xl text-ink-900 leading-snug">
+                Stayward turns that carve-out into a product. We route your brief to hotels,
+                they quote you privately, and the OTA parity rule doesn't apply.
+              </p>
+              <p className="text-ink-700 leading-relaxed">
+                Typical discount versus the public rate: 10 to 25 per cent on off-peak dates,
+                sometimes more when the hotel has softness. This is not a guarantee — it's
+                just what hotels are free to offer when the OTA isn't in the middle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT WE DON'T DO */}
+      <section className="bg-paper-50">
         <div className="hairline" />
         <div className="container-edge py-section">
           <div className="grid grid-cols-12 gap-6 md:gap-10">
             <div className="col-span-12 md:col-span-5">
-              <div className="eyebrow mb-3">Included on every booking</div>
+              <div className="eyebrow mb-3">What we don't do</div>
               <h2 className="font-display text-display-md">
-                Price Drop{' '}
-                <span className="italic text-terracotta-500">Protection</span>.
+                Things that are absent on purpose.
               </h2>
             </div>
-            <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading">
-              <p className="text-lg text-ink-700 leading-relaxed mb-6">
-                If the price of your room drops between booking and check-in, we credit you the
-                difference automatically. No form to fill, no manual monitoring, no asking.
-              </p>
-              <p className="text-ink-700 leading-relaxed mb-6">
-                It works because we hold the booking until check-in. Every six hours we re-check
-                the current rate for your room. If it's lower, the delta goes straight to
-                your Stayward account as a credit, ready for your next booking.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-10 text-sm">
+            <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-6">
+              <div className="flex items-start gap-4 pb-6 hairline">
+                <ShieldCheck className="w-5 h-5 mt-1 shrink-0 text-sage-500" strokeWidth={1.5} />
                 <div>
-                  <div className="font-display text-2xl tabular text-terracotta-500 mb-1">Every 6h</div>
-                  <div className="text-ink-600">Re-check cadence</div>
-                </div>
-                <div>
-                  <div className="font-display text-2xl tabular text-terracotta-500 mb-1">£10</div>
-                  <div className="text-ink-600">Minimum credit – avoids noise</div>
-                </div>
-                <div>
-                  <div className="font-display text-2xl tabular text-terracotta-500 mb-1">Auto</div>
-                  <div className="text-ink-600">Applied to your next stay</div>
+                  <h3 className="font-display text-lg mb-1">We don't take payment.</h3>
+                  <p className="text-sm text-ink-700 leading-relaxed">
+                    The transaction is between you and the hotel, on their booking system.
+                    We're never in the money path. Nothing to charge back to, nothing to
+                    refund from, nothing to audit.
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INSIDER MEMBERSHIP */}
-      <section id="insider" className="scroll-mt-10 bg-ink-900 text-paper-50">
-        <div className="container-edge py-section">
-          <div className="grid grid-cols-12 gap-6 md:gap-10">
-            <div className="col-span-12 md:col-span-5">
-              <div className="eyebrow text-paper-300 mb-3">£49 per year</div>
-              <h2 className="font-display text-display-md">
-                Insider{' '}
-                <span className="italic text-terracotta-400">membership</span>.
-              </h2>
-            </div>
-            <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading">
-              <p className="text-lg text-paper-200 leading-relaxed mb-8">
-                A private rate card, a first look at new hotels before they're public, and
-                priority on the rooms every boutique holds back. £49 a year. The first booking
-                usually pays for it.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  ['Private rate card', 'Rates that bypass the public listing, often 8–15% lower on direct.'],
-                  ['Early access inventory', 'Rooms hotels hold back specifically for us. First look is yours.'],
-                  ['Silent upgrades', 'Where an upgrade is available at check-in, you get it. Same price.'],
-                  ['Transferable credits', 'Refer a friend. Both of you get a credit on your next stay.'],
-                ].map(([t, d]) => (
-                  <li key={t} className="py-4 border-t border-paper-50/15 flex gap-5">
-                    <span className="text-terracotta-400 tabular text-xs mt-1.5">●</span>
-                    <div>
-                      <div className="font-display text-xl mb-1">{t}</div>
-                      <div className="text-paper-200 text-sm leading-relaxed">{d}</div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-10">
-                <button className="inline-flex items-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm hover:bg-terracotta-500 hover:text-paper-50 transition-colors">
-                  <span>Join Insider</span>
-                  <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-                <div className="mt-3 text-xs text-paper-300">
-                  Coming at launch. We'll let you know.
+              <div className="flex items-start gap-4 pb-6 hairline">
+                <ShieldCheck className="w-5 h-5 mt-1 shrink-0 text-sage-500" strokeWidth={1.5} />
+                <div>
+                  <h3 className="font-display text-lg mb-1">We don't store your card.</h3>
+                  <p className="text-sm text-ink-700 leading-relaxed">
+                    No card details touch Stayward, ever. We don't have PCI compliance obligations
+                    because we never handle payments.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 pb-6 hairline">
+                <ShieldCheck className="w-5 h-5 mt-1 shrink-0 text-sage-500" strokeWidth={1.5} />
+                <div>
+                  <h3 className="font-display text-lg mb-1">We don't share your email.</h3>
+                  <p className="text-sm text-ink-700 leading-relaxed">
+                    Hotels receive your brief through our reply-routing system. Your actual
+                    email stays private until you accept a quote, at which point you're put
+                    in direct contact with just that one hotel.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <ShieldCheck className="w-5 h-5 mt-1 shrink-0 text-sage-500" strokeWidth={1.5} />
+                <div>
+                  <h3 className="font-display text-lg mb-1">We don't do urgency theatre.</h3>
+                  <p className="text-sm text-ink-700 leading-relaxed">
+                    No countdown timers, no "5 people are looking," no pre-ticked insurance,
+                    no fake discounts against a fake original price. Your brief sits there
+                    until you're ready to decide.
+                  </p>
                 </div>
               </div>
             </div>
@@ -158,30 +182,52 @@ export default function AboutPage() {
             <div className="col-span-12 md:col-span-5">
               <div className="eyebrow mb-3">The detail</div>
               <h2 className="font-display text-display-md">
-                50 things Expedia ignores, that actually decide whether a room is good.
+                We index the things Expedia ignores.
               </h2>
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6 max-w-reading space-y-5 text-ink-700 leading-relaxed">
               <p>
-                "Fast Wi-Fi" is not a specification. Neither is "soaking tub."
-                Neither is "quiet room." All three of those phrases have decided an entire
-                stay against somebody who booked in good faith.
+                "Fast Wi-Fi" is not a specification. Neither is "soaking tub." Neither is
+                "quiet room." All three of those phrases have decided an entire stay against
+                someone who booked in good faith.
               </p>
               <p>
-                We store tub depth in centimetres. We store wifi speed as a tested number with
-                a date. We store whether the AC rattles, whether the shower has pressure, whether
-                the room shares a wall with a lift shaft, whether the mattress is pocket-spring
-                or foam, whether the ethernet port is at the desk or behind the television.
-              </p>
-              <p>
-                Hotels fill this in themselves at onboarding. Our team spot-checks. Verified
-                details wear a badge. Everything else is self-reported but visible.
+                We store tub depth in centimetres. We store wifi speed as a tested number
+                with a date. We store whether the AC rattles, whether the shower has
+                pressure, whether the room shares a wall with a lift shaft. These details
+                feed the matching engine — which is how your brief for "deep tub + fast wifi"
+                lands with the right hotels.
               </p>
               <div>
-                <Link href="/search/" className="link-underline text-ink-900">
-                  Search with it →
+                <Link href="/brief/new/" className="link-underline text-ink-900">
+                  Try it with your own brief →
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="bg-ink-900 text-paper-50">
+        <div className="container-edge py-section">
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
+            <div className="col-span-12 md:col-span-8">
+              <div className="eyebrow text-paper-300 mb-4">Ready?</div>
+              <h2 className="font-display text-display-lg">
+                One brief. Five quotes.{' '}
+                <span className="italic text-terracotta-400">No middleman fees</span>.
+              </h2>
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              <Link
+                href="/brief/new/"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-paper-50 text-ink-900 text-sm transition-colors hover:bg-terracotta-500 hover:text-paper-50 w-full"
+              >
+                <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+                <span>Start your brief</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
             </div>
           </div>
         </div>

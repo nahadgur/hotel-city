@@ -1,196 +1,143 @@
 # Stayward
 
-A deployable Next.js MVP for the Stayward hotel booking platform.
+A Next.js hotel quote-routing platform. Think HeadBox for hotel rooms.
 
-Natural-language agentic search that matches travellers to boutique hotels by vibe and verified detail. Parses queries with Claude, embeds vibe with OpenAI, retrieves with Pinecone, ranks with a hybrid vibe/structured/quality score.
-
----
-
-## Two modes — no wrong way to deploy
-
-**Mock mode** (zero dependencies): if no API keys are set, the site uses a local rule-based search. Still impressive, still demo-worthy, still deployable. This was Part 1.
-
-**Agentic mode** (Part 2): add Anthropic + OpenAI + Pinecone keys and the search becomes real. Handles queries like *"somewhere that feels like a Wes Anderson film"* or *"a hotel where I can actually focus for a week"*. Falls back gracefully to mock on any failure.
+Customers sign in with Google, create a listing describing what they want, and five matching hotels quote them directly by email — usually below the public rate, because direct quotes sit outside OTA parity clauses. Bidirectional email threads live in the customer dashboard.
 
 ---
 
-## Deploy to Vercel in 3 minutes (mock mode)
+## Deploy checklist
 
-1. Upload this folder to GitHub (nahadgur or vimldn).
-2. Import the repo into Vercel.
-3. Deploy. **No env vars needed.**
-
-That's it. Live URL with mock search.
-
----
-
-## Upgrade to agentic mode (Part 2)
-
-### Step 1 — Create API accounts (10 minutes total)
-
-| Service | What you need | Cost |
-|---|---|---|
-| **[Anthropic](https://console.anthropic.com)** | API key | $5 free credit, ~$0.01/search after |
-| **[OpenAI](https://platform.openai.com)** | API key | Pay-as-you-go, ~$0.0001/search |
-| **[Pinecone](https://pinecone.io)** | API key + new index | Free tier covers this build |
-
-For Pinecone, create an index with these exact settings:
-- **Name**: `stayward-vibes`
-- **Dimensions**: `1536`
-- **Metric**: `cosine`
-- **Cloud**: AWS
-- **Region**: us-east-1
-- **Type**: Serverless
-
-### Step 2 — Set env vars on Vercel
-
-In your Vercel project, Settings, Environment Variables, add these four:
-
-```
-ANTHROPIC_API_KEY=sk-ant-...
-OPENAI_API_KEY=sk-...
-PINECONE_API_KEY=pcsk_...
-PINECONE_INDEX_NAME=stayward-vibes
-```
-
-Redeploy after adding.
-
-### Step 3 — Seed the Pinecone index (one-time, local)
-
-On your machine, create `.env.local` in the project root with the same four vars as above.
-
-Then:
-
-```cmd
-npm install
-npm run seed
-```
-
-You should see:
-```
-Target index: stayward-vibes
-Hotels to embed: 12
-Embedding (OpenAI text-embedding-3-small, 1536-dim)...
-   Got 12 vectors, each 1536 dimensions
-Upserting to Pinecone...
-   Upserted 12 vectors
-Done. Your search index is live.
-```
-
-Re-run `npm run seed` any time you edit `data/hotels.ts`.
-
-### Step 4 — Test it
-
-Visit your Vercel URL. The search results page should now show a small terracotta badge: *"Claude read your request"*. If you don't see that, mock mode is still running. Check your env vars.
-
-Good queries to stress-test the agentic search:
-
-- `somewhere that feels like a Wes Anderson film`
-- `a room I can cry in without being bothered`
-- `make me feel like I'm not on Earth`
-- `a hotel where my partner and I can fight and still be friends in the morning`
-- `Wi-Fi that actually works, ideally near a decent coffee shop`
-
-Mock mode would match none of these. Agentic mode handles them all.
+1. **Push this repo to GitHub** (nahadgur or vimldn).
+2. **Import to Vercel.** Build will succeed with no env vars — the site runs in mock mode (no auth, no emails, no agentic matching).
+3. **Set up the four services** — full walkthroughs in the `PART*_SETUP.md` files:
+   - Anthropic + OpenAI + Pinecone → agentic search (`PART3_SETUP.md` covers all services including these two parts)
+   - Supabase → database
+   - Resend → email
+   - Google Cloud Console → OAuth (`PART4A_SETUP.md`)
+4. **Run both SQL migrations** in Supabase in order:
+   - `supabase/schema.sql` (Part 3)
+   - `supabase/migration_part4a.sql` (Part 4a — upgrades Part 3 schema to thread-aware)
+5. **Set env vars** on Vercel (see `.env.example`).
+6. **Redeploy.**
+7. **Seed Pinecone** once locally with `npm run seed` after cloning and setting `.env.local`.
 
 ---
 
-## Architecture
+## What you get
 
-### Search pipeline (agentic mode)
+**Public site (indexable):**
+- `/` — homepage
+- `/hotels/[slug]/` — 12 hotel detail pages (SSG)
+- `/search/` — natural-language search (agentic when API keys present, mock otherwise)
+- `/about/` — how it works
+- `/for-hotels/` — B2B pitch
 
-```
-raw query
-  |
-  v
-1. Claude parses query to structured JSON
-   { city, maxPriceGbp, requiredAmenities, workMode, noisePreference, vibeDescription }
-  |
-  v
-2. OpenAI embeds vibeDescription (1536-dim vector)
-  |
-  v
-3. Pinecone returns top-20 hotels by cosine similarity
-  |
-  v
-4. Hard-filter on city / maxPrice
-  |
-  v
-5. Score = 0.6 * vibe + 0.3 * structured + 0.1 * quality
-  |
-  v
-6. Claude generates "why we matched" bullets for top 5
-  |
-  v
-ranked results with reasons
-```
+**Authenticated dashboard:**
+- `/login/` — Google sign-in
+- `/dashboard/` — user's listings
+- `/dashboard/new/` — create a listing (auth required)
+- `/dashboard/listings/[id]/` — per-hotel message threads with reply box
 
-### Fallback strategy
-
-Every layer has a fallback. If Claude fails, the whole pipeline falls back to mock. If Pinecone is empty, structured matches still work. If only Claude's reason-generation fails for one hotel, that hotel falls back to amenity-based reasons. **Users never see an error page**. Worst case they get the mock experience.
+**Under the hood:**
+- `POST /api/listings` — create a listing (auth)
+- `GET /api/listings/[id]` — poll for updates (auth + owner)
+- `POST /api/listings/[id]/messages` — customer sends a reply (auth + owner)
+- `POST /api/inbound` — Resend webhook captures hotel replies
+- `/api/auth/[...nextauth]` — NextAuth handler
 
 ---
 
-## Structure
+## File map
 
 ```
 app/
-  page.tsx                 Homepage
-  layout.tsx               Root layout, fonts, SEO
-  globals.css              Base styles
-  search/
-    page.tsx               Search results (async, uses agentic search)
-    loading.tsx            Loading state
-  hotels/[slug]/
-    page.tsx               Hotel detail (SSG, 12 routes)
-  about/page.tsx           Philosophy
-  for-hotels/page.tsx      B2B landing
-  sitemap.ts
-  robots.ts
-  not-found.tsx
+  layout.tsx, page.tsx, globals.css, not-found.tsx
+  sitemap.ts, robots.ts
+  search/page.tsx, search/loading.tsx
+  hotels/[slug]/page.tsx                  SSG, 12 pages
+  about/page.tsx                          How it works
+  for-hotels/page.tsx                     B2B
+  login/page.tsx + LoginClient.tsx        Google sign-in
+  dashboard/page.tsx                      Listings list
+  dashboard/new/page.tsx + ListingFormClient.tsx
+  dashboard/listings/[id]/page.tsx + ListingDetailClient.tsx
+  api/auth/[...nextauth]/route.ts
+  api/listings/route.ts
+  api/listings/[id]/route.ts
+  api/listings/[id]/messages/route.ts
+  api/inbound/route.ts
 
 components/
-  SiteHeader.tsx
+  SiteHeader.tsx                Auth-aware nav with user dropdown
   SiteFooter.tsx
-  SearchInput.tsx
-  HotelCard.tsx
+  SearchInput.tsx               Rotating placeholder input
+  HotelCard.tsx                 Used on search results
+  AuthProvider.tsx              NextAuth SessionProvider wrapper
 
 lib/
-  types.ts                 Hotel / Amenity / ParsedQuery / MatchResult
-  env.ts                   Centralised check for agentic keys
-  claude.ts                Claude SDK wrapper (parse + reasons)
-  embeddings.ts            OpenAI embeddings wrapper
-  pinecone.ts              Pinecone ANN wrapper
-  search.ts                Mock fallback search
-  search-agentic.ts        Orchestrator with fallback
+  types.ts                      Hotel, Amenity, ParsedQuery, MatchResult
+  env.ts                        hasAgenticKeys, hasBriefPipeline, hasAuth
+  auth.ts                       NextAuth config (Google + Supabase adapter)
+  session.ts                    getSessionUser, requireUser
+  supabase.ts                   Server client with service role
+  signing.ts                    HMAC tokens for magic links + reply routing
+  claude.ts                     Query parser + match reasons
+  embeddings.ts                 OpenAI text-embedding-3-small
+  pinecone.ts                   ANN query + upsert
+  search.ts                     Mock fallback search
+  search-agentic.ts             Real search orchestrator with graceful fallback
+  email.ts                      Resend: sendBriefToHotel, sendCustomerMessageToHotel, notifyCustomerOfReply
+  listing.ts                    Listings orchestration: create, fetch, postMessage
 
 data/
-  hotels.ts                12 seed hotels
+  hotels.ts                     12 seed hotels with hidden amenity metadata
+
+supabase/
+  schema.sql                    Part 3 base schema
+  migration_part4a.sql          Part 4a upgrade (run after schema.sql)
 
 scripts/
-  seed-pinecone.ts         One-shot seed for Pinecone index
+  seed-pinecone.ts              One-shot seed for Pinecone vibe index
+
+Setup docs:
+  PART3_SETUP.md                Supabase + Resend walkthrough
+  PART4A_SETUP.md               Google OAuth + migration walkthrough
 ```
+
+---
+
+## Local development
+
+```cmd
+npm install
+npm run dev
+```
+
+Visit http://localhost:3000.
+
+For auth to work locally, you need to:
+1. Add `http://localhost:3000/api/auth/callback/google` as an Authorised Redirect URI in Google Cloud Console.
+2. Set `NEXTAUTH_URL=http://localhost:3000` in `.env.local`.
+
+Without the env vars, the site still runs — just with mock search and no auth.
 
 ---
 
 ## Design system
 
-- **Fonts**: Fraunces (display) + Inter Tight (body) + JetBrains Mono (tabular)
-- **Palette**: Paper #F7F3EC / Ink #1A1613 / Terracotta #B8522D / Sage #6B7A5C
-- **Layout**: Editorial, asymmetric, generous whitespace
-- **Motion**: One orchestrated page-load stagger. Subtle hover states.
+- Fonts: Fraunces (display serif) + Inter Tight (body) + JetBrains Mono (tabular)
+- Palette: Paper `#F7F3EC` / Ink `#1A1613` / Terracotta `#B8522D` / Sage `#6B7A5C`
+- `trailingSlash: true` everywhere
+- Editorial layout, generous whitespace, no urgency theatre
 
 ---
 
-## What's coming in Part 3
+## What's next (Part 4b)
 
-| Feature | Part 1 | Part 2 | Part 3 |
-|---|---|---|---|
-| Search parser | Rule-based | Claude API (done) | Same |
-| Vibe matching | Token overlap | Pinecone ANN (done) | Same |
-| Hotel data | data/hotels.ts | data/hotels.ts | Supabase Postgres |
-| Hotel onboarding | None | None | Self-serve + Stripe subscription |
-| Bookings | Disabled | Disabled | Stripe PaymentIntents |
-| Price Drop Protection | Explained only | Explained only | pg_cron + Stripe credits |
+SEO programmatic pages:
+- `/hotels/` — all hotels index
+- `/[city]/` — city landing pages
+- `/[city]/hotels-with-[tag]/` — hidden-tag programmatic pages
 
-Part 3 only makes sense once real hotels want to list. Focus after Part 2 should be **hotel outreach**, not more code.
+Not yet built. Ask for "Part 4b" when ready.

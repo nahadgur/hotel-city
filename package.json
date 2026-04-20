@@ -1,12 +1,13 @@
 {
   "name": "stayward",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx scripts/seed-pinecone.ts"
   },
   "dependencies": {
     "next": "14.2.5",
@@ -14,7 +15,10 @@
     "react-dom": "^18.3.1",
     "framer-motion": "^11.3.19",
     "lucide-react": "^0.427.0",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "@anthropic-ai/sdk": "^0.27.0",
+    "openai": "^4.56.0",
+    "@pinecone-database/pinecone": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.15",
@@ -23,6 +27,8 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.9",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "tsx": "^4.17.0",
+    "dotenv": "^16.4.5"
   }
 }

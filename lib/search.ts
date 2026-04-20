@@ -53,7 +53,7 @@ const AMENITY_MATCHERS: { keywords: string[]; amenity: string }[] = [
   { keywords: ['breakfast'], amenity: 'breakfast included' },
 ]
 
-export function parseQuery(rawQuery: string): ParsedQuery {
+export function parseQueryMock(rawQuery: string): ParsedQuery {
   const q = rawQuery.toLowerCase()
 
   // City detection
@@ -188,10 +188,11 @@ function structuredScore(hotel: Hotel, parsed: ParsedQuery): { score: number; re
   return { score: Math.min(score, 1), reasons, pass }
 }
 
-// ============ MAIN SEARCH ============
+// ============ MAIN SEARCH (MOCK) ============
+// This is the fallback when agentic keys aren't available.
 
-export function search(rawQuery: string): { parsed: ParsedQuery; results: MatchResult[] } {
-  const parsed = parseQuery(rawQuery)
+export function searchMock(rawQuery: string): { parsed: ParsedQuery; results: MatchResult[] } {
+  const parsed = parseQueryMock(rawQuery)
 
   const scored: MatchResult[] = []
 

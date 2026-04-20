@@ -1,32 +1,45 @@
 import { SearchInput } from '@/components/SearchInput'
 import { HotelCard } from '@/components/HotelCard'
-import { search, summariseIntent } from '@/lib/search'
+import { searchAgentic, summariseIntentAgentic } from '@/lib/search-agentic'
 import { hotels } from '@/data/hotels'
 import type { Metadata } from 'next'
+import { Sparkles } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Search',
   robots: { index: false, follow: true },
 }
 
+// This route is dynamic (reads search params, hits external APIs)
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 type Props = { searchParams: { q?: string } }
 
-export default function SearchPage({ searchParams }: Props) {
+export default async function SearchPage({ searchParams }: Props) {
   const query = (searchParams.q || '').trim()
 
   if (!query) {
     return <EmptyState />
   }
 
-  const { parsed, results } = search(query)
-  const summary = summariseIntent(parsed)
+  const { parsed, results, usedAgentic } = await searchAgentic(query)
+  const summary = summariseIntentAgentic(parsed)
 
   return (
     <>
       {/* INTENT BAR */}
       <section className="bg-ink-900 text-paper-50">
         <div className="container-edge py-10 md:py-14">
-          <div className="eyebrow text-paper-300 mb-3">What we heard</div>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="eyebrow text-paper-300">What we heard</div>
+            {usedAgentic && (
+              <div className="inline-flex items-center gap-1.5 text-xs text-terracotta-400">
+                <Sparkles className="w-3 h-3" strokeWidth={1.5} />
+                <span>Claude read your request</span>
+              </div>
+            )}
+          </div>
           <p className="font-display italic text-2xl md:text-3xl max-w-reading leading-snug">
             "{query}"
           </p>

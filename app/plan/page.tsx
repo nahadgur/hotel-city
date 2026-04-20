@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Plan a stay',
   description:
     'Describe the stay you want. The Stayward team reads every brief personally and replies within 24 hours with direct quotes from hotels that fit.',
+  alternates: { canonical: '/plan/' },
 }
 
 export const dynamic = 'force-dynamic'

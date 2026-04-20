@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/schema'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default function HomePage() {
   return (

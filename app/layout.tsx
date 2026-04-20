@@ -4,7 +4,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://stayward.vercel.app'),
+  metadataBase: new URL('https://hotel-city-khaki.vercel.app'),
   title: {
     default: 'Stayward \u2013 A concierge for direct hotel quotes.',
     template: '%s \u2013 Stayward',

@@ -15,14 +15,10 @@ type PlanPayload = {
   maxPriceGbp?: number
 }
 
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzhdHfdMj9UpBOi6ZlWxTxWoXxujAoHQ94zqHydPnt41ZTvOoxw_iS0vmP3Otr0eqY3/exec'
+
 export async function POST(req: Request) {
-  const webhook = process.env.PLAN_WEBHOOK_URL
-  if (!webhook) {
-    return NextResponse.json(
-      { ok: false, error: 'Server not configured.' },
-      { status: 500 }
-    )
-  }
+  const webhook = process.env.PLAN_WEBHOOK_URL || WEBHOOK_URL
 
   let body: PlanPayload
   try {

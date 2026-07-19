@@ -26,8 +26,8 @@ export default function HomePage() {
               </div>
 
               <h1 className="font-display text-display-xl mb-8 animate-fade-up" style={{ animationDelay: '120ms' }}>
-                Describe your stay.{' '}
-                <span className="italic text-terracotta-500">We find it</span>.
+                Direct hotel quotes,{' '}
+                <span className="italic text-terracotta-500">found by hand</span>.
               </h1>
 
               <p className="font-display italic text-xl md:text-2xl text-ink-700 max-w-reading leading-snug mb-10 animate-fade-up" style={{ animationDelay: '260ms' }}>
